@@ -2114,13 +2114,13 @@ public class minisql extends javax.swing.JFrame {
                     resultado = resultado + lexer.lexeme + "        Linea: " + ContadorLineas + " Columna: " + ContadorCaracterInicio + "-" + ContadorCaracteres + " T_STRINGA (valor = " + lexer.lexeme + " )\r\n";
                     ContadorCaracterInicio = ContadorCaracteres ;
                     break;
-                 case T_ENTEROHEX:
-                     ContadorCaracteres = lexer.lexeme.length() + ContadorCaracterInicio;
-                    ContadorCaracterInicio++;
-                    resultado = resultado + lexer.lexeme + "        Linea: " + ContadorLineas + " Columna: " +  ContadorCaracterInicio + "-" + ContadorCaracteres + " T_ENTEROHEX (valor = " + lexer.lexeme + " )\r\n";
-                    ContadorCaracterInicio = ContadorCaracteres ;
-
-                    break;
+//                 case T_ENTEROHEX:
+//                     ContadorCaracteres = lexer.lexeme.length() + ContadorCaracterInicio;
+//                    ContadorCaracterInicio++;
+//                    resultado = resultado + lexer.lexeme + "        Linea: " + ContadorLineas + " Columna: " +  ContadorCaracterInicio + "-" + ContadorCaracteres + " T_ENTEROHEX (valor = " + lexer.lexeme + " )\r\n";
+//                    ContadorCaracterInicio = ContadorCaracteres ;
+//
+//                    break;
                 case T_ENTERODECIMAL:
                     ContadorCaracteres = lexer.lexeme.length() + ContadorCaracterInicio;
                     ContadorCaracterInicio++;
@@ -2128,12 +2128,12 @@ public class minisql extends javax.swing.JFrame {
                     ContadorCaracterInicio = ContadorCaracteres ;
 
                     break;
-                case T_CONSTBOOL:
-                    ContadorCaracteres = lexer.lexeme.length() + ContadorCaracterInicio;
-                    ContadorCaracterInicio++;
-                    resultado =resultado + lexer.lexeme + "         Linea: " + ContadorLineas + " Columna: " +  ContadorCaracterInicio + "-" + ContadorCaracteres +  " T_CONSTBOOL (valor = " + lexer.lexeme + " )\r\n";
-                    ContadorCaracterInicio = ContadorCaracteres ;
-                    break;
+//                case T_CONSTBOOL:
+//                    ContadorCaracteres = lexer.lexeme.length() + ContadorCaracterInicio;
+//                    ContadorCaracterInicio++;
+//                    resultado =resultado + lexer.lexeme + "         Linea: " + ContadorLineas + " Columna: " +  ContadorCaracterInicio + "-" + ContadorCaracteres +  " T_CONSTBOOL (valor = " + lexer.lexeme + " )\r\n";
+//                    ContadorCaracterInicio = ContadorCaracteres ;
+//                    break;
                 case T_OPSUMA:
                     ContadorCaracteres = lexer.lexeme.length() + ContadorCaracterInicio;
                     ContadorCaracterInicio++;

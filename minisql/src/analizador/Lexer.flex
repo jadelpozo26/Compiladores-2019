@@ -13,9 +13,9 @@ HEX = [0X|0x]
 ENTER = [\n]
 CARACT = [^\n]
 WHITE = [ \t\r]*
-ENTEROHEX = 0[xX][0-9|a-f|A-F]+
+
 ENTERODECIMAL = {D}+
-CONSTBOOL = ("true"|"false")
+
 STRINGA = ['][^'\n]*[']|[´][^´\n]*[´]
 COMENTARIOS = ("--"[^\n]*)
 COMENTARIOS2 = "/*"~"*/"
@@ -382,8 +382,6 @@ public String lexeme;
 {WHITE}                                                     {lexeme=yytext(); return T_WHITE;}
 {ENTER}                                                     {lexeme=yytext(); return T_ENTER;}
 {ENTERODECIMAL}                                             {lexeme=yytext(); return T_ENTERODECIMAL;}
-{ENTEROHEX}                                                 {lexeme=yytext(); return T_ENTEROHEX;}
-{CONSTBOOL}                                                 {lexeme=yytext(); return T_CONSTBOOL;}
 {STRINGA}                                                   {lexeme=yytext(); return T_STRINGA;}
 {COMENTARIOS}                                               {lexeme=yytext(); return T_COMENTARIOS;}
 {COMENTARIOS2}                                              {lexeme=yytext(); return T_COMENTARIOS2;}
