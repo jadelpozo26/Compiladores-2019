@@ -1,0 +1,63 @@
+#void 
+    void void string NewArray 
+.12.12
+int
+string
+class bool
+0X23abcdf 23 New
+if this
+extends
+implements
+bool
+hola_45
+qwertyuiopasdfghjklzxcvbnmnbvcxzaswqieop452365489
+//hola esto es un comentario
+
+
+holaestoesidentificador
+"hola"
+
+[]
+
+// 
+
+( ) () [ ] % & 
+!=
+==
+<=
+.12E+2
+12.e+69
+/*
+
+
+fdsa
+fdsa
+hgg
+fdsa
+
+*/
+
+fdsafdsa
+
+
+
+
+
+
+/*
+
+
+
+
+fdsa
+
+
+fdsa
+
+fcv
+
+
+
+
+
+*/
