@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 public class minisql extends javax.swing.JFrame {
 
@@ -24,6 +25,7 @@ public class minisql extends javax.swing.JFrame {
     String nombre;
     File ArchivoSelec2;
     String nombre2;
+    String errores;
     
     public minisql() {
         initComponents();
@@ -2104,6 +2106,7 @@ public class minisql extends javax.swing.JFrame {
                 case T_ERRORCOMENTARIOS:
                     resultado= resultado + "***Error*** Linea: " + ContadorLineas + " Columna: " +ContadorCaracterInicio + "-" + ContadorCaracteres + " no esta cerrado el comentario" + "\r\n";
                     Imprimir(resultado);
+                    errores = errores + "***Error*** Linea: " + ContadorLineas + " Columna: " +ContadorCaracterInicio + "-" + ContadorCaracteres + " no esta cerrado el comentario" + "\r\n";
                     return;
                 case T_STRINGA:
                     ContadorCaracteres = lexer.lexeme.length() + ContadorCaracterInicio;
@@ -2322,6 +2325,7 @@ public class minisql extends javax.swing.JFrame {
                     ContadorCaracterInicio++;
                     resultado= resultado + "***Error*** Linea: " + ContadorLineas + " Columna: " +ContadorCaracterInicio + "-" + ContadorCaracteres + " simbolo no reconocido: " + lexer.lexeme + "\r\n";
                     ContadorCaracterInicio = ContadorCaracteres ;
+                    errores = errores + "***Error*** Linea: " + ContadorLineas + " Columna: " +ContadorCaracterInicio + "-" + ContadorCaracteres + " simbolo no reconocido: " + lexer.lexeme + "\r\n";
                     break;
                 case T_IDENTIFICADOR: {
                     String cadenafinal = lexer.lexeme;
@@ -2339,6 +2343,7 @@ public class minisql extends javax.swing.JFrame {
                         cadenafinal = lexer.lexeme.substring(0, 31);
                         resultado = resultado + cadenafinal + "         Linea: " + ContadorLineas + " Columna: " +  ContadorCaracterInicio + "-" + ContadorCaracteres +  " T_ID " + "\r\n" + "***Identificador Truncado*** Linea: " + ContadorLineas + " Columna: " +ContadorCaracterInicio + "-" + ContadorCaracteres + "\r\n";
                         ContadorCaracterInicio = ContadorCaracteres ;
+                        errores = errores + "***Identificador Truncado*** Linea: " + ContadorLineas + " Columna: " +ContadorCaracterInicio + "-" + ContadorCaracteres + "\r\n";
                     }
                     else
                     {
@@ -2380,6 +2385,8 @@ public class minisql extends javax.swing.JFrame {
                 writer2 = new PrintWriter(fichero2);
                 writer2.print(resultado);
                 writer2.close();
+                JOptionPane.showMessageDialog(null,errores);
+                errores = "";
             } catch (FileNotFoundException ex) 
             {
             }
