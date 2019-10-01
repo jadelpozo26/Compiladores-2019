@@ -1063,6 +1063,7 @@ public class minisql extends javax.swing.JFrame {
                 Limpiar(lexer);
                 COLUMNDEF4(lexer);
             }
+            
             else
             {
                 //error32 se esperaba ID
@@ -1544,7 +1545,13 @@ public class minisql extends javax.swing.JFrame {
                 Limpiar(lexer);
                 COLUMNC20(lexer);
                                   
-            }    
+            }  
+            else if(token == token.T_PRIMARY || token == token.T_DEFAULT)
+            {
+                token = lexer.yylex();
+                Contador(lexer);
+                Limpiar(lexer);
+            }
             else
             {
                 //error32 se esperaba ID
