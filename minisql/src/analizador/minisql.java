@@ -3642,7 +3642,29 @@ public class minisql extends javax.swing.JFrame {
             token = lexer.yylex();
             Contador(lexer);
             Limpiar(lexer);
-            UPD9(lexer);
+            if(token == token.T_IDENTIFICADOR)
+            {
+                 token = lexer.yylex();
+                Contador(lexer);
+                Limpiar(lexer);
+                UPD9(lexer);
+            }
+            else
+            {
+                if(token == null)
+                {
+                    
+                }
+                else
+                {
+                    //error23
+                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+                    Error(lexer);
+                    INICIO(lexer);
+                }
+            }
+                    
+           
         }
         else
         {
