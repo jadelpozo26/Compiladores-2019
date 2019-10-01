@@ -5,6 +5,22 @@ import static analizador.Token.*;
 %type Token                             /*LOS VALORES SE RETORNAN DE TIPO "TOKEN" */
 %line
 %column
+
+%{
+    public int Lineas(java.io.Reader reader)
+    {
+        return yyline();
+    }
+    public int Columnas(java.io.Reader reader)
+    {
+        return yycolumn();
+    }
+%}
+%{
+public String lexeme;
+%}
+%%
+
 L = [a-zA-Z]                           
 D = [0-9]
 P = [(){}\[\]]
@@ -371,6 +387,7 @@ WORK = ("WORK")
 WRITE = ("WRITE")
 YEAR = ("YEAR")
 ZONE = ("ZONE")
+LOGIN = ("LOGIN")
 
 
 
@@ -734,6 +751,7 @@ public String lexeme;
 {WRITE}                                                     {lexeme=yytext(); return T_WRITE;}
 {YEAR}                                                     {lexeme=yytext(); return T_YEAR;}
 {ZONE}                                                     {lexeme=yytext(); return T_ZONE;}
+{LOGIN}                                                     {lexeme=yytext(); return T_LOGIN;}
 
 
 
