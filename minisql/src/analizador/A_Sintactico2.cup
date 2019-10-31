@@ -1,0 +1,1964 @@
+   
+/* ---------------Seccion de declaraciones preliminares--------------------*/
+package analizador;
+
+/* Import the class java_cup.runtime.*  */
+import java_cup.runtime.*;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
+
+
+   
+/* Codigo del parser, se copia integramente a la clase final.
+    Agregamos el manejo de errores. */
+parser code {:
+    
+    /* Reporte de error encontrado. */
+    public void report_error(String message, Object info) {
+        StringBuilder m = new StringBuilder("Error");
+        if (info instanceof java_cup.runtime.Symbol) {
+            java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+            m.append(" " + s.value.toString());
+            if (s.left >= 0) {                
+                m.append(" in line "+(s.left));
+                if (s.right >= 0)
+                    m.append(", column "+(s.right));
+            }
+        }
+        m.append(" : "+message);
+        System.err.println(m);
+    }
+   
+    /* Cuando se encuentra un error de donde el sistema no puede
+        recuperarse, se lanza un error fatal. Se despliega el mensaje
+        de error y se finaliza la ejecucion. */
+    public void report_fatal_error(String message, Object info) {
+        report_error(message, info);
+        System.exit(1);
+    }
+
+    /* Metodo main para garantizar la ejecucion del analizador
+       lexico y sintactico, ademas que se pase como parametro la tabla
+       de simbolos correspondiente. */
+    public static void main(String[] args){
+        try {
+             parser asin = new parser(
+                    new Lexer( new FileReader(args[0])));
+            Object result = asin.parse().value;
+            System.out.println("\n*** Resultados finales ***");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+	
+	
+	
+:};   
+
+   
+/* ------------Declaracion de simbolos terminales y no terminales---------- */
+   
+/* Terminales (tokens obtenidos por el analizador lexico).  
+
+   Terminales que no tienen un valor son listados primero, los terminales que
+   tienen un valor como los enteros son listados en la segunda o demas lineas. */
+
+terminal TABLE, TRUNCATE, IDENTIFICADOR, STRINGA,SUMA, RESTA, MULTI, DIV,PORCENTAJE,
+        MENORQUE, MENORIGUAL, MAYORQUE, MAYORIGUAL, IGUAL, DOBLEIGUAL,
+        DIFERENTE, OPAND, OPOR, ADMIRACION, PUNTOCOMA, COMA, PUNTO,BRACKETIZQ, BRACKETDER, PARENTESISIZQ,
+        PARENTESISDER, CORCHETEIZQ, CORCHETEDER, BRACKETS, PARENTESIS, CORCHETES, ARROBA, NUMERAL,
+        DOBLENUMERAL, DOUBLENUM, DROP, IF, EXISTS, VIEW, DATABASE, USER, COMMIT, TRAN, TRANSACTION, WITH,
+        DELAYED_DURABILITY, ON, OFF, ROLLBACK, SAVE, BEGIN, MARK, INSERT, TOP, PERCENT, OPENQUERY, OPENROWSET, VALUES, DEFAULT,NUL, OUTPUT, INTO,
+        EXEC, EXECUTE, AVG, COUNT, MAX, MIN, SUM, ALL, DISTINCT, DELETED, INSERTED,ENTERODECIMAL, NULL, AS,NOT,AND,OR,LIKE,CONTAINS,FREETEXT,IS,BETWEEN,
+        IN,UPDATE,SET,WRITE,WHERE,UNPIVOT,FOR,PIVOT,TABLESAMPLE,ROWS,CROSS,JOIN,LEFT,RIGHT,FULL,OUTER, DIFIGUAL,DIFMAYOR,DIFMENOR,MAYORMENOR,FROM,INNER, CURRENT, OF,
+        GLOBAL, DELETE, ORDER, BY,HAVING, DOLAR, IDENTITY, ROWGUID, ASC, DESC, COLLATE, SELECT, GROUP, CREATE, CONTAINMENT, NONE, PARTIAL, PRIMARY, LOG,FILEGROUP,
+        FILESTREAM, MEMORY_OPTIMIZED_DATA, NAME, FILENAME, SIZE, MAXSIZE, UNLIMITED,FILEGROWTH, KB, MB, GB, TB,SNAPSHOT,ATTACH, ATTACH_REBUILD_LOG, LOGIN, PASSWORD,
+        WITHOUT, CERTIFICATE, ASYMMETRIC, KEY, CHECK, OPTION,GO,UNIQUE, CLUSTERED, NONCLUSTERED,INCLUDE, FILESTREAM_ON, INDEX, PUNTOPUNTO, MODIFY, ADD, FILE, REMOVE, ALTER,
+        TO, DEFAULT_LANGUAGE, DEFAULT_SCHEMA, ALLOW_ENCRYPTED_VALUE_MODIFICATIONS, OLD_PASSWORD, REBUILD, DISABLE, REORGANIZE, RESUME, PAUSE, ABORT,
+        ALLOW_ROW_LOCKS, ALLOW_PAGE_LOCKS, OPTIMIZE_FOR_SEQUENTIAL_KEY, IGNORE_DUP_KEY, STATISTICS_NORECOMPUTE, PARTITION, TEXTIMAGE_ON, COLUMNSTORE, FILLFACTOR,FOREIGN, REFERENCES, REPLICATION,
+        PERSISTED, SPARSE, MASKED, FUNCTION, CONSTRAINT, GENERATED, ALWAYS, ROW, START, END,HIDDEN, ROWGUIDCOL, ACTION, CASCADE, BIT, INT, INTEGER, FLOAT,VARCHAR,DATE,REAL, DECIMAL, NUMERIC, SMALLINT,
+        TIME, CHAR, NCHAR, NO, COLUMN, NOCHECK, PROC, PROCEDURE, ENCRYPTION, RECOMPILE, CALLER, SELF, OWNER, VARYING, OUT, READONLY,
+        CURSOR, DECLARE, INSENSITIVE, SCROLL,OPEN, FETCH, NEXT, CLOSE,LOCAL, FORWARD_ONLY, STATIC, KEYSET, DYNAMIC, FAST_FORWARD, READ_ONLY, SCROLL_LOCKS, OPTIMISTIC, TYPE_WARNING, WHILE,
+        FETCH_STATUS, DEALLOCATE, RETURNS, RETURN, NULLIF, SUBSTRING, TRANSLATE, LOWER, UPPER, TRIM ;
+
+
+
+   
+/* No terminales usados en la seccion gramatical. 
+
+   Primero se lista los no terminales que tienen un valor Object y despues
+   se lista los no terminales que tienen un entero. Un Object se refiere a que
+   no tienen tipo, pudiendo ser entero o String. */
+
+non terminal INICIO, OBJECT, TRUNCATE1, FINAL, OBJECT2, OBJECT3, DROP1, EXISTS1, COMA1, DROPT, DROPV, DROPU, DROPD, COMA2, COMA3, COMMIT1, TRAN1, IDVAR, WITH1, ROLLBACK1,
+            TRAN2, SAVE1, IDVAR2, BEGIN1, WITH2, BEGINTRAN1, DESC1, INSERT1, INSERT2,INSERT3, EXECUTE1, EXECUTE2,EXECUTE3, EXECUTE4,EXECUTE5,EXECUTE6,VAROVAC, SCALAREXP, E1, T, T1, F, E3, E4, T3,
+            T4, F3, F4, G, EXPIZADA, CONST, FUNC,FUNC2, FUNC3, VALOR, COLUMNLIST, COLUMNLIST2, OUTPUT1, OUTPUT2,DML_SELECT_LIST, DML_SELECT_LIST2,COLUMN_NAME, COLUMN_NAME2, TOP1, PERCENT1,
+            OPROWOBJECT, ROWSETF, OPENROWSET2, OPENROWSET3, CATALOG, INTO1, OUTPUT3, AS1, EXECUTE7, EXECUTE8, EXECUTE9, EXECUTE10, EXECUTE11, INSERT4, INSERT5, INSERT6, INSERT7, INSERT8,
+            INSERT9, INSERT10, INSERT11, INSERT12, OPROW2, OPROW3, OPROW4, OPROW5, OPROW6, OPQUER2, OUTPUT4, COLUMNSLIST, COLUMNSLIST2, DML_SELECT_LIST3,NOT1, PREDICADO, PRED1, PRED2, PRED3,
+            SCWM, SCWM2, SCWM3, SCWM4, SCWM5, UPDATE1, UPD2, UPD3, UPD4, UPD5, UPD6, UPD7, UPD8,UPD9,UPD10,FINALQUERY,FQ2,FQ3,ARGUMENT,ARGUMENT2,DEFOBJETO,DEFOBJETO1,DEFOBJETO2,TB_SOURCE,UNPIVOTED,UNPIVOTCLAUSE,
+            PIVOTED,PIVOTCLAUSE,TB2,TB4,TB5,TB3,TB1,SAM_CL,SAM_CL3,JOIN_TB,JOIN_TB2,JOIN_TB3,JOIN_TYPE,JOIN_TYPE1,JOIN_TYPE2,JOIN_TYPE3, CSC1, CSC2, CSC3, FT1, COMPARADORES, JOINTYPE,JOINTYPE1,JOINTYPE3,TABLE2,
+            TABLE3, DELETE1, DEL2,DEL3,DEL4,DEL5, GROUP_BY, GROUP_BY2, GROUP_BY3, GROUP_BY4, SELIST, SELIST2, SELIST3,SELIST4, SELECT1,SELECT2,SELECT3,SELECT4,SELECT5,SELECT6,SELECT7,SELECT8,SELECT9,SELECT10,SELECT11,
+            SELECT12,SELECT13, ORDER_BY, ORDER_BY2, ORDER_BY3, ORDER_BY4, CREATE1, CDATABASE1,CDATABASE2,CDATABASE3,CDATABASE4,CDATABASE5,FILEGROUP1,FILEGROUP2,
+            FILESPEC, FILESPEC2, FILESPEC3, FILESPEC4, FILESPEC5, TAM, CDATABASE6, CUSER1, CVIEW1, CVIEW2, CVIEW3,SELECT20,SELECT21,SELECT22,SELECT23,SELECT24,SELECT25,SELECT26,SELECT27,SELECT28,SELECT29,SELECT31,SELECT32,SELECT33,
+            CINDEX1,CINDEX2,CINDEX3,CINDEX4,CINDEX5,CINDEX6, ONCLAUSE, FILTER_PREDICATE, CONJUNCT, DISJUNCT,DISJUNCT2,COMPARISON, COMPARISON_OP, ASCDESC, CINDEX7, ALTER1, ALTERD1, ALTERD2, FILE_AND_FILEGROUP, FILE_AND_FILEGROUP2, 
+            FILE_AND_FILEGROUP3, ALTERU1, SET_ITEM, SET_ITEM2, PASS1, ALTERI1, ALTERI2, ALTERI3, PARTITION1, SET_INDEX_OPTION, SET_INDEX_OPTION2, CTABLE1, CTABLE2, CTABLE3, CTABLE4, TEXTIMAGECLAUSE, FILESTREAMCLAUSE,TABLEINDEX,
+            TABLEINDEX1, TABLEINDEX2, TABLECONSTRAINT, TCONSTRAINT1, TCONSTRAINT2, TCONSTRAINT3, TCONSTRAINT4, TCONSTRAINT5, TCONSTRAINT6, TCONSTRAINT7,TCONSTRAINT8, TCONSTRAINT9, TCONSTRAINT10, TCONSTRAINT11, COMPUTEDDEF, COMPUTEDDEF2,
+            COLUMNDEF, COLUMNDEF2, COLUMNDEF3, COLUMNDEF4, COLUMNDEF5, COLUMNDEF6, COLUMNDEF7, COLUMNDEF8, COLUMNDEF9, COLUMNDEF10, COLUMNDEF11, COLUMNDEF12, COLUMNDEF13, COLUMNDEF14, COLUMNDEF15, COLUMNINDEX, COLUMNINDEX2,
+            COLUMNCONSTRAINT, COLUMNC1, COLUMNC2, COLUMNC3, COLUMNC4, COLUMNC5, COLUMNC6, COLUMNC7, COLUMNC8,COLUMNC9, OPCIONESC, DATA_TYPE, DATA_TYPE2, DATA_TYPE3, DATA_TYPE4, CTABLE5, CTABLE6, COLUMNC12, COLUMNC10, COLUMNC11,
+            TCONSTRAINT12, DROPI, DROPI2, DROPI3, PROCEDURE2, PROCEDURE3, PROCEDURE4, PROCEDURE5, PROCEDURE6, PROCEDURE7, PROCEDURE8, PROCEDURE9, PROCEDURE10, PROCEDURE11, PROCEDURE12, PROCEDURE13, PROCEDURE14, EXECUTECLAUSE, EXECUTECLAUSE2,
+            SQLSTATEMENT, SQLSTATEMENT2, SQLSTATEMENT3, UPDATE11, UPD12, UPD13, UPD14, UPD15, UPD16, UPD17, UPD18, UPD19,UPD20, FINALQUERY2, FQ4, FQ5, DELETE11, DEL12, DEL13, DEL14, DEL15, EXECUTECLAUSE3,
+            CURSOR1, CURSOR2,CURSOR3,CURSOR4,CURSOR5,CURSOR6,CURSOR7,CURSOR8,CURSOR9,CURSOR10,CURSOR11,CURSOR12,CURSOR13, DECLARE2,DECLARE3, PALABRASCURSOR, PALABRASCURSOR2, PALABRASCURSOR3, PALABRASCURSOR4, PALABRASCURSOR5, PROCEDURE18,
+            FUNCTION2, FUNCTION3, FUNCTION4, FUNCTION5, FUNCTION6, FUNCTION7, FUNCTION8, FUNCTION9, FUNCTION10, FILESPEC6, DROPPROC, DROPPROC2, DROPPROC3, DROPPROC4, DROPFUNC, EXECUTE20, ALTERT15, ALTERT2, ALTERT3, ALTERT4, ALTERT5, ALTERT6, ALTERT7, 
+            ALTERT8, ALTERT9, ALTERT10, ALTERT11, ALTERT12, ALTERT13, ALTERT14, ALTERT20, DECLARE1, DECLARE4, FUNC4, SUB1, SUB2;
+
+
+
+/* -------------Seccion de predencia y asociacion de los terminales----------- */
+        precedence left COMA, PUNTO, PUNTOCOMA;
+  precedence left IGUAL;
+  precedence left OR,OPOR;
+  precedence left AND, OPAND;
+  precedence left DIFERENTE;
+  precedence left MENORQUE, MENORIGUAL, MAYORIGUAL, MAYORQUE;
+  precedence left SUMA, RESTA; 
+  precedence left MULTI,DIV,PORCENTAJE;
+  precedence left ADMIRACION;
+  precedence left PARENTESISIZQ,PARENTESISDER;
+  precedence left INDEX;
+  precedence left INNER, LEFT, RIGHT, FULL, CROSS;
+  precedence left IDENTIFICADOR, ENTERODECIMAL, DOUBLENUM, STRINGA, ARROBA, AVG, SUM,COUNT,MAX,MIN, NULL, JOIN;
+/*
+  Precedencia de los no terminales, no sirve con simbolos terminales.
+  Por eso no la usamos. Además indica si se asocia a izquierda o derecha.
+*/
+ 
+
+
+/* ------------------- Seccion de la gramatica ------------------------ */
+   
+
+        //METER PIVOT Y UN PIVOT Y AGREGAR MAS FUNCIONES EN E3
+        //PROBAR FUNTION CON 3 DELETES Y 3 INSERTS Y UPDATES 
+	INICIO::= TRUNCATE1
+                  |DROP DROP1 
+                  |COMMIT1
+                  |ROLLBACK1
+                  |SAVE1
+                  |BEGIN1
+                  |INSERT1
+                  |ALTER ALTER1 //FALTA TABLE
+                  |UPDATE1
+                  |DELETE1
+                  |SELECT1
+                  |CREATE CREATE1
+                  |DECLARE CURSOR1
+                  |DECLARE DECLARE1
+                  |EXECUTE20
+                  |error INICIO
+                  |error
+                  ;
+
+        EXECUTE20 ::= EXECUTE2 EXECUTE3 FINAL INICIO
+                |EXECUTE2 EXECUTE3 FINAL
+                ;
+
+        CURSOR1 ::= OBJECT CURSOR2 CURSOR PALABRASCURSOR CURSOR3 FINAL INICIO
+                |OBJECT CURSOR2 CURSOR PALABRASCURSOR CURSOR3 FINAL
+                ;
+
+        CURSOR2 ::= INSENSITIVE
+                |SCROLL
+                |
+                ;
+        
+
+        CURSOR3 ::= FOR SELECT20 CURSOR4
+                ;
+
+        CURSOR4 ::= OPEN OBJECT CURSOR5
+                |CURSOR6
+                ;
+
+        CURSOR5 ::= FETCH NEXT FROM OBJECT CURSOR8
+                ;
+
+        CURSOR8 ::= INTO CURSOR9
+                |
+                ;
+
+        CURSOR9 ::= ARROBA IDENTIFICADOR CURSOR10 CURSOR11
+                ;
+
+        CURSOR10 ::= COMA ARROBA IDENTIFICADOR CURSOR10
+                |
+                ;
+
+        DECLARE1 ::= ARROBA IDENTIFICADOR AS1 DATA_TYPE IGUAL DECLARE4 DECLARE3 FINAL INICIO
+                |ARROBA IDENTIFICADOR AS1 DATA_TYPE IGUAL DECLARE4 DECLARE3 FINAL
+                |ARROBA IDENTIFICADOR AS1 DATA_TYPE DECLARE3 FINAL INICIO
+                |ARROBA IDENTIFICADOR AS1 DATA_TYPE DECLARE3 FINAL
+                |ARROBA IDENTIFICADOR CURSOR DECLARE3 FINAL
+                |ARROBA IDENTIFICADOR CURSOR DECLARE3 FINAL INICIO
+                ;
+
+        
+        DECLARE3 ::= COMA ARROBA IDENTIFICADOR AS1 DATA_TYPE IGUAL DECLARE4 DECLARE3
+                |COMA ARROBA IDENTIFICADOR AS1 DATA_TYPE DECLARE3
+                |COMA ARROBA IDENTIFICADOR CURSOR DECLARE3
+                |
+                ;
+
+        DECLARE4 ::= ENTERODECIMAL
+                |DOUBLENUM
+                |STRINGA
+                |DEFAULT
+                ;
+
+        CURSOR11 ::= WHILE ARROBA ARROBA FETCH_STATUS IGUAL ENTERODECIMAL  CURSOR12
+                |WHILE E3 SQLSTATEMENT CURSOR13
+                |
+                ;
+
+        CURSOR12 ::= BEGIN SQLSTATEMENT END CURSOR13
+                |SQLSTATEMENT CURSOR13
+                ;
+
+        CURSOR13 ::= CLOSE OBJECT DEALLOCATE OBJECT
+                |
+                ;
+
+        
+        
+
+        CURSOR6 ::= FOR UPDATE OF IDENTIFICADOR CURSOR7
+                |FOR UPDATE 
+                |
+                ;
+
+        CURSOR7 ::= COMA IDENTIFICADOR CURSOR7
+                |
+                ;
+        
+
+        PALABRASCURSOR ::= LOCAL PALABRASCURSOR2
+                        |GLOBAL PALABRASCURSOR2
+                        |PALABRASCURSOR2
+                        ;
+
+        PALABRASCURSOR2 ::= FORWARD_ONLY PALABRASCURSOR3
+                        |SCROLL PALABRASCURSOR3
+                        |PALABRASCURSOR3
+                        ;
+
+        PALABRASCURSOR3 ::= STATIC PALABRASCURSOR4
+                        |KEYSET PALABRASCURSOR4
+                        |DYNAMIC PALABRASCURSOR4
+                        |FAST_FORWARD PALABRASCURSOR4
+                        |PALABRASCURSOR4
+                        ;
+
+        PALABRASCURSOR4 ::= READ_ONLY PALABRASCURSOR5
+                        |SCROLL_LOCKS PALABRASCURSOR5
+                        |OPTIMISTIC PALABRASCURSOR5
+                        |PALABRASCURSOR5
+                        ;
+
+        PALABRASCURSOR5 ::= TYPE_WARNING
+                        |
+                        ;
+
+        ALTER1 ::= DATABASE ALTERD1 FINAL INICIO
+                |DATABASE ALTERD1 FINAL
+                |VIEW OBJECT CVIEW1 FINAL
+                |VIEW OBJECT CVIEW1 FINAL INICIO
+                |USER OBJECT ALTERU1 FINAL INICIO
+                |USER OBJECT ALTERU1 FINAL
+                |INDEX ALTERI1 ALTERI2 FINAL INICIO
+                |INDEX ALTERI1 ALTERI2 FINAL
+                |FUNCTION3 FINAL INICIO
+                |FUNCTION3 FINAL
+                |PROCEDURE3 FINAL INICIO
+                |PROCEDURE3 FINAL
+                |TABLE OBJECT ALTERT2 FINAL INICIO
+                |TABLE OBJECT ALTERT2 FINAL
+                ;
+
+        ALTERT2 ::= ALTER COLUMN OBJECT ALTERT20 ALTERT15
+                |ADD CTABLE4 ALTERT15
+                |DROP ALTERT8 ALTERT15
+                |SET FILESTREAMCLAUSE ALTERT15
+                ; 
+
+        ALTERT20 ::= DATA_TYPE ALTERT3 
+                |ADD ALTERT5 
+                |DROP ALTERT5 
+                ;
+
+        ALTERT15 ::= COMA ALTER COLUMN OBJECT DATA_TYPE ALTERT3 ALTERT15
+                |COMA ADD CTABLE4 ALTERT15
+                |COMA DROP ALTERT8 ALTERT15
+                |
+                ;
+
+        ALTERT3 ::= COLLATE IDENTIFICADOR ALTERT4
+                |ALTERT4
+                ;
+
+        ALTERT4 ::= NULL SPARSE
+                |NULL 
+                |NOT NULL SPARSE
+                |NOT NULL 
+                |
+                ;
+
+        ALTERT5 ::= ROWGUIDCOL
+                |PERSISTED
+                |NOT FOR REPLICATION
+                |SPARSE
+                |HIDDEN
+                | MASKED
+                |MASKED WITH FUNCTION IGUAL STRINGA
+                ;
+
+        ALTERT6 ::= IDENTIFICADOR COLUMNDEF ALTERT7
+                |IDENTIFICADOR COMPUTEDDEF ALTERT7
+                |TABLECONSTRAINT ALTERT7
+                ;
+
+        ALTERT7 ::= COMA ALTERT6
+                |
+                ;
+
+        ALTERT8 ::= CONSTRAINT IF EXISTS ALTERT9 
+                |CONSTRAINT ALTERT9 
+                |IF EXISTS ALTERT9 
+                |COLUMN IF EXISTS ALTERT10 
+                |COLUMN ALTERT10 
+                |ALTERT9
+                ;
+
+        ALTERT9 ::= IDENTIFICADOR ALTERT11
+                ;
+        
+        ALTERT11 ::= COMA IDENTIFICADOR ALTERT11
+                |COMA ALTERT8 
+                |COMA ALTER COLUMN OBJECT ALTERT20 ALTERT11
+                |COMA ADD CTABLE4 ALTERT11
+                |COMA DROP ALTERT8 ALTERT11
+                |
+                ;
+
+        ALTERT10 ::= IDENTIFICADOR ALTERT11
+                ;
+
+        ALTERT12 ::= COMA ALTERT8
+                |
+                ;
+
+        ALTERT13 ::= CHECK CONSTRAINT IDENTIFICADOR ALTERT14
+                |NOCHECK CONSTRAINT IDENTIFICADOR ALTERT14
+                |CONSTRAINT IDENTIFICADOR
+                |CHECK CONSTRAINT ALL
+                |NOCHECK CONSTRAINT ALL
+                |CONSTRAINT ALL
+                ;
+
+        ALTERT14 ::= COMA IDENTIFICADOR ALTERT14
+                |
+                ;
+
+
+        ALTERI1 ::= OBJECT
+                |ALL
+                ;
+
+        ALTERI2 ::= ON OBJECT ALTERI3
+                ;
+
+        ALTERI3 ::= REBUILD PARTITION1
+                |DISABLE
+                |REORGANIZE PARTITION1
+                |SET PARENTESISIZQ SET_INDEX_OPTION SET_INDEX_OPTION2 PARENTESISDER
+                |RESUME
+                |PAUSE 
+                |ABORT
+                ;
+
+        PARTITION1 ::= PARTITION IGUAL ALL
+                |PARTITION IGUAL ENTERODECIMAL
+                |PARTITION IGUAL DOUBLENUM
+                |
+                ;
+
+        SET_INDEX_OPTION ::= ALLOW_ROW_LOCKS IGUAL ON
+                        |ALLOW_ROW_LOCKS IGUAL OFF
+                        |ALLOW_PAGE_LOCKS IGUAL ON
+                        |ALLOW_PAGE_LOCKS IGUAL OFF
+                        |OPTIMIZE_FOR_SEQUENTIAL_KEY IGUAL ON
+                        |OPTIMIZE_FOR_SEQUENTIAL_KEY IGUAL OFF
+                        |IGNORE_DUP_KEY IGUAL ON
+                        |IGNORE_DUP_KEY IGUAL OFF
+                        |STATISTICS_NORECOMPUTE IGUAL ON
+                        |STATISTICS_NORECOMPUTE IGUAL OFF
+                        ;
+
+        SET_INDEX_OPTION2 ::= COMA SET_INDEX_OPTION SET_INDEX_OPTION2
+                        |
+                        ;
+
+        ALTERU1 ::=  WITH SET_ITEM SET_ITEM2
+                ;
+
+        SET_ITEM ::= NAME IGUAL IDENTIFICADOR
+                |DEFAULT_SCHEMA IGUAL IDENTIFICADOR
+                |DEFAULT_SCHEMA IGUAL NULL
+                |LOGIN IGUAL IDENTIFICADOR
+                |PASSWORD IGUAL STRINGA PASS1
+                |DEFAULT_LANGUAGE IGUAL NONE
+                |DEFAULT_LANGUAGE IGUAL IDENTIFICADOR
+                |ALLOW_ENCRYPTED_VALUE_MODIFICATIONS IGUAL ON
+                |ALLOW_ENCRYPTED_VALUE_MODIFICATIONS IGUAL OFF
+                ;
+
+        SET_ITEM2 ::= COMA SET_ITEM SET_ITEM2
+                |
+                ;
+
+        PASS1 ::= OLD_PASSWORD IGUAL STRINGA
+                |
+                ;
+
+        ALTERD1 ::= OBJECT ALTERD2
+                |CURRENT ALTERD2
+                ;
+
+        ALTERD2 ::= MODIFY NAME IGUAL IDENTIFICADOR
+                |COLLATE IDENTIFICADOR
+                |COLLATE STRINGA
+                |FILE_AND_FILEGROUP
+                ;
+
+        FILE_AND_FILEGROUP ::= ADD FILE FILESPEC FILE_AND_FILEGROUP2 FILE_AND_FILEGROUP3
+                |ADD LOG FILE FILESPEC FILEGROUP2
+                |REMOVE FILE IDENTIFICADOR
+                |REMOVE FILE STRINGA
+                |MODIFY FILE FILESPEC
+                ;
+
+        FILE_AND_FILEGROUP2 ::= COMA FILESPEC FILE_AND_FILEGROUP2
+                |
+                ;
+
+        FILE_AND_FILEGROUP3 ::= TO FILEGROUP STRINGA
+                        |TO FILEGROUP IDENTIFICADOR
+                        |
+                        ;
+
+        CREATE1 ::= DATABASE IDENTIFICADOR CDATABASE1 FINAL INICIO
+                |DATABASE IDENTIFICADOR CDATABASE1 FINAL
+                |USER IDENTIFICADOR CUSER1 FINAL INICIO
+                |USER IDENTIFICADOR CUSER1 FINAL
+                |VIEW OBJECT CVIEW1 FINAL
+                |VIEW OBJECT CVIEW1 FINAL INICIO
+                |CINDEX1 FINAL INICIO
+                |CINDEX1 FINAL 
+                |TABLE CTABLE1 FINAL INICIO
+                |TABLE CTABLE1 FINAL
+                |PROCEDURE2 FINAL
+                |PROCEDURE2 FINAL INICIO
+                |FUNCTION2 FINAL 
+                |FUNCTION2 FINAL INICIO
+                ;
+
+        FUNCTION2 ::= OR ALTER FUNCTION3
+                        |FUNCTION3
+                        ;
+
+        AS1 ::= AS
+                |
+                ;
+
+        FUNCTION3 ::= FUNCTION OBJECT PARENTESISIZQ FUNCTION4 PARENTESISDER FUNCTION8
+                ;
+
+        FUNCTION4 ::= ARROBA IDENTIFICADOR AS1 DATA_TYPE FUNCTION5 FUNCTION6 FUNCTION7
+                |
+                ;
+
+        FUNCTION5 ::= IGUAL DEFAULT
+                |
+                ;
+
+        FUNCTION6 ::= READONLY
+                |
+                ;
+
+        FUNCTION7 ::= COMA ARROBA IDENTIFICADOR AS1 DATA_TYPE FUNCTION5 FUNCTION6 FUNCTION7
+                |
+                ;
+
+        FUNCTION8 ::= RETURNS DATA_TYPE FUNCTION9
+                |RETURNS TABLE FUNCTION10
+                ;
+
+        FUNCTION9 ::= AS1 BEGIN SQLSTATEMENT RETURN SCALAREXP END
+                        ;
+
+        FUNCTION10 ::= AS1 RETURN PARENTESISIZQ SELECT20 PARENTESISDER
+                |AS1 RETURN SELECT20
+                ;
+
+        PROCEDURE2 ::= OR ALTER PROCEDURE3
+                        |PROCEDURE3
+                        ;
+
+        PROCEDURE3 ::= PROC OBJECT PROCEDURE4 PROCEDURE5
+                |PROCEDURE OBJECT PROCEDURE4 PROCEDURE5
+                ;
+
+        PROCEDURE4 ::= PUNTOCOMA ENTERODECIMAL
+                        |
+                        ;
+
+        PROCEDURE5 ::= ARROBA IDENTIFICADOR DATA_TYPE PROCEDURE6 PROCEDURE7 PROCEDURE8 PROCEDURE9 PROCEDURE10 PROCEDURE14
+                        |PROCEDURE14
+                        ;
+        
+        PROCEDURE14 ::= WITH ENCRYPTION PROCEDURE11
+                        |WITH RECOMPILE PROCEDURE11
+                        |WITH EXECUTECLAUSE PROCEDURE11
+                        |PROCEDURE11
+                        ;
+
+        EXECUTECLAUSE ::= EXEC AS EXECUTECLAUSE2
+                        |EXECUTE AS EXECUTECLAUSE2
+                        ;
+
+        EXECUTECLAUSE2 ::= CALLER EXECUTECLAUSE3
+                        |SELF EXECUTECLAUSE3
+                        |OWNER EXECUTECLAUSE3
+                        |STRINGA EXECUTECLAUSE3
+                        |IDENTIFICADOR EXECUTECLAUSE3
+                        ;
+
+        EXECUTECLAUSE3 ::= COMA CALLER EXECUTECLAUSE3
+                        |COMA SELF EXECUTECLAUSE3
+                        |COMA OWNER EXECUTECLAUSE3
+                        |COMA STRINGA EXECUTECLAUSE3
+                        |COMA IDENTIFICADOR EXECUTECLAUSE3
+                        |
+                        ;
+
+        PROCEDURE6 ::= VARYING
+                        |
+                        ;
+
+        PROCEDURE7 ::= IGUAL DEFAULT
+                        |
+                        ;
+
+        PROCEDURE8 ::= OUT
+                |OUTPUT
+                |
+                ;
+
+        PROCEDURE9 ::= READONLY
+                        |
+                        ;
+
+        PROCEDURE10 ::= COMA ARROBA IDENTIFICADOR DATA_TYPE PROCEDURE6 PROCEDURE7 PROCEDURE8 PROCEDURE9 PROCEDURE10
+                        |
+                        ;
+
+        PROCEDURE11 ::= FOR REPLICATION PROCEDURE12
+                        |PROCEDURE12
+                        ;
+
+        PROCEDURE12 ::= AS PROCEDURE13 SQLSTATEMENT PROCEDURE18
+                        ;
+
+        PROCEDURE13 ::= BEGIN
+                        |
+                        ;
+
+        PROCEDURE18 ::= END
+                        |
+                        ;
+
+        SQLSTATEMENT ::= UPDATE11 SQLSTATEMENT2
+                        |SELECT20 SQLSTATEMENT2
+                        |DELETE11 SQLSTATEMENT2
+                        |INSERT INSERT2 FINAL SQLSTATEMENT2
+                        ;
+
+        SQLSTATEMENT2 ::= UPDATE11 SQLSTATEMENT3
+                        |SELECT20 SQLSTATEMENT3
+                        |DELETE11 SQLSTATEMENT3
+                        |INSERT INSERT2 FINAL SQLSTATEMENT3
+                        |
+                        ;
+
+        SQLSTATEMENT3 ::= UPDATE11
+                        |SELECT20
+                        |DELETE11
+                        |INSERT INSERT2 FINAL
+                        |
+                        ;
+
+        CTABLE1 ::= OBJECT AS IDENTIFICADOR PARENTESISIZQ CTABLE2 PARENTESISDER ONCLAUSE TEXTIMAGECLAUSE FILESTREAMCLAUSE
+                |OBJECT PARENTESISIZQ CTABLE2 PARENTESISDER ONCLAUSE TEXTIMAGECLAUSE FILESTREAMCLAUSE
+                ;
+
+        CTABLE2 ::= IDENTIFICADOR CTABLE5
+                |TABLEINDEX CTABLE3
+                | TABLECONSTRAINT  CTABLE3 
+                ;
+
+        CTABLE5 ::= COMPUTEDDEF CTABLE3
+                |COLUMNDEF CTABLE3
+                ;
+
+        CTABLE3 ::= COMA CTABLE4
+                |
+                ;
+
+        CTABLE4 ::= TABLEINDEX CTABLE3
+                |TABLECONSTRAINT CTABLE3
+                |IDENTIFICADOR COMPUTEDDEF CTABLE3
+                |IDENTIFICADOR COLUMNDEF CTABLE3
+                ;
+
+        CTABLE6 ::= COMPUTEDDEF CTABLE3
+                | COLUMNDEF CTABLE3
+                ;
+
+         TEXTIMAGECLAUSE ::= TEXTIMAGE_ON IDENTIFICADOR
+                |TEXTIMAGE_ON STRINGA
+                |TEXTIMAGE_ON DEFAULT
+                |TEXTIMAGE_ON PRIMARY
+                |TEXTIMAGE_ON NULL
+                |
+                ;
+
+        
+
+        COMPUTEDDEF ::= AS E3 PERSISTED NOT NULL COLUMNCONSTRAINT
+                        |AS E3 PERSISTED COLUMNCONSTRAINT
+                        |AS E3 COLUMNCONSTRAINT
+                        |AS E3 PERSISTED NOT NULL
+                        |AS E3 PERSISTED
+                        |AS E3 
+                        ;
+
+
+        TABLECONSTRAINT ::= CONSTRAINT OBJECT TCONSTRAINT1
+                        |TCONSTRAINT1
+                        ;
+
+        TCONSTRAINT1 ::= PRIMARY KEY TCONSTRAINT2
+                        |UNIQUE TCONSTRAINT2
+                        |FOREIGN KEY TCONSTRAINT7
+                        |CHECK TCONSTRAINT12
+                        |DEFAULT PARENTESISIZQ E3 PARENTESISDER
+                        ;
+
+        TCONSTRAINT2 ::= CLUSTERED TCONSTRAINT3
+                        |NONCLUSTERED TCONSTRAINT3
+                        |TCONSTRAINT3
+                        ;
+
+        TCONSTRAINT3 ::= PARENTESISIZQ IDENTIFICADOR ASCDESC TCONSTRAINT4 PARENTESISDER TCONSTRAINT5
+                        ;
+
+        TCONSTRAINT4 ::= COMA IDENTIFICADOR ASCDESC TCONSTRAINT4
+                        |
+                        ;
+
+        TCONSTRAINT5 ::= WITH FILLFACTOR IGUAL ENTERODECIMAL TCONSTRAINT6
+                        |TCONSTRAINT6
+                        ;
+
+        TCONSTRAINT6 ::= ONCLAUSE
+                        ;
+
+        TCONSTRAINT7 ::= FOREIGN KEY PARENTESISIZQ COLUMNSLIST PARENTESISDER TCONSTRAINT8
+                        ;
+
+        TCONSTRAINT8 ::= REFERENCES OBJECT PARENTESISIZQ COLUMNSLIST PARENTESISDER TCONSTRAINT9
+                        |REFERENCES OBJECT TCONSTRAINT9
+                        ;
+        
+        TCONSTRAINT9 ::= ON DELETE OPCIONESC TCONSTRAINT10
+                        |TCONSTRAINT10
+                        ;
+
+        TCONSTRAINT10 ::= ON UPDATE OPCIONESC TCONSTRAINT11
+                        |TCONSTRAINT11
+                        ;
+
+        TCONSTRAINT11 ::= NOT FOR REPLICATION
+                        |
+                        ;
+
+        TCONSTRAINT12 ::= CHECK NOT FOR REPLICATION PARENTESISIZQ E3 PARENTESISIZQ
+                        |CHECK PARENTESISIZQ E3 PARENTESISDER
+                        ;
+
+        COLUMNDEF ::= DATA_TYPE COLUMNDEF2
+                ;
+
+
+        DATA_TYPE ::= IDENTIFICADOR DATA_TYPE2
+                        |DATA_TYPE3
+                        ;
+
+        DATA_TYPE2 ::= PUNTO IDENTIFICADOR PARENTESISIZQ ENTERODECIMAL PARENTESISDER
+                        |PARENTESISIZQ ENTERODECIMAL PARENTESISDER
+                        |PUNTO IDENTIFICADOR
+                        |PARENTESISIZQ ENTERODECIMAL COMA ENTERODECIMAL PARENTESISDER
+                        |PUNTO IDENTIFICADOR PARENTESISIZQ ENTERODECIMAL COMA ENTERODECIMAL PARENTESISDER
+                        |
+                        ;
+
+        DATA_TYPE3 ::= BIT DATA_TYPE4
+                |INT DATA_TYPE4
+                |INTEGER DATA_TYPE4
+                |FLOAT DATA_TYPE4
+                |VARCHAR DATA_TYPE4
+                |DATE DATA_TYPE4
+                |REAL DATA_TYPE4
+                |DECIMAL DATA_TYPE4
+                |NUMERIC DATA_TYPE4
+                |SMALLINT DATA_TYPE4
+                |TIME DATA_TYPE4
+                |CHAR DATA_TYPE4
+                |NCHAR DATA_TYPE4
+                ;
+
+        DATA_TYPE4 ::= PARENTESISIZQ ENTERODECIMAL PARENTESISDER
+                |PARENTESISIZQ ENTERODECIMAL COMA ENTERODECIMAL PARENTESISDER
+                |
+                ;
+
+        COLUMNDEF2 ::= FILESTREAM COLUMNDEF3
+                        |COLUMNDEF3
+                        ;
+
+        COLUMNDEF3 ::= COLLATE IDENTIFICADOR COLUMNDEF4
+                        |COLUMNDEF4
+                        ;
+
+        COLUMNDEF4 ::= SPARSE COLUMNDEF5
+                        |COLUMNDEF5
+                        ;
+
+        COLUMNDEF5 ::= MASKED WITH PARENTESISIZQ FUNCTION IGUAL STRINGA PARENTESISDER COLUMNDEF6
+                        |COLUMNDEF6
+                        ;
+
+        COLUMNDEF6 ::= CONSTRAINT OBJECT DEFAULT E3 COLUMNDEF7
+                        |COLUMNDEF7
+                        ;
+
+        COLUMNDEF7 ::= IDENTITY PARENTESISIZQ ENTERODECIMAL COMA ENTERODECIMAL PARENTESISDER COLUMNDEF8
+                        |COLUMNDEF8
+                        ;
+        COLUMNDEF8 ::= NOT FOR REPLICATION COLUMNDEF9
+                        |COLUMNDEF9
+                        ;
+
+        COLUMNDEF9 ::= GENERATED ALWAYS AS ROW START COLUMNDEF10 COLUMNDEF11
+                        |GENERATED ALWAYS AS ROW END COLUMNDEF10 COLUMNDEF11
+                        |COLUMNDEF11
+                        ;
+
+        COLUMNDEF10 ::= HIDDEN
+                        |
+                        ;
+
+        COLUMNDEF11 ::= NULL COLUMNDEF12
+                        |NOT NULL COLUMNDEF12
+                        |COLUMNDEF12
+                        ;
+
+        COLUMNDEF12 ::= ROWGUIDCOL COLUMNDEF13
+                        |COLUMNDEF13
+                        ;
+
+        COLUMNDEF13 ::= COLUMNCONSTRAINT COLUMNDEF15 COLUMNDEF14
+                        |COLUMNDEF14
+                        ;
+
+        COLUMNDEF14 ::= COLUMNINDEX
+                        |
+                        ;
+
+        COLUMNDEF15 ::= COMA COLUMNCONSTRAINT COLUMNDEF15
+                        |COMA CTABLE4
+                        |
+                        ;
+
+
+        COLUMNINDEX ::= INDEX OBJECT CLUSTERED ONCLAUSE FILESTREAMCLAUSE
+                |INDEX OBJECT NONCLUSTERED ONCLAUSE FILESTREAMCLAUSE
+                |INDEX OBJECT ONCLAUSE FILESTREAMCLAUSE
+                ;
+
+        COLUMNCONSTRAINT ::= CONSTRAINT OBJECT COLUMNC2
+                        |COLUMNC2
+                        ;
+
+        COLUMNC2::= PRIMARY KEY COLUMNC3
+                |UNIQUE COLUMNC3
+                |FOREIGN KEY COLUMNC5
+                |REFERENCES COLUMNC6
+                |CHECK COLUMNC12
+                |DEFAULT PARENTESISIZQ E3 PARENTESISDER
+                ;
+
+        COLUMNC3 ::= CLUSTERED COLUMNC4
+                |NONCLUSTERED COLUMNC4
+                |COLUMNC4
+                ;
+
+        COLUMNC4 ::= ONCLAUSE
+                ;
+
+        COLUMNC5 ::= REFERENCES COLUMNC6
+                ;
+
+        COLUMNC6 ::= IDENTIFICADOR COLUMNC7
+                ;
+
+        COLUMNC7 ::= PUNTO IDENTIFICADOR COLUMNC8
+                |COLUMNC8
+                ;
+
+        COLUMNC8 ::= PARENTESISIZQ COLUMNSLIST PARENTESISDER COLUMNC9
+                |COLUMNC9
+                ;
+
+        COLUMNC9 ::= ON DELETE OPCIONESC COLUMNC10
+                |COLUMNC10
+                ;
+
+        COLUMNC10 ::= ON UPDATE OPCIONESC COLUMNC11
+                |COLUMNC11
+                ;
+
+        COLUMNC11 ::= NOT FOR REPLICATION
+                |
+                ;
+
+        COLUMNC12 ::= NOT FOR REPLICATION PARENTESISIZQ E3 PARENTESISDER
+                |PARENTESISIZQ E3 PARENTESISDER
+                ;
+        
+
+
+        FILESTREAMCLAUSE ::= FILESTREAM_ON STRINGA
+                        |FILESTREAM_ON DEFAULT
+                        |FILESTREAM_ON PRIMARY
+                        |FILESTREAM_ON IDENTIFICADOR
+                        |FILESTREAM_ON NULL
+                        |
+                        ;
+                
+
+        TABLEINDEX ::= INDEX OBJECT CLUSTERED PARENTESISIZQ IDENTIFICADOR ASCDESC TCONSTRAINT4 PARENTESISDER ONCLAUSE FILESTREAMCLAUSE
+                        |INDEX OBJECT NONCLUSTERED PARENTESISIZQ IDENTIFICADOR ASCDESC TCONSTRAINT4 PARENTESISDER ONCLAUSE FILESTREAMCLAUSE
+                        |INDEX OBJECT PARENTESISIZQ IDENTIFICADOR ASCDESC TCONSTRAINT4 PARENTESISDER ONCLAUSE FILESTREAMCLAUSE
+                        |INDEX OBJECT CLUSTERED COLUMNSTORE ONCLAUSE FILESTREAMCLAUSE
+                        |INDEX OBJECT NONCLUSTERED COLUMNSTORE PARENTESISIZQ COLUMNSLIST PARENTESISDER ONCLAUSE FILESTREAMCLAUSE
+                        |INDEX OBJECT COLUMNSTORE PARENTESISIZQ COLUMNSLIST PARENTESISDER ONCLAUSE FILESTREAMCLAUSE
+                        ;
+
+        OPCIONESC ::= NO ACTION 
+                        |CASCADE
+                        |SET NULL
+                        |SET DEFAULT
+                        ;
+
+
+        CINDEX1 ::= UNIQUE INDEX CINDEX7 ON OBJECT CINDEX2
+                |UNIQUE CLUSTERED INDEX CINDEX7 ON OBJECT CINDEX2
+                |UNIQUE NONCLUSTERED INDEX CINDEX7 ON OBJECT CINDEX2
+                |CLUSTERED INDEX CINDEX7 ON OBJECT CINDEX2
+                |NONCLUSTERED INDEX CINDEX7 ON OBJECT CINDEX2
+                |INDEX CINDEX7 ON OBJECT CINDEX2
+                |UNIQUE INDEX CINDEX7 ON IDENTIFICADOR PUNTOPUNTO IDENTIFICADOR CINDEX2
+                |UNIQUE CLUSTERED INDEX CINDEX7 ON IDENTIFICADOR PUNTOPUNTO IDENTIFICADOR CINDEX2
+                |UNIQUE NONCLUSTERED INDEX CINDEX7 ON IDENTIFICADOR PUNTOPUNTO IDENTIFICADOR CINDEX2
+                |CLUSTERED INDEX CINDEX7 ON IDENTIFICADOR PUNTOPUNTO IDENTIFICADOR CINDEX2
+                |NONCLUSTERED INDEX CINDEX7 ON IDENTIFICADOR PUNTOPUNTO IDENTIFICADOR CINDEX2
+                |INDEX CINDEX7 ON IDENTIFICADOR PUNTOPUNTO IDENTIFICADOR CINDEX2
+                ;
+
+        CINDEX7 ::= OBJECT
+                |STRINGA
+                ;
+
+        CINDEX2 ::= PARENTESISIZQ IDENTIFICADOR ASCDESC CINDEX3 PARENTESISDER CINDEX4
+                ;
+
+        CINDEX3 ::= COMA IDENTIFICADOR ASCDESC CINDEX3
+                |
+                ;
+
+        CINDEX4 ::= INCLUDE PARENTESISIZQ COLUMNSLIST PARENTESISDER CINDEX5
+                |CINDEX5
+                ;
+
+        CINDEX5 ::= WHERE FILTER_PREDICATE ONCLAUSE CINDEX6
+                |ONCLAUSE CINDEX6
+                ;
+
+        ONCLAUSE ::= ON OBJECT PARENTESISIZQ IDENTIFICADOR ASCDESC CINDEX3 PARENTESISDER
+                |ON OBJECT
+                |ON DEFAULT
+                |ON PRIMARY
+                |ON STRINGA
+                |ON ENTERODECIMAL
+                |ON IDENTIFICADOR PUNTOPUNTO IDENTIFICADOR PARENTESISIZQ IDENTIFICADOR ASCDESC CINDEX3 PARENTESISDER
+                |
+                ;
+
+        CINDEX6 ::= FILESTREAM_ON IDENTIFICADOR
+                |FILESTREAM_ON NULL
+                |
+                ;
+
+        FILTER_PREDICATE ::= CONJUNCT AND CONJUNCT
+                        |CONJUNCT
+                        ;
+
+        CONJUNCT ::= DISJUNCT
+                |COMPARISON
+                ;
+
+        DISJUNCT ::= IDENTIFICADOR IN PARENTESISIZQ CONST DISJUNCT2 PARENTESISDER
+                ;
+
+        DISJUNCT2 ::= COMA CONST DISJUNCT2
+                |
+                ;
+
+        COMPARISON ::= IDENTIFICADOR COMPARISON_OP CONST
+                ;
+
+        COMPARISON_OP ::= IS
+                        |IS NOT
+                        |IGUAL
+                        |MAYORMENOR
+                        |DIFERENTE
+                        |DIFIGUAL
+                        |MENORQUE
+                        |MENORIGUAL
+                        |DIFMENOR
+                        |MAYORQUE
+                        |MAYORIGUAL
+                        |DIFMAYOR
+                        ;
+
+        ASCDESC ::= ASC
+                |DESC
+                |
+                ;
+
+
+        CVIEW1 ::= PARENTESISIZQ COLUMNSLIST PARENTESISDER CVIEW2
+                |CVIEW2
+                ;
+
+        CVIEW2 ::= AS SELECT20 CVIEW3
+                ;
+
+        CVIEW3 ::= WITH CHECK OPTION
+                |
+                ;
+
+
+        CUSER1 ::= FOR LOGIN IDENTIFICADOR
+                |FOR LOGIN STRINGA
+                |FROM LOGIN IDENTIFICADOR
+                |FROM LOGIN STRINGA
+                |WITH PASSWORD IGUAL STRINGA
+                |WITHOUT LOGIN 
+                |FOR CERTIFICATE IDENTIFICADOR
+                |FROM CERTIFICATE IDENTIFICADOR
+                |FOR ASYMMETRIC KEY IDENTIFICADOR
+                |FROM ASYMMETRIC KEY IDENTIFICADOR
+                |
+                ;
+
+        CDATABASE1 ::= CONTAINMENT IGUAL NONE CDATABASE2
+                |CONTAINMENT IGUAL PARTIAL CDATABASE2
+                |CDATABASE2
+                ;
+
+        CDATABASE2 ::= ON PRIMARY CDATABASE3
+                        |ON CDATABASE3
+                        ;
+
+        CDATABASE3 ::= FILESPEC CDATABASE4 CDATABASE6 CDATABASE5
+                        |FILEGROUP1 CDATABASE4 CDATABASE5
+                        |LOG ON FILESPEC CDATABASE4  CDATABASE5
+                        |CDATABASE5
+                        ;
+
+        CDATABASE6 ::= AS SNAPSHOT OF IDENTIFICADOR
+                        |
+                        ;
+
+        CDATABASE4 ::= COMA FILESPEC CDATABASE4
+                        |COMA FILEGROUP1 CDATABASE4
+                        |COMA LOG ON FILESPEC CDATABASE4
+                        |LOG ON FILESPEC CDATABASE4
+                        |FOR ATTACH
+                        |FOR ATTACH_REBUILD_LOG
+                        |
+                        ;
+
+        CDATABASE5 ::= COLLATE IDENTIFICADOR
+                        |
+                        ;
+
+        TAM ::= KB
+                |MB
+                |GB
+                |TB
+                |
+                ;
+        FILEGROUP1 ::= FILEGROUP IDENTIFICADOR FILEGROUP2 FILESPEC
+                        ;
+
+        FILEGROUP2 ::= CONTAINS FILESTREAM DEFAULT 
+                        |CONTAINS FILESTREAM
+                        |DEFAULT
+                        |CONTAINS MEMORY_OPTIMIZED_DATA
+                        |
+                        ;
+
+        FILESPEC ::= PARENTESISIZQ NAME IGUAL FILESPEC2 COMA FILESPEC6 IGUAL STRINGA FILESPEC3 PARENTESISDER;
+
+        FILESPEC2 ::= IDENTIFICADOR
+                        |STRINGA
+                        ;
+
+        FILESPEC3 ::= COMA SIZE IGUAL ENTERODECIMAL TAM FILESPEC4
+                        |FILESPEC4
+                        ;
+
+        FILESPEC4 ::= COMA MAXSIZE IGUAL ENTERODECIMAL TAM FILESPEC5
+                |COMA MAXSIZE IGUAL ENTERODECIMAL UNLIMITED FILESPEC5
+                |FILESPEC5
+                ;
+
+        FILESPEC5 ::= COMA FILEGROWTH IGUAL ENTERODECIMAL TAM
+                |COMA FILEGROWTH IGUAL ENTERODECIMAL PORCENTAJE
+                |
+                ;
+
+        FILESPEC6 ::= FILE
+                |FILENAME
+                ;
+
+
+
+
+        GROUP_BY ::= E3 GROUP_BY2
+                |PARENTESISIZQ E3 GROUP_BY2 PARENTESISIZQ
+                ;
+
+        GROUP_BY2 ::= COMA E3 GROUP_BY2
+                        |
+                        ;
+
+        ORDER_BY ::= E3 ORDER_BY2
+                ;
+
+        ORDER_BY2 ::= COLLATE IDENTIFICADOR ORDER_BY3
+                |ORDER_BY3
+                ;
+
+        ORDER_BY3 ::= ASC ORDER_BY4
+                |DESC ORDER_BY4
+                |ORDER_BY4
+                ;
+
+        ORDER_BY4::= COMA ORDER_BY 
+                |
+                ;
+        
+
+
+        SELIST ::= MULTI SELIST4
+                |IDENTIFICADOR PUNTO MULTI SELIST4
+                |IDENTIFICADOR PUNTO SELIST2 SELIST4
+                |E3 SELIST3 SELIST4
+                |OBJECT PARENTESISIZQ ARGUMENT PARENTESISDER SELIST4
+                ;
+        
+
+
+        SELIST2 ::= DOLAR IDENTITY
+                |DOLAR ROWGUID
+                ;
+
+        SELIST3 ::= AS IDENTIFICADOR
+                |IDENTIFICADOR
+                |
+                ;
+
+        SELECT1 ::= SELECT SELECT2 
+                ;
+
+        SELECT2 ::= ALL SELECT3
+                |DISTINCT SELECT3
+                |SELECT3 
+                ;
+        
+        SELECT3 ::= TOP PARENTESISIZQ SCALAREXP PARENTESISDER SELECT4 SELECT13
+                |SELECT13
+                ;
+
+        SELIST4 ::= COMA SELIST
+                |
+                ;
+
+        SELECT13 ::= SELIST SELECT5
+                ;
+
+        SELECT4 ::= PERCENT
+                |
+                ;
+
+        SELECT5 ::= INTO OBJECT ON IDENTIFICADOR SELECT6
+                |INTO OBJECT SELECT6
+                |SELECT6
+                ;
+
+        SELECT6 ::= FROM TB_SOURCE SELECT7 SELECT8
+                |SELECT8
+                ;
+
+        SELECT7 ::= COMA TB_SOURCE SELECT7
+                |
+                ;
+
+        SELECT8 ::= WHERE SCWM SELECT9
+                |SELECT9
+                ;
+
+        SELECT9 ::= GROUP BY GROUP_BY SELECT10
+                |SELECT10
+                ;
+
+        SELECT10 ::= HAVING SCWM SELECT11
+                |SELECT11
+                ;
+
+        SELECT11 ::= ORDER BY ORDER_BY SELECT12
+                |SELECT12
+                ;
+
+        SELECT12 ::= FINAL INICIO
+                |FINAL
+                ;
+
+        SELECT20 ::= SELECT SELECT21 
+                ;
+
+        SELECT21 ::= ALL SELECT22
+                |DISTINCT SELECT22
+                |SELECT22
+                ;
+        
+        SELECT22 ::= TOP PARENTESISIZQ SCALAREXP PARENTESISDER SELECT23 SELECT33
+                |SELECT33
+                ;
+
+        SELECT33 ::= SELIST SELECT24
+                ;
+
+        SELECT23 ::= PERCENT
+                |
+                ;
+
+        SELECT24 ::= INTO OBJECT ON IDENTIFICADOR SELECT25
+                |INTO OBJECT SELECT25
+                |SELECT25
+                ;
+
+        SELECT25 ::= FROM TB_SOURCE SELECT26 SELECT27
+                |SELECT27
+                ;
+
+        SELECT26 ::= COMA TB_SOURCE SELECT26
+                |
+                ;
+
+        SELECT27 ::= WHERE SCWM SELECT28
+                |SELECT28
+                ;
+
+        SELECT28 ::= GROUP BY GROUP_BY SELECT29
+                |SELECT29
+                ;
+
+        SELECT29 ::= HAVING SCWM SELECT31
+                |SELECT31
+                ;
+
+        SELECT31 ::= ORDER BY ORDER_BY SELECT32
+                |SELECT32
+                ;
+
+        SELECT32 ::= FINAL
+                ;
+
+        DELETE1 ::= DELETE DEL2 
+                ;
+
+        DEL2 ::= TOP PARENTESISIZQ SCALAREXP PARENTESISDER DEL3 
+                |DEL4
+                ;
+        
+        DEL3 ::= PERCENT DEL4
+                |DEL4
+                ;
+
+        DEL4 ::= FROM DEL5
+                |DEL5
+                ;
+
+        DEL5 ::= OBJECT FINALQUERY
+                |ARROBA IDENTIFICADOR FINALQUERY 
+                |ROWSETF FINALQUERY
+                ;
+
+        DELETE11 ::= DELETE DEL12 
+                ;
+
+        DEL12 ::= TOP PARENTESISIZQ SCALAREXP PARENTESISDER DEL13 
+                |DEL14
+                ;
+        
+        DEL13 ::= PERCENT DEL14
+                |DEL14
+                ;
+
+        DEL14 ::= FROM DEL15
+                |DEL15
+                ;
+
+        DEL15 ::= OBJECT FINALQUERY2
+                |ARROBA IDENTIFICADOR FINALQUERY2 
+                |ROWSETF FINALQUERY2
+                ;
+
+
+        
+
+
+        NOT1 ::= NOT
+                |
+                ;
+
+        CSC1 ::= STRINGA CSC2
+                |PARENTESISIZQ CSC1 PARENTESISDER CSC2
+                |
+                ;
+
+        CSC2 ::= AND CSC3
+                |OR CSC1
+                |OPOR CSC1
+                |OPAND CSC1
+                ;
+
+        CSC3 ::= NOT CSC1
+                |CSC1
+                ;
+        
+        PREDICADO ::= E3 PRED1 
+                        |CONTAINS PARENTESISIZQ FT1 COMA CSC1 PARENTESISDER
+                        |FREETEXT PARENTESISIZQ FT1 COMA STRINGA PARENTESISDER
+                        ;
+
+        FT1 ::= IDENTIFICADOR
+                |MULTI
+                |PARENTESISIZQ COLUMNSLIST PARENTESISDER
+                ;
+
+        PRED1 ::= COMPARADORES E3
+                |IS NOT1 NULL
+                |NOT1 PRED3
+                |
+                ;
+        
+        COMPARADORES ::= DIFIGUAL
+                        |DIFMAYOR
+                        |DIFMENOR
+                        |MAYORMENOR
+                        ;
+
+        PRED3 ::= BETWEEN E3 AND E3
+                |IN PARENTESISIZQ E3 PRED2 PARENTESISDER
+                |LIKE STRINGA
+                ;
+
+        PRED2 ::= COMA E3 PRED2
+                |
+                ;
+
+
+        SCWM ::= NOT1 PREDICADO SCWM2
+                |PARENTESISIZQ SCWM PARENTESISDER SCWM2
+                ;
+
+        SCWM2 ::= AND SCWM3
+                |OR SCWM3
+                |
+                ;
+
+        SCWM3 ::= NOT SCWM4
+                |SCWM4
+                ;
+
+        SCWM4 ::= PREDICADO SCWM5
+                |PARENTESISIZQ SCWM PARENTESISDER SCWM5
+                ;
+
+        SCWM5 ::= SCWM2
+                ;
+
+
+        UPDATE1 ::= UPDATE DEFOBJETO SET UPD2 
+                ;
+
+        UPD2 ::= IDENTIFICADOR UPD3
+                |ARROBA IDENTIFICADOR UPD9
+                ;
+
+        UPD3 ::= IGUAL UPD4
+                |PUNTO UPD5
+                ;
+
+        UPD4 ::= E3 UPD8 
+                |DEFAULT UPD8
+                |NULL UPD8
+                ;
+
+        UPD5 ::= IDENTIFICADOR UPD6
+                |WRITE PARENTESISIZQ E3 COMA UPD7 COMA UPD7 PARENTESISDER UPD8
+                ;
+        
+
+
+        UPD7 ::= ENTERODECIMAL
+                |NULL
+                |ARROBA IDENTIFICADOR
+                ;
+
+        UPD9 ::= IGUAL UPD10
+                ;
+
+        UPD10 ::= E3 UPD8
+                ;
+
+        UPD8 ::= COMA UPD2
+                |FINALQUERY
+                ;
+
+        UPD6 ::= IGUAL E3 UPD8
+                | PARENTESISIZQ ARGUMENT PARENTESISDER UPD8
+                ;
+                
+        UPDATE11 ::= UPDATE DEFOBJETO SET UPD12 
+                ;
+
+        UPD12 ::= IDENTIFICADOR UPD13
+                |ARROBA IDENTIFICADOR UPD19
+                ;
+
+        UPD13 ::= IGUAL UPD14
+                |PUNTO UPD15
+                ;
+
+        UPD14 ::= E3 UPD18 
+                |DEFAULT UPD18
+                |NULL UPD18
+                ;
+
+        UPD15 ::= IDENTIFICADOR UPD16
+                |WRITE PARENTESISIZQ E3 COMA UPD17 COMA UPD17 PARENTESISDER UPD18
+                ;
+
+        UPD17 ::= ENTERODECIMAL
+                |NULL
+                |ARROBA IDENTIFICADOR
+                ;
+
+        UPD19 ::= IGUAL UPD20
+                ;
+
+        UPD20 ::= E3 UPD18
+                ;
+
+        UPD18 ::= COMA UPD12
+                |FINALQUERY2
+                ;
+                
+        UPD16 ::= IGUAL E3 UPD18
+                | PARENTESISIZQ ARGUMENT PARENTESISDER UPD18
+                ;
+
+
+        FINALQUERY2 ::= OUTPUT1 FQ4
+                        |FQ4
+                        ;
+
+        FQ4 ::= FROM TB_SOURCE FQ5
+                |FQ5
+                ;
+
+        FQ5 ::= WHERE SCWM FINAL
+                |WHERE CURRENT OF GLOBAL IDENTIFICADOR FINAL
+                |WHERE CURRENT OF IDENTIFICADOR FINAL
+                |FINAL
+                ;
+      
+
+        FINALQUERY ::= OUTPUT1 FQ2
+                        |FQ2
+                        ;
+
+        FQ2 ::= FROM TB_SOURCE FQ3
+                |FQ3
+                ;
+
+        FQ3 ::= WHERE SCWM FINAL INICIO
+                |WHERE SCWM FINAL
+                |WHERE CURRENT OF GLOBAL IDENTIFICADOR FINAL INICIO
+                |WHERE CURRENT OF GLOBAL IDENTIFICADOR FINAL
+                |WHERE CURRENT OF IDENTIFICADOR FINAL INICIO
+                |WHERE CURRENT OF IDENTIFICADOR FINAL
+                |FINAL INICIO
+                |FINAL
+                ;
+
+       
+        ARGUMENT ::= E3 ARGUMENT2
+                ;
+
+        ARGUMENT2 ::= COMA ARGUMENT
+                        | 
+                        ;
+
+        DEFOBJETO ::= TOP PARENTESISIZQ SCALAREXP PARENTESISDER DEFOBJETO1
+                |DEFOBJETO2
+                ;
+
+        DEFOBJETO1 ::= PERCENT DEFOBJETO2
+                |DEFOBJETO2
+                ;
+
+        DEFOBJETO2 ::= OBJECT
+                |ROWSETF 
+                |ARROBA IDENTIFICADOR 
+                ;
+
+
+        TB_SOURCE ::= OBJECT TB1 SAM_CL TABLE2
+		|ROWSETF TB1 TABLE2
+		|ARROBA IDENTIFICADOR TB2 TABLE2
+                |PARENTESISIZQ TB_SOURCE TABLE3 TABLE2
+                ;
+
+
+        TABLE2 ::= JOINTYPE TB_SOURCE ON SCWM TABLE2
+                |CROSS JOIN TB_SOURCE TABLE2
+                |
+                ;
+
+        TABLE3 ::= JOINTYPE TB_SOURCE ON SCWM PARENTESISDER 
+                |CROSS JOIN TB_SOURCE PARENTESISDER
+                ;
+
+        JOINTYPE ::= INNER JOIN
+                |JOIN
+                |LEFT JOINTYPE3 JOIN
+                |RIGHT JOINTYPE3 JOIN
+                |FULL JOINTYPE3 JOIN 
+                        ;
+
+        JOINTYPE3 ::= OUTER
+                        |
+                        ;
+
+        TB2 ::= AS IDENTIFICADOR
+                |IDENTIFICADOR
+                |PUNTO IDENTIFICADOR PARENTESISIZQ E3 TB3 PARENTESISDER TB4 TB5
+                ;
+
+        TB4 ::= AS IDENTIFICADOR
+                |IDENTIFICADOR
+                |
+                ;
+
+        TB5 ::= PARENTESISIZQ COLUMNSLIST PARENTESISDER
+                |
+                ;
+
+        TB3 ::= COMA E3 TB3
+                |
+                ;
+
+        TB1 ::= AS IDENTIFICADOR
+                |IDENTIFICADOR
+                |
+                ;
+
+        SAM_CL ::= TABLESAMPLE PARENTESISIZQ SCALAREXP SAM_CL3 PARENTESISDER
+                |
+                ;
+
+        SAM_CL3 ::= PERCENT
+                        |ROWS
+                        |
+                        ;
+
+        
+
+        //HASTA AQUI FUNCIONA
+
+
+
+        OUTPUT1 ::= OUTPUT DML_SELECT_LIST OUTPUT4 
+            ;
+
+        OUTPUT4 ::= INTO OUTPUT2 OUTPUT3 
+                |
+                ;
+                
+        OUTPUT2 ::= ARROBA IDENTIFICADOR
+                |IDENTIFICADOR
+                ;
+
+        OUTPUT3 ::= PARENTESISIZQ COLUMNSLIST PARENTESISDER
+                |
+                ;
+
+        DML_SELECT_LIST ::= COLUMN_NAME DML_SELECT_LIST3 DML_SELECT_LIST2
+                        |SCALAREXP DML_SELECT_LIST3 DML_SELECT_LIST2
+                        |IDENTIFICADOR PUNTO MULTI DML_SELECT_LIST3  DML_SELECT_LIST2
+                        ;
+
+        DML_SELECT_LIST3 ::= AS IDENTIFICADOR
+                                |
+                                ;
+                        
+
+        DML_SELECT_LIST2 ::= COMA DML_SELECT_LIST
+                        |
+                        ;
+
+        COLUMN_NAME ::= DELETED PUNTO COLUMN_NAME2
+                        |INSERTED PUNTO COLUMN_NAME2
+                        
+                        ;
+        
+        COLUMN_NAME2 ::= MULTI 
+                        |IDENTIFICADOR
+                        ;
+
+        EXECUTE1 ::= EXECUTE2 EXECUTE3 PUNTOCOMA
+                ;
+
+        EXECUTE2 ::= EXEC
+                |EXECUTE
+                |
+                ;
+
+        EXECUTE3 ::= ARROBA IDENTIFICADOR EXECUTE4
+                |EXECUTE11
+                ;
+
+        EXECUTE4 ::= IGUAL EXECUTE5
+                        |EXECUTE6
+                        ;
+                        
+        EXECUTE11 ::= OBJECT PUNTOCOMA ENTERODECIMAL EXECUTE6
+                |OBJECT EXECUTE6
+                ;
+        
+        EXECUTE5 ::= OBJECT PUNTOCOMA ENTERODECIMAL EXECUTE6
+                |OBJECT EXECUTE6
+                | ARROBA IDENTIFICADOR EXECUTE6
+                ;
+
+        EXECUTE6 ::= ARROBA IDENTIFICADOR EXECUTE7
+                |EXECUTE10
+                ;
+
+        EXECUTE7 ::= IGUAL EXECUTE8
+                |OUTPUT EXECUTE9
+                |EXECUTE9
+                ;
+
+        EXECUTE8 ::= ENTERODECIMAL EXECUTE9
+                |DOUBLENUM EXECUTE9
+                |STRINGA EXECUTE9
+                |IDENTIFICADOR EXECUTE9
+                |DEFAULT EXECUTE9
+                |ARROBA IDENTIFICADOR OUTPUT EXECUTE9
+                |ARROBA IDENTIFICADOR EXECUTE9
+                ;
+
+        EXECUTE10 ::= ENTERODECIMAL EXECUTE9
+                |DOUBLENUM EXECUTE9
+                |STRINGA EXECUTE9
+                |IDENTIFICADOR EXECUTE9
+                |DEFAULT EXECUTE9
+                |
+                ;
+
+
+        EXECUTE9 ::= COMA EXECUTE6
+                |
+                ;
+
+
+        E3 ::= T3 E4 
+                ;
+
+        E4 ::= SUMA T3 E4 
+                |RESTA T3 E4 
+                |
+                ;
+
+        T3 ::= F3 T4
+                ;
+
+        T4 ::= MULTI F3 T4 
+                |DIV F3 T4
+                |
+                ;
+
+        F3 ::= G F4
+                ;
+
+        F4 ::= MENORQUE G F4
+                |MAYORQUE G F4
+                |MAYORIGUAL G F4
+                |MENORIGUAL G F4
+                |DIFERENTE G F4
+                |IGUAL G F4
+                |PORCENTAJE G F4
+                |
+                ;
+
+        G ::= PARENTESISIZQ E3 PARENTESISDER
+                |EXPIZADA
+                ;
+
+        EXPIZADA ::= OBJECT
+                |CONST 
+                |FUNC
+                |NULLIF PARENTESISIZQ SCALAREXP COMA SCALAREXP PARENTESISDER
+                |SUBSTRING PARENTESISIZQ SUB1 COMA SCALAREXP COMA SCALAREXP PARENTESISDER
+                |TRANSLATE PARENTESISIZQ SUB1 COMA SUB1 COMA SUB1 PARENTESISDER
+                |LOWER PARENTESISIZQ SUB1 PARENTESISDER
+                |UPPER PARENTESISIZQ SUB1 PARENTESISDER
+                |TRIM PARENTESISIZQ SUB1 SUB2 PARENTESISDER
+                |ARROBA IDENTIFICADOR
+                ;
+
+        SUB2 ::= FROM SUB1
+                |
+                ;
+
+        SUB1 ::= ARROBA IDENTIFICADOR
+                |STRINGA
+                |IDENTIFICADOR
+                ;
+
+        CONST ::= NULL
+                |ENTERODECIMAL
+                |RESTA ENTERODECIMAL
+                |DOUBLENUM
+                |RESTA DOUBLENUM
+                |STRINGA
+                ;
+
+        FUNC ::= AVG PARENTESISIZQ  FUNC2 PARENTESISDER
+                |COUNT PARENTESISIZQ FUNC4 FUNC3 PARENTESISDER
+                |MAX PARENTESISIZQ FUNC2 PARENTESISDER
+                |MIN PARENTESISIZQ FUNC2 PARENTESISDER
+                |SUM PARENTESISIZQ FUNC2 PARENTESISDER
+                ;
+
+        FUNC2 ::= ALL E3 
+                |DISTINCT E3  
+                |E3
+                ;
+
+        FUNC3 ::= MULTI
+                |E3
+                ;
+        FUNC4 ::= ALL 
+                |DISTINCT
+                |
+                ;
+
+
+        SCALAREXP::= T E1 
+                ;
+
+        E1 ::= SUMA T E1
+                |RESTA T E1
+                |
+                ;
+
+        T ::= F T1 
+        ;
+
+        T1 ::= MULTI F T1 
+                |DIV F T1
+                |
+                ;
+
+        F ::= PARENTESISIZQ SCALAREXP PARENTESISDER
+                |ENTERODECIMAL
+                |DOUBLENUM
+                |ARROBA IDENTIFICADOR
+                |OBJECT
+                ;
+
+
+        INSERT1 ::= INSERT INSERT2 FINAL INICIO
+                |INSERT INSERT2 FINAL
+                        ;
+
+        INSERT2 ::= TOP PARENTESISIZQ SCALAREXP PARENTESISDER INSERT3
+                        |INSERT4
+                        ;
+
+        INSERT3 ::= PERCENT     
+                        |INSERT4
+                        ;
+
+        INSERT4 ::= INTO INSERT5
+                        |INSERT5
+                        ;
+
+        INSERT5 ::= OBJECT INSERT6
+                        |ROWSETF INSERT6
+                        | ARROBA IDENTIFICADOR INSERT6
+                        ;
+
+
+        INSERT6 ::=  PARENTESISIZQ COLUMNSLIST PARENTESISDER INSERT7
+                        |INSERT7
+                        ;
+
+        INSERT7 ::= OUTPUT1 INSERT8
+                        |INSERT8
+                        ;
+        INSERT8 ::= VALUES PARENTESISIZQ INSERT9 PARENTESISDER INSERT12
+                        |DEFAULT VALUES
+                        |EXECUTE1
+                        ;
+
+        INSERT9 ::= DEFAULT INSERT10
+                        |E3 INSERT10
+                        ;
+
+        INSERT10 ::= COMA INSERT9
+                | 
+                ;
+
+        INSERT12 ::= COMA PARENTESISIZQ INSERT9 PARENTESISDER INSERT12
+                        |
+                        ;
+
+        COLUMNSLIST ::= IDENTIFICADOR COLUMNSLIST2
+                        ;
+
+        COLUMNSLIST2 ::= COMA IDENTIFICADOR COLUMNSLIST2
+                        |
+                        ;
+
+
+        ROWSETF ::= OPENROWSET OPROW2 
+                |OPENQUERY OPQUER2
+                ;
+
+
+        OPROW2 ::= PARENTESISIZQ STRINGA COMA OPROW3
+                        ;
+
+        OPROW3 ::= STRINGA OPROW4
+                        ;
+
+        OPROW4 ::= PUNTOCOMA STRINGA PUNTOCOMA STRINGA OPROW5
+                |OPROW5
+                ;
+
+        OPROW5 ::= COMA OPROW6
+                        ;
+
+        OPROW6 ::= OBJECT PARENTESISDER 
+                |STRINGA PARENTESISDER
+                ;
+
+        OPQUER2 ::= PARENTESISIZQ IDENTIFICADOR COMA STRINGA PARENTESISDER
+                        ;
+
+        BEGIN1::= BEGIN BEGINTRAN1
+                |BEGIN SQLSTATEMENT END FINAL INICIO
+                |BEGIN SQLSTATEMENT END FINAL
+                ;
+
+        BEGINTRAN1::= TRAN2 IDVAR WITH2 FINAL INICIO
+                    |TRAN2 IDVAR WITH2 FINAL
+                    ;
+
+        WITH2::= WITH MARK DESC1
+                |
+                ;
+
+        DESC1::= STRINGA
+                |
+                ;
+
+        SAVE1::= SAVE TRAN2 IDVAR2 FINAL INICIO
+                |SAVE TRAN2 IDVAR2 FINAL
+                ;
+
+        ROLLBACK1::= ROLLBACK TRAN2 IDVAR FINAL INICIO
+                    |ROLLBACK TRAN2 IDVAR FINAL 
+                    ;
+
+        TRAN2::= TRAN
+                |TRANSACTION
+                ;
+
+        COMMIT1::= COMMIT TRAN1 WITH1 FINAL INICIO
+                    |COMMIT TRAN1 WITH1 FINAL
+                    ;
+
+        TRAN1 ::= TRAN IDVAR
+                |TRANSACTION IDVAR
+                |
+                ;
+
+        IDVAR::= IDENTIFICADOR
+                |ARROBA IDENTIFICADOR
+                |
+                ;
+
+        IDVAR2::= IDENTIFICADOR
+                |ARROBA IDENTIFICADOR
+                ;
+        
+        WITH1::= WITH PARENTESISIZQ DELAYED_DURABILITY IGUAL OFF PARENTESISDER
+                |WITH PARENTESISIZQ DELAYED_DURABILITY IGUAL ON PARENTESISDER
+                |
+                ;
+
+
+        DROP1::= DROPT
+                |DROPD
+                |DROPV
+                |DROPU
+                |DROPI
+                |DROPPROC
+                |DROPFUNC
+                ;
+
+        DROPFUNC ::= FUNCTION DROPPROC3 OBJECT DROPPROC4 FINAL INICIO
+                |FUNCTION DROPPROC3 OBJECT DROPPROC4 FINAL
+                ;
+
+        DROPPROC ::= DROPPROC2 DROPPROC3 OBJECT DROPPROC4 FINAL INICIO
+                |DROPPROC2 DROPPROC3 OBJECT DROPPROC4 FINAL
+                ;
+
+        DROPPROC2 ::= PROC
+                |PROCEDURE
+                ;
+
+        DROPPROC3 ::= IF EXISTS
+                |
+                ;
+
+        DROPPROC4 ::= COMA OBJECT DROPPROC4
+                |
+                ;
+    
+
+        DROPI ::= INDEX IF EXISTS DROPI2 FINAL INICIO
+                |INDEX IF EXISTS DROPI2 FINAL
+                |INDEX DROPI2 FINAL INICIO
+                |INDEX DROPI2 FINAL
+                ;
+
+        DROPI2 ::= OBJECT ON OBJECT DROPI3
+                |OBJECT DROPI3
+                ;
+
+        DROPI3 ::= COMA OBJECT ON OBJECT DROPI3
+                |COMA OBJECT
+                |
+                ;
+
+        DROPD::= DATABASE EXISTS1 IDENTIFICADOR COMA2 FINAL INICIO
+                |DATABASE EXISTS1 IDENTIFICADOR COMA2 FINAL
+                ;
+
+        DROPU::= USER EXISTS1 IDENTIFICADOR FINAL INICIO
+                |USER EXISTS1 IDENTIFICADOR FINAL
+                ;
+
+        DROPV::= VIEW EXISTS1 OBJECT2 COMA3 FINAL INICIO
+                |VIEW EXISTS1 OBJECT2 COMA3 FINAL
+                ;
+
+        COMA3::= COMA OBJECT2 COMA3
+                |
+                ;
+
+        OBJECT2::= IDENTIFICADOR PUNTO IDENTIFICADOR
+                    |IDENTIFICADOR  
+                    ;      
+
+        DROPT::= TABLE EXISTS1 OBJECT COMA1 FINAL INICIO
+                |TABLE EXISTS1 OBJECT COMA1 FINAL
+                ;
+
+        COMA2::= COMA IDENTIFICADOR COMA2
+                |
+                ; 
+        EXISTS1::= IF EXISTS
+                    | 
+                    ;
+        COMA1::= COMA OBJECT COMA1
+                |
+                ;
+
+        TRUNCATE1 ::= TRUNCATE TABLE OBJECT FINAL INICIO
+                       |TRUNCATE TABLE OBJECT FINAL
+                      ;
+                    
+
+        OBJECT ::= IDENTIFICADOR 
+                   |IDENTIFICADOR PUNTO IDENTIFICADOR
+                   |IDENTIFICADOR PUNTO IDENTIFICADOR PUNTO IDENTIFICADOR
+                   ;
+        FINAL ::= PUNTOCOMA
+                |GO
+                ;
+       
+

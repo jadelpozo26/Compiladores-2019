@@ -375,537 +375,537 @@ Entero = 0 | [1-9][0-9]*
 	("--"[^\n]*)   { /* ignora el espacio */ } 	
 					  
 	//TOKEN DE PALABRAS RESERVADAS
-    {TABLE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {TABLE} {  
                       return symbol(sym.TABLE,  (yytext())); }
-    {TRUNCATE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {TRUNCATE} {
                       return symbol(sym.TRUNCATE,  (yytext())); }
     {ENTER} {}
     {WHITE} {}
-    {DROP} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DROP} {   
                       return symbol(sym.DROP,  (yytext())); }
-	{IF} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+	{IF} {  
                       return symbol(sym.IF,  (yytext())); }
-	{EXISTS} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+	{EXISTS} {  
                       return symbol(sym.EXISTS,  (yytext())); }	
-    {DATABASE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DATABASE} {  
                       return symbol(sym.DATABASE,  (yytext())); }				  
-	{USER} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+	{USER} {  
                       return symbol(sym.USER,  (yytext())); }
-    {VIEW} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {VIEW} {  
                       return symbol(sym.VIEW,  (yytext())); }
-    {COMMIT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {COMMIT} {  
                       return symbol(sym.COMMIT,  (yytext())); }
-    {TRAN} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {TRAN} {  
                       return symbol(sym.TRAN,  (yytext())); }
-    {TRANSACTION} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {TRANSACTION} {  
                       return symbol(sym.TRANSACTION,  (yytext())); }
-    {WITH} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {WITH} {  
                       return symbol(sym.WITH,  (yytext())); }
-    {DELAYED_DURABILITY} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DELAYED_DURABILITY} {  
                       return symbol(sym.DELAYED_DURABILITY,  (yytext())); }
-    {OFF} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {OFF} {  
                       return symbol(sym.OFF,  (yytext())); }
-    {ON} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ON} {  
                       return symbol(sym.ON,  (yytext())); }
-    {ROLLBACK} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ROLLBACK} {  
                       return symbol(sym.ROLLBACK,  (yytext())); }
-    {SAVE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {SAVE} {  
                       return symbol(sym.SAVE,  (yytext())); }
-    {BEGIN} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {BEGIN} {  
                       return symbol(sym.BEGIN,  (yytext())); }
-    {MARK} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {MARK} {  
                       return symbol(sym.MARK,  (yytext())); }
-    {INSERT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {INSERT} {  
                       return symbol(sym.INSERT,  (yytext())); }
-    {TOP}  {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {TOP}  {  
                       return symbol(sym.TOP,  (yytext())); }
-    {PERCENT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {PERCENT} {  
                       return symbol(sym.PERCENT,  (yytext())); }
-    {OPENQUERY} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {OPENQUERY} {  
                       return symbol(sym.OPENQUERY,  (yytext())); }
-    {OPENROWSET} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {OPENROWSET} {  
                       return symbol(sym.OPENROWSET,  (yytext())); }
-    {VALUES} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {VALUES} {  
                       return symbol(sym.VALUES,  (yytext())); }
-    {DEFAULT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DEFAULT} {  
                       return symbol(sym.DEFAULT,  (yytext())); }
-    {NULL} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {NULL} {  
                       return symbol(sym.NULL,  (yytext())); }
-    {OUTPUT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {OUTPUT} {  
                       return symbol(sym.OUTPUT,  (yytext())); }	
-    {INTO} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {INTO} {  
                       return symbol(sym.INTO,  (yytext())); }	
 
-    {EXEC} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {EXEC} {  
                       return symbol(sym.EXEC,  (yytext())); }
 
-    {EXECUTE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {EXECUTE} {  
                         return symbol(sym.EXECUTE,  (yytext())); }
-    {AVG} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {AVG} {  
                         return symbol(sym.AVG,  (yytext())); }
-    {COUNT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {COUNT} {  
                         return symbol(sym.COUNT,  (yytext())); }
-    {MAX} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {MAX} {  
                         return symbol(sym.MAX,  (yytext())); }
-    {MIN} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {MIN} {  
                         return symbol(sym.MIN,  (yytext())); }
-    {SUM} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {SUM} {  
                         return symbol(sym.SUM,  (yytext())); }
-    {ALL} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ALL} {  
                         return symbol(sym.ALL,  (yytext())); }
-    {DISTINCT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DISTINCT} {  
                         return symbol(sym.DISTINCT,  (yytext())); }
-    {DELETED} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DELETED} {  
                         return symbol(sym.DELETED,  (yytext())); }
-    {INSERTED} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {INSERTED} {  
                         return symbol(sym.INSERTED,  (yytext())); }	
-    {ENTERODECIMAL} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ENTERODECIMAL} {  
                       return symbol(sym.ENTERODECIMAL,  (yytext())); }
-    {DOUBLENUM} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DOUBLENUM} {  
                       return symbol(sym.DOUBLENUM,  (yytext())); }	 
-    {NULL} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {NULL} {  
                       return symbol(sym.NULL,  (yytext())); }	
-    {AS} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {AS} {  
                       return symbol(sym.AS,  (yytext())); }
-    {NOT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {NOT} {  
                       return symbol(sym.NOT,  (yytext())); } 
-    {AND} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {AND} {  
                       return symbol(sym.AND,  (yytext())); }
-    {OR} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {OR} {  
                       return symbol(sym.OR,  (yytext())); }
-    {LIKE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {LIKE} {  
                       return symbol(sym.LIKE,  (yytext())); }
-	{CONTAINS} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+	{CONTAINS} {  
                       return symbol(sym.CONTAINS,  (yytext())); }
-    {FREETEXT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {FREETEXT} {  
                       return symbol(sym.FREETEXT,  (yytext())); }
-    {IS} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {IS} {  
                       return symbol(sym.IS,  (yytext())); }
-    {BETWEEN} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {BETWEEN} {  
                       return symbol(sym.BETWEEN,  (yytext())); }
-    {IN} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {IN} {  
                       return symbol(sym.IN,  (yytext())); }
-    {UPDATE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {UPDATE} {  
                       return symbol(sym.UPDATE,  (yytext())); }
-    {SET} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {SET} {  
                       return symbol(sym.SET,  (yytext())); }
-    {WRITE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {WRITE} {  
                       return symbol(sym.WRITE,  (yytext())); }
-    {WHERE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {WHERE} {  
                       return symbol(sym.WHERE,  (yytext())); }
-    {UNPIVOT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {UNPIVOT} {  
                       return symbol(sym.UNPIVOT,  (yytext())); }
-    {FOR} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {FOR} {  
                       return symbol(sym.FOR,  (yytext())); }
-    {PIVOT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {PIVOT} {  
                       return symbol(sym.PIVOT,  (yytext())); }
-    {TABLESAMPLE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {TABLESAMPLE} {  
                       return symbol(sym.TABLESAMPLE,  (yytext())); }
-    {ROWS} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ROWS} {  
                       return symbol(sym.ROWS,  (yytext())); }
-    {CROSS} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {CROSS} {  
                       return symbol(sym.CROSS,  (yytext())); }
-    {JOIN} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {JOIN} {  
                       return symbol(sym.JOIN,  (yytext())); }
-    {LEFT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {LEFT} {  
                       return symbol(sym.LEFT,  (yytext())); }
-    {RIGHT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {RIGHT} {  
                       return symbol(sym.RIGHT,  (yytext())); }
-    {FULL} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {FULL} {  
                       return symbol(sym.FULL,  (yytext())); }
-    {OUTER} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {OUTER} {  
                       return symbol(sym.OUTER,  (yytext())); }
-    {FROM} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {FROM} {  
                       return symbol(sym.FROM,  (yytext())); }
-    {CURRENT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {CURRENT} {  
                       return symbol(sym.CURRENT,  (yytext())); }
-    {OF} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {OF} {  
                       return symbol(sym.OF,  (yytext())); }
-    {GLOBAL} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {GLOBAL} {  
                       return symbol(sym.GLOBAL,  (yytext())); }
-    {DELETE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DELETE} {  
                       return symbol(sym.DELETE,  (yytext())); }
-    {INNER} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {INNER} {  
                       return symbol(sym.INNER,  (yytext())); }
-    {ORDER} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ORDER} {  
                       return symbol(sym.ORDER,  (yytext())); }
-    {BY} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {BY} {  
                       return symbol(sym.BY,  (yytext())); }
-    {HAVING} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {HAVING} {  
                       return symbol(sym.HAVING,  (yytext())); }
-    {IDENTITY} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {IDENTITY} {  
                       return symbol(sym.IDENTITY,  (yytext())); }
-    {ROWGUID} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ROWGUID} {  
                       return symbol(sym.ROWGUID,  (yytext())); }
-    {ASC} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ASC} {  
                       return symbol(sym.ASC,  (yytext())); }
-    {DESC} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DESC} {  
                       return symbol(sym.DESC,  (yytext())); }
-    {COLLATE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {COLLATE} {  
                       return symbol(sym.COLLATE,  (yytext())); }
-    {SELECT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {SELECT} {  
                       return symbol(sym.SELECT,  (yytext())); }
-    {GROUP} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {GROUP} {  
                       return symbol(sym.GROUP,  (yytext())); }
-    {CREATE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {CREATE} {  
                       return symbol(sym.CREATE,  (yytext())); }
-    {CONTAINMENT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {CONTAINMENT} {  
                       return symbol(sym.CONTAINMENT,  (yytext())); } 
-    {NONE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {NONE} {  
                       return symbol(sym.NONE,  (yytext())); }
-    {PARTIAL} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {PARTIAL} {  
                       return symbol(sym.PARTIAL,  (yytext())); }
-    {PRIMARY} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {PRIMARY} {  
                       return symbol(sym.PRIMARY,  (yytext())); }
-    {LOG} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {LOG} {  
                       return symbol(sym.LOG,  (yytext())); }
-    {FILEGROUP} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {FILEGROUP} {  
                       return symbol(sym.FILEGROUP,  (yytext())); }
-    {FILESTREAM} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {FILESTREAM} {  
                       return symbol(sym.FILESTREAM,  (yytext())); }
-    {MEMORY_OPTIMIZED_DATA} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {MEMORY_OPTIMIZED_DATA} {  
                       return symbol(sym.MEMORY_OPTIMIZED_DATA,  (yytext())); }
-    {NAME} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {NAME} {  
                       return symbol(sym.NAME,  (yytext())); }
-    {FILENAME} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {FILENAME} {  
                       return symbol(sym.FILENAME,  (yytext())); }
-    {SIZE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {SIZE} {  
                       return symbol(sym.SIZE,  (yytext())); }
-    {MAXSIZE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {MAXSIZE} {  
                       return symbol(sym.MAXSIZE,  (yytext())); }
-    {UNLIMITED} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {UNLIMITED} {  
                       return symbol(sym.UNLIMITED,  (yytext())); }
-    {FILEGROWTH} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {FILEGROWTH} {  
                       return symbol(sym.FILEGROWTH,  (yytext())); }
-    {KB} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {KB} {  
                       return symbol(sym.KB,  (yytext())); }
-    {MB} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {MB} {  
                       return symbol(sym.MB,  (yytext())); }
-    {GB} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {GB} {  
                       return symbol(sym.GB,  (yytext())); }
-    {TB} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {TB} {  
                       return symbol(sym.TB,  (yytext())); }
-    {SNAPSHOT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {SNAPSHOT} {  
                       return symbol(sym.SNAPSHOT,  (yytext())); }
-    {ATTACH} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ATTACH} {  
                       return symbol(sym.ATTACH,  (yytext())); }
-    {ATTACH_REBUILD_LOG} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ATTACH_REBUILD_LOG} {  
                       return symbol(sym.ATTACH_REBUILD_LOG,  (yytext())); }
-    {SNAPSHOT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {SNAPSHOT} {  
                       return symbol(sym.SNAPSHOT,  (yytext())); }
-    {ATTACH} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ATTACH} {  
                       return symbol(sym.ATTACH,  (yytext())); }
-    {ATTACH_REBUILD_LOG} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ATTACH_REBUILD_LOG} {  
                       return symbol(sym.ATTACH_REBUILD_LOG,  (yytext())); }
-    {LOGIN} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {LOGIN} {  
                       return symbol(sym.LOGIN,  (yytext())); }
-    {PASSWORD} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {PASSWORD} {  
                       return symbol(sym.PASSWORD,  (yytext())); }
-    {WITHOUT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {WITHOUT} {  
                       return symbol(sym.WITHOUT,  (yytext())); }
-    {CERTIFICATE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {CERTIFICATE} {  
                       return symbol(sym.CERTIFICATE,  (yytext())); }
-    {ASYMMETRIC} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ASYMMETRIC} {  
                       return symbol(sym.ASYMMETRIC,  (yytext())); }
-    {KEY} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {KEY} {  
                       return symbol(sym.KEY,  (yytext())); }
-    {CHECK} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {CHECK} {  
                       return symbol(sym.CHECK,  (yytext())); }
-    {OPTION} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {OPTION} {  
                       return symbol(sym.OPTION,  (yytext())); }
-    {GO} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {GO} {  
                       return symbol(sym.GO,  (yytext())); }
-    {UNIQUE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {UNIQUE} {  
                       return symbol(sym.UNIQUE,  (yytext())); }
-    {CLUSTERED} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {CLUSTERED} {  
                       return symbol(sym.CLUSTERED,  (yytext())); }
-    {NONCLUSTERED} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {NONCLUSTERED} {  
                       return symbol(sym.NONCLUSTERED,  (yytext())); }
-    {INCLUDE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {INCLUDE} {  
                       return symbol(sym.INCLUDE,  (yytext())); }
-    {FILESTREAM_ON} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {FILESTREAM_ON} {  
                       return symbol(sym.FILESTREAM_ON,  (yytext())); }
-    {INDEX} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {INDEX} {  
                       return symbol(sym.INDEX,  (yytext())); }
-    {TO} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {TO} {  
                       return symbol(sym.TO,  (yytext())); }
-    {MODIFY} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {MODIFY} {  
                       return symbol(sym.MODIFY,  (yytext())); }
-    {ADD} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ADD} {  
                       return symbol(sym.ADD,  (yytext())); }
-    {FILE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {FILE} {  
                       return symbol(sym.FILE,  (yytext())); }
-    {REMOVE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {REMOVE} {  
                       return symbol(sym.REMOVE,  (yytext())); }
-    {ALTER} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ALTER} {  
                       return symbol(sym.ALTER,  (yytext())); }
-    {DEFAULT_LANGUAGE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DEFAULT_LANGUAGE} {  
                       return symbol(sym.DEFAULT_LANGUAGE,  (yytext())); }
-    {DEFAULT_SCHEMA} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DEFAULT_SCHEMA} {  
                       return symbol(sym.DEFAULT_SCHEMA,  (yytext())); }
-    {ALLOW_ENCRYPTED_VALUE_MODIFICATIONS} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ALLOW_ENCRYPTED_VALUE_MODIFICATIONS} {  
                       return symbol(sym.ALLOW_ENCRYPTED_VALUE_MODIFICATIONS,  (yytext())); }
-    {OLD_PASSWORD} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {OLD_PASSWORD} {  
                       return symbol(sym.OLD_PASSWORD,  (yytext())); }
-    {REBUILD} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {REBUILD} {  
                       return symbol(sym.REBUILD,  (yytext())); }
-    {DISABLE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DISABLE} {  
                       return symbol(sym.DISABLE,  (yytext())); }
-    {REORGANIZE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {REORGANIZE} {  
                       return symbol(sym.REORGANIZE,  (yytext())); }
-    {RESUME} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {RESUME} {  
                       return symbol(sym.RESUME,  (yytext())); }
-    {PAUSE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {PAUSE} {  
                       return symbol(sym.PAUSE,  (yytext())); }
-    {ABORT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ABORT} {  
                       return symbol(sym.ABORT,  (yytext())); }
-    {ALLOW_ROW_LOCKS} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ALLOW_ROW_LOCKS} {  
                       return symbol(sym.ALLOW_ROW_LOCKS,  (yytext())); }
-    {ALLOW_PAGE_LOCKS} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ALLOW_PAGE_LOCKS} {  
                       return symbol(sym.ALLOW_PAGE_LOCKS,  (yytext())); }
-    {OPTIMIZE_FOR_SEQUENTIAL_KEY} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {OPTIMIZE_FOR_SEQUENTIAL_KEY} {  
                       return symbol(sym.OPTIMIZE_FOR_SEQUENTIAL_KEY,  (yytext())); }
-    {IGNORE_DUP_KEY} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {IGNORE_DUP_KEY} {  
                       return symbol(sym.IGNORE_DUP_KEY,  (yytext())); }
-    {STATISTICS_NORECOMPUTE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {STATISTICS_NORECOMPUTE} {  
                       return symbol(sym.STATISTICS_NORECOMPUTE,  (yytext())); }
-    {PARTITION} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {PARTITION} {  
                       return symbol(sym.PARTITION,  (yytext())); }
-    {TEXTIMAGE_ON} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {TEXTIMAGE_ON} {  
                       return symbol(sym.TEXTIMAGE_ON,  (yytext())); }
-    {COLUMNSTORE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {COLUMNSTORE} {  
                       return symbol(sym.COLUMNSTORE,  (yytext())); }
-    {FILLFACTOR} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {FILLFACTOR} {  
                       return symbol(sym.FILLFACTOR,  (yytext())); }
-    {FOREIGN} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {FOREIGN} {  
                       return symbol(sym.FOREIGN,  (yytext())); }
-    {REFERENCES} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {REFERENCES} {  
                       return symbol(sym.REFERENCES,  (yytext())); }
-    {REPLICATION} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {REPLICATION} {  
                       return symbol(sym.REPLICATION,  (yytext())); }
-    {PERSISTED} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {PERSISTED} {  
                       return symbol(sym.PERSISTED,  (yytext())); }
-    {SPARSE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {SPARSE} {  
                       return symbol(sym.SPARSE,  (yytext())); }
-    {MASKED} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {MASKED} {  
                       return symbol(sym.MASKED,  (yytext())); }
-    {FUNCTION} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {FUNCTION} {  
                       return symbol(sym.FUNCTION,  (yytext())); }
-    {CONSTRAINT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {CONSTRAINT} {  
                       return symbol(sym.CONSTRAINT,  (yytext())); }
-    {GENERATED} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {GENERATED} {  
                       return symbol(sym.GENERATED,  (yytext())); }
-    {ALWAYS} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ALWAYS} {  
                       return symbol(sym.ALWAYS,  (yytext())); }
-    {ROW} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ROW} {  
                       return symbol(sym.ROW,  (yytext())); }
-    {START} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {START} {  
                       return symbol(sym.START,  (yytext())); }
-    {END} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {END} {  
                       return symbol(sym.END,  (yytext())); }
-    {HIDDEN} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {HIDDEN} {  
                       return symbol(sym.HIDDEN,  (yytext())); }
-    {ROWGUIDCOL} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ROWGUIDCOL} {  
                       return symbol(sym.ROWGUIDCOL,  (yytext())); }
-    {ACTION} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ACTION} {  
                       return symbol(sym.ACTION,  (yytext())); }
-    {CASCADE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {CASCADE} {  
                       return symbol(sym.CASCADE,  (yytext())); }
-    {BIT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {BIT} {  
                       return symbol(sym.BIT,  (yytext())); }
-    {INT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {INT} {  
                       return symbol(sym.INT,  (yytext())); }
-    {INTEGER} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {INTEGER} {  
                       return symbol(sym.INTEGER,  (yytext())); }
-    {FLOAT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {FLOAT} {  
                       return symbol(sym.FLOAT,  (yytext())); }
-    {VARCHAR} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {VARCHAR} {  
                       return symbol(sym.VARCHAR,  (yytext())); }
-    {DATE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DATE} {  
                       return symbol(sym.DATE,  (yytext())); }
-    {REAL} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {REAL} {  
                       return symbol(sym.REAL,  (yytext())); }
-    {DECIMAL} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DECIMAL} {  
                       return symbol(sym.DECIMAL,  (yytext())); }
-    {NUMERIC} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {NUMERIC} {  
                       return symbol(sym.NUMERIC,  (yytext())); }
-    {SMALLINT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {SMALLINT} {  
                       return symbol(sym.SMALLINT,  (yytext())); }
-    {TIME} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {TIME} {  
                       return symbol(sym.TIME,  (yytext())); }
-    {CHAR} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {CHAR} {  
                       return symbol(sym.CHAR,  (yytext())); }
-    {NCHAR} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {NCHAR} {  
                       return symbol(sym.NCHAR,  (yytext())); }
-    {NO} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {NO} {  
                       return symbol(sym.NO,  (yytext())); }
-    {COLUMN} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {COLUMN} {  
                       return symbol(sym.COLUMN,  (yytext())); }
-    {NOCHECK} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {NOCHECK} {  
                       return symbol(sym.NOCHECK,  (yytext())); }
-    {PROC} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {PROC} {  
                       return symbol(sym.PROC,  (yytext())); }
-    {PROCEDURE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {PROCEDURE} {  
                       return symbol(sym.PROCEDURE,  (yytext())); }
-    {ENCRYPTION} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {ENCRYPTION} {  
                       return symbol(sym.ENCRYPTION,  (yytext())); }
-    {RECOMPILE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {RECOMPILE} {  
                       return symbol(sym.RECOMPILE,  (yytext())); }
-    {CALLER} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {CALLER} {  
                       return symbol(sym.CALLER,  (yytext())); }
-    {SELF} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {SELF} {  
                       return symbol(sym.SELF,  (yytext())); }
-    {OWNER} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {OWNER} {  
                       return symbol(sym.OWNER,  (yytext())); }
-    {VARYING} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {VARYING} {  
                       return symbol(sym.VARYING,  (yytext())); }
-    {OUT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {OUT} {  
                       return symbol(sym.OUT,  (yytext())); }
-    {READONLY} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {READONLY} {  
                       return symbol(sym.READONLY,  (yytext())); }
-    {CURSOR} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {CURSOR} {  
                       return symbol(sym.CURSOR,  (yytext())); }
-    {DECLARE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DECLARE} {  
                       return symbol(sym.DECLARE,  (yytext())); }
-    {INSENSITIVE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {INSENSITIVE} {  
                       return symbol(sym.INSENSITIVE,  (yytext())); }
-    {SCROLL} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {SCROLL} {  
                       return symbol(sym.SCROLL,  (yytext())); }
-    {OPEN} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {OPEN} {  
                       return symbol(sym.OPEN,  (yytext())); }
-    {FETCH} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {FETCH} {  
                       return symbol(sym.FETCH,  (yytext())); }
-    {NEXT} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {NEXT} {  
                       return symbol(sym.NEXT,  (yytext())); }
-    {CLOSE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {CLOSE} {  
                       return symbol(sym.CLOSE,  (yytext())); }
-    {LOCAL} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {LOCAL} {  
                       return symbol(sym.LOCAL,  (yytext())); }
-    {FORWARD_ONLY} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {FORWARD_ONLY} {  
                       return symbol(sym.FORWARD_ONLY,  (yytext())); }
-    {STATIC} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {STATIC} {  
                       return symbol(sym.STATIC,  (yytext())); }
-    {KEYSET} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {KEYSET} {  
                       return symbol(sym.KEYSET,  (yytext())); }
-    {DYNAMIC} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DYNAMIC} {  
                       return symbol(sym.DYNAMIC,  (yytext())); }
-    {FAST_FORWARD} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {FAST_FORWARD} {  
                       return symbol(sym.FAST_FORWARD,  (yytext())); }
-    {READ_ONLY} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {READ_ONLY} {  
                       return symbol(sym.READ_ONLY,  (yytext())); }
-    {SCROLL_LOCKS} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {SCROLL_LOCKS} {  
                       return symbol(sym.SCROLL_LOCKS,  (yytext())); }
-    {OPTIMISTIC} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {OPTIMISTIC} {  
                       return symbol(sym.OPTIMISTIC,  (yytext())); }
-    {TYPE_WARNING} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {TYPE_WARNING} {  
                       return symbol(sym.TYPE_WARNING,  (yytext())); }
-    {WHILE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {WHILE} {  
                       return symbol(sym.WHILE,  (yytext())); }
-    {FETCH_STATUS} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {FETCH_STATUS} {  
                       return symbol(sym.FETCH_STATUS,  (yytext())); }
-    {DEALLOCATE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DEALLOCATE} {  
                       return symbol(sym.DEALLOCATE,  (yytext())); }
-    {RETURN} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {RETURN} {  
                       return symbol(sym.RETURN,  (yytext())); }
-    {RETURNS} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {RETURNS} {  
                       return symbol(sym.RETURNS,  (yytext())); }
-    {NULLIF} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {NULLIF} {  
                       return symbol(sym.NULLIF,  (yytext())); }
-    {SUBSTRING} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {SUBSTRING} {  
                       return symbol(sym.SUBSTRING,  (yytext())); }
-    {TRANSLATE} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {TRANSLATE} {  
                       return symbol(sym.TRANSLATE,  (yytext())); }
-    {LOWER} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {LOWER} {  
                       return symbol(sym.LOWER,  (yytext())); }
-    {UPPER} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {UPPER} {  
                       return symbol(sym.UPPER,  (yytext())); }
-    {TRIM} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {TRIM} {  
                       return symbol(sym.TRIM,  (yytext())); }
 
 
   //TOKEN PARA OPERADORES Y CARACTERES DE PUNTUACION
 
-  {STRINGA} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+  {STRINGA} { 
                       return symbol(sym.STRINGA, (yytext()));}
 
-    {SUMA} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {SUMA} { 
                       return symbol(sym.SUMA, (yytext()));}
 
-    {RESTA} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {RESTA} { 
                       return symbol(sym.RESTA, (yytext()));}
-    {MULTI} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {MULTI} { 
                       return symbol(sym.MULTI, (yytext()));}
-    {DIV} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {DIV} { 
                       return symbol(sym.DIV, (yytext()));}
-    {PORCENTAJE} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {PORCENTAJE} { 
                       return symbol(sym.PORCENTAJE, (yytext()));}
-    {MENORQUE} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {MENORQUE} { 
                       return symbol(sym.MENORQUE, (yytext()));}
-    {MENORIGUAL} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {MENORIGUAL} { 
                       return symbol(sym.MENORIGUAL, (yytext()));}
-    {MAYORQUE} {{System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {MAYORQUE} {{ 
                       return symbol(sym.MAYORQUE, (yytext()));}}
-    {MAYORIGUAL} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {MAYORIGUAL} { 
                       return symbol(sym.MAYORIGUAL, (yytext()));}
-    {IGUAL} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {IGUAL} { 
                       return symbol(sym.IGUAL, (yytext()));}
-    {DOBLEIGUAL} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {DOBLEIGUAL} { 
                       return symbol(sym.DOBLEIGUAL, (yytext()));}
-    {DIFERENTE} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {DIFERENTE} { 
                       return symbol(sym.DIFERENTE, (yytext()));}
-    {OPAND} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {OPAND} { 
                       return symbol(sym.OPAND, (yytext()));}
-    {OPOR} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {OPOR} { 
                       return symbol(sym.OPOR, (yytext()));}
-    {ADMIRACION} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {ADMIRACION} { 
                       return symbol(sym.ADMIRACION, (yytext()));}
-    {PUNTOCOMA} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {PUNTOCOMA} { 
                       return symbol(sym.PUNTOCOMA, (yytext()));}
-    {COMA} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {COMA} { 
                       return symbol(sym.COMA, (yytext()));}
-    {PUNTO} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {PUNTO} { 
                       return symbol(sym.PUNTO, (yytext()));}
-    {BRACKETIZQ} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {BRACKETIZQ} { 
                       return symbol(sym.BRACKETIZQ, (yytext()));}
-    {BRACKETDER} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {BRACKETDER} { 
                       return symbol(sym.BRACKETDER, (yytext()));}
-    {PARENTESISIZQ} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {PARENTESISIZQ} { 
                       return symbol(sym.PARENTESISIZQ, (yytext()));}
-    {PARENTESISDER} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {PARENTESISDER} { 
                       return symbol(sym.PARENTESISDER, (yytext()));}
-    {CORCHETEIZQ} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {CORCHETEIZQ} { 
                       return symbol(sym.CORCHETEIZQ, (yytext()));}
-    {CORCHETEDER} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {CORCHETEDER} { 
                       return symbol(sym.CORCHETEDER, (yytext()));}
-    {BRACKETS} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {BRACKETS} { 
                       return symbol(sym.BRACKETS, (yytext()));}
-    {PARENTESIS} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {PARENTESIS} { 
                       return symbol(sym.PARENTESIS, (yytext()));}
-    {CORCHETES} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {CORCHETES} { 
                       return symbol(sym.CORCHETES, (yytext()));}
-    {ARROBA} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {ARROBA} { 
                       return symbol(sym.ARROBA, (yytext()));}
-    {NUMERAL} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {NUMERAL} { 
                       return symbol(sym.NUMERAL, (yytext()));}
-    {DOBLENUMERAL} {System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+    {DOBLENUMERAL} { 
                       return symbol(sym.DOBLENUMERAL, (yytext()));}
-    {DIFIGUAL} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DIFIGUAL} {  
                       return symbol(sym.DIFIGUAL,  (yytext())); }
-    {DIFMAYOR} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DIFMAYOR} {  
                       return symbol(sym.DIFMAYOR,  (yytext())); }
-    {DIFMENOR} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DIFMENOR} {  
                       return symbol(sym.DIFMENOR,  (yytext())); }
-    {MAYORMENOR} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {MAYORMENOR} {  
                       return symbol(sym.MAYORMENOR,  (yytext())); }
-    {PUNTOPUNTO} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {PUNTOPUNTO} {  
                       return symbol(sym.PUNTOPUNTO,  (yytext())); }
-    {DOLAR} {   System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn + "\n"); 
+    {DOLAR} {  
                       return symbol(sym.DOLAR,  (yytext())); }
 
 
 
 
-	{IDENTIFICADOR} {   System.out.print(yytext()+"		Linea "+yyline+ " Columna: " +yycolumn + "\n"); 
+	{IDENTIFICADOR} {    
                       return symbol(sym.IDENTIFICADOR, (yytext())); }
   
    
