@@ -502,7 +502,7 @@ non terminal INICIO, OBJECT, TRUNCATE1, FINAL, OBJECT2, OBJECT3, DROP1, EXISTS1,
                 |RETURNS TABLE FUNCTION10
                 ;
 
-        FUNCTION9 ::= AS1 BEGIN SQLSTATEMENT RETURN SCALAREXP END
+        FUNCTION9 ::= AS1 BEGIN SQLSTATEMENT RETURN SCALAREXP END FINAL
                         ;
 
         FUNCTION10 ::= AS1 RETURN PARENTESISIZQ SELECT20 PARENTESISDER
@@ -575,16 +575,10 @@ non terminal INICIO, OBJECT, TRUNCATE1, FINAL, OBJECT2, OBJECT3, DROP1, EXISTS1,
                         |PROCEDURE12
                         ;
 
-        PROCEDURE12 ::= AS PROCEDURE13 SQLSTATEMENT PROCEDURE18
+        PROCEDURE12 ::= AS BEGIN SQLSTATEMENT END FINAL
+                        |AS SQLSTATEMENT
                         ;
 
-        PROCEDURE13 ::= BEGIN
-                        |
-                        ;
-
-        PROCEDURE18 ::= END
-                        |
-                        ;
 
         SQLSTATEMENT ::= UPDATE11 SQLSTATEMENT2
                         |SELECT20 SQLSTATEMENT2
@@ -999,6 +993,7 @@ non terminal INICIO, OBJECT, TRUNCATE1, FINAL, OBJECT2, OBJECT3, DROP1, EXISTS1,
 
         CDATABASE2 ::= ON PRIMARY CDATABASE3
                         |ON CDATABASE3
+                        |CDATABASE3
                         ;
 
         CDATABASE3 ::= FILESPEC CDATABASE4 CDATABASE6 CDATABASE5
@@ -1097,7 +1092,7 @@ non terminal INICIO, OBJECT, TRUNCATE1, FINAL, OBJECT2, OBJECT3, DROP1, EXISTS1,
                 |IDENTIFICADOR PUNTO MULTI SELIST4
                 |IDENTIFICADOR PUNTO SELIST2 SELIST4
                 |E3 SELIST3 SELIST4
-                |OBJECT PARENTESISIZQ ARGUMENT PARENTESISDER SELIST4
+                |OBJECT PARENTESISIZQ ARGUMENT PARENTESISDER SELIST3 SELIST4
                 ;
         
 
@@ -1108,6 +1103,8 @@ non terminal INICIO, OBJECT, TRUNCATE1, FINAL, OBJECT2, OBJECT3, DROP1, EXISTS1,
 
         SELIST3 ::= AS IDENTIFICADOR
                 |IDENTIFICADOR
+                |AS STRINGA
+                |STRINGA
                 |
                 ;
 
