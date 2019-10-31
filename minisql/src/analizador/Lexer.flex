@@ -919,5 +919,5 @@ Entero = 0 | [1-9][0-9]*
 
 /* Si el token contenido en la entrada no coincide con ninguna regla
     entonces se marca un token ilegal */
-[^]                    { throw new Error("Caracter ilegal <"+yytext()+">"); }
+[^]                    { System.out.print(yytext()+"		Linea "+yyline+" Columna: " +yycolumn  + " Simbolo no valido" + "\n"); }
 
