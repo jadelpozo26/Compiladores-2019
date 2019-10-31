@@ -127,6 +127,7 @@ public class minisql extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try{
              probarLexerFile();
+//             analisis_sintactico.main(archivoPrueba);
         }
         catch (IOException ex){
             System.out.println(ex.getMessage());
@@ -139,10 +140,13 @@ public class minisql extends javax.swing.JFrame {
        JFileChooser file2 = new JFileChooser();
        file2.showOpenDialog(this);
        File abre = file2.getSelectedFile();
+       String ubicacion = abre.getAbsolutePath();
        if(abre != null)
        {
            ArchivoSelec = abre;
            nombre = abre.getName();
+           String[] archivoPrueba = {ubicacion};
+           parser.main(archivoPrueba);
        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -194,8 +198,8 @@ public class minisql extends javax.swing.JFrame {
        Reader reader = new BufferedReader(new FileReader(ArchivoSelec));
        Lexer lexer = new Lexer (reader);
         String resultado="";
-        token = lexer.yylex();
-        Contador(lexer);
+//        token = lexer.yylex();
+//        Contador(lexer);
         while (true){
             
             if (token == null){
@@ -206,7 +210,7 @@ public class minisql extends javax.swing.JFrame {
                 return;
             }
             
-            INICIO (lexer);
+//            INICIO (lexer);
         
                
            }
@@ -214,1283 +218,97 @@ public class minisql extends javax.swing.JFrame {
            
     }
     
-    public void INICIO (Lexer lexer) throws IOException
-    {
-        Limpiar(lexer);
-        if (token == token.T_SELECT)
-        {
-            SELECT(lexer);
-        }
-        else if (token == token.T_DROP)
-        {
-            DROP(lexer);
-        }
-        else if (token == token.T_UPDATE)
-        {
-            UPDATE(lexer);
-        }
-        else if (token == token.T_ALTER)
-        {
-            ALTER(lexer);
-        }
-        else if (token == token.T_INSERT)
-        {
-            INSERT(lexer);
-        }
-        else if (token == token.T_CREATE)
-        {
-            CREATE(lexer);
-        }
-        else if (token == token.T_DELETE)
-        {
-            DELETE(lexer);
-        }
-        else if (token == token.T_TRUNCATE)
-        {
-            TRUNCATE (lexer);
-        }
-        else
-        {
-            if(token == null)
-            {
-                    
-            }
-            else
-            {
-                //error23
-                    
-                ErroresSintac = ErroresSintac + "Se esperaba 'SELECT', 'DROP', 'TRUNCATE', 'INSERT', 'UPDATE', 'ALTER', 'CREATE' O 'DELETE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres +"\n";
-                Error(lexer);
-                INICIO(lexer);
-            }
-        }
-            
-         
-    }
-    public void COLUMNINDEX(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_INDEX)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                COLUMNI1(lexer);
-                Limpiar(lexer);
-                COLUMNI2(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-                
-            }
-        }
-        else
-        {
-            //error32 se esperaba INDEX
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'INDEX' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void COLUMNI1(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_CLUSTERED)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_NONCLUSTERED)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void COLUMNI2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        COLUMNC4(lexer);
-    }
-    
-    public void CCD(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token ==  token.T_AS)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            E5(lexer);
+//    public void INICIO (Lexer lexer) throws IOException
+//    {
+//        Limpiar(lexer);
+//        if (token == token.T_SELECT)
+//        {
+//            SELECT(lexer);
+//        }
+//        else if (token == token.T_DROP)
+//        {
+//            DROP(lexer);
+//        }
+//        else if (token == token.T_UPDATE)
+//        {
+//            UPDATE(lexer);
+//        }
+//        else if (token == token.T_ALTER)
+//        {
+//            ALTER(lexer);
+//        }
+//        else if (token == token.T_INSERT)
+//        {
+//            INSERT(lexer);
+//        }
+//        else if (token == token.T_CREATE)
+//        {
+//            CREATE(lexer);
+//        }
+//        else if (token == token.T_DELETE)
+//        {
+//            DELETE(lexer);
+//        }
+//        else if (token == token.T_TRUNCATE)
+//        {
+//            TRUNCATE (lexer);
+//        }
+//        else
+//        {
+//            if(token == null)
+//            {
+//                    
+//            }
+//            else
+//            {
+//                //error23
+//                    
+//                ErroresSintac = ErroresSintac + "Se esperaba 'SELECT', 'DROP', 'TRUNCATE', 'INSERT', 'UPDATE', 'ALTER', 'CREATE' O 'DELETE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres +"\n";
+//                Error(lexer);
+//                INICIO(lexer);
+//            }
+//        }
+//            
+//         
+//    }
+//    public void COLUMNINDEX(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_INDEX)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
 //            if(token == token.T_IDENTIFICADOR)
 //            {
+//                TRUNCAR(lexer);
 //                token = lexer.yylex();
 //                Contador(lexer);
 //                Limpiar(lexer);
-//                COLUMNC2(lexer);
+//                COLUMNI1(lexer);
+//                Limpiar(lexer);
+//                COLUMNI2(lexer);
 //            }
 //            else
 //            {
 //                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//                
 //            }
-        }
-        else
-        {
-            //error32 se esperaba AS
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'AS' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void TABLECON (Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_CONSTRAINT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                TABLECON1(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            TABLECON1(lexer);
-        }
-    }
-    
-    public void TABLECON1(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_PRIMARY)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_KEY)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                TABLECON2(lexer);
-                Limpiar(lexer);
-                TABLECON3(lexer);
-            }
-            else
-            {
-                //error32 se esperaba KEY
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'KEY' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_UNIQUE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            TABLECON2(lexer);
-            Limpiar(lexer);
-            TABLECON3(lexer);
-        }
-        else if(token == token.T_FOREIGN)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_KEY)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPPARENTESISIZQ)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    if(token == token.T_IDENTIFICADOR)
-                    {
-                        TRUNCAR(lexer);
-                        token = lexer.yylex();
-                        Contador(lexer);
-                        Limpiar(lexer);
-                        TABLECON7(lexer);
-                        Limpiar(lexer);
-                        if(token == token.T_OPPARENTESISDER)
-                        {
-                            token = lexer.yylex();
-                            Contador(lexer);
-                            Limpiar(lexer);
-                            COLUMNC6(lexer);
-                        }
-                        else
-                        {
-                            //error32 se esperaba )
-                            if(token == null)
-                            {
-
-                            }
-                            else
-                            {
-                                //error23
-                                ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                                Error(lexer);
-                                INICIO(lexer);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        //error32 se esperaba ID
-                        if(token == null)
-                        {
-
-                        }
-                        else
-                        {
-                            //error23
-                            ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                            Error(lexer);
-                            INICIO(lexer);
-                        }
-                    }
-                }
-                else
-                {
-                    //error32 se esperaba (
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error32 se esperaba KEy
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'KEY' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_CHECK)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            COLUMNC16(lexer);
-        }
-        else
-        {
-            //error32 se esperaba PRIMARY UNIQUE FOREIGN CHECK
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'PRIMARY, UNIQUE, FOREIGN o CHECK' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void TABLECON2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_CLUSTERED)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_NONCLUSTERED)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void TABLECON3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPARENTESISIZQ)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            TABLECON8(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISDER)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                COLUMNC4(lexer);
-            }
-            else
-            {
-                //error32 se esperaba )
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error32 se esperaba (
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void TABLECON8(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            TABLECON4(lexer);
-        }
-        else
-        {
-            //error32 se esperaba ID
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void TABLECON4(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_ASC)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            TABLECON6(lexer);
-        }
-        else if(token == token.T_DESC)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            TABLECON6(lexer);
-        }
-        else
-        {
-            TABLECON6(lexer);
-        }
-    }
-    
-    public void TABLECON6(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            TABLECON8(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void TABLECON7(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                TABLECON7(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void TABIND(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_INDEX)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                TABLECON2(lexer);
-                if(token == token.T_OPPARENTESISIZQ)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    TABLECON8(lexer);
-                    Limpiar(lexer);
-                    if(token == token.T_OPPARENTESISDER)
-                    {
-                        token = lexer.yylex();
-                        Contador(lexer);
-                        Limpiar(lexer);  
-                        COLUMNC4(lexer);
-                    }
-                }
-                else
-                {
-                    //error32 se esperaba (
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error32 se espseraba INDEX
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'INDEX' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void DATATYPE(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token ==  token.T_INT || token == token.T_INTEGER || token == token.T_SMALLINT || token == token.T_DECIMAL || token == token.T_FLOAT || token == token.T_BIT || token ==  token.T_DATE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_VARCHAR || token == token.T_CHAR)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISIZQ)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                if(token == token.T_ENTERODECIMAL)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    if(token == token.T_OPPARENTESISDER)
-                    {
-                        token = lexer.yylex();
-                        Contador(lexer);
-                        Limpiar(lexer);
-                    }
-                    else
-                    {
-                        //error32 se esperaba )
-                        if(token == null)
-                        {
-
-                        }
-                        else
-                        {
-                            //error23
-                            ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                            Error(lexer);
-                            INICIO(lexer);
-                        }
-                    }
-                }
-                else
-                {
-                    //error32 se esperaba un numero
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba 'NUMERO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }   
-                }
-            }
-            else
-            {
-                //error32 se esperaba (
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_NCHAR)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISIZQ)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                if(token == token.T_ENTERODECIMAL)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    if(token == token.T_OPPARENTESISDER)
-                    {
-                        token = lexer.yylex();
-                        Contador(lexer);
-                        Limpiar(lexer);
-                    }
-                    else
-                    {
-                        //error32 se esperaba )
-                        if(token == null)
-                        {
-
-                        }
-                        else
-                        {
-                            //error23
-                            ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                            Error(lexer);
-                            INICIO(lexer);
-                        }
-                    }
-                }
-                else
-                {
-                    //error32 se esperaba un numero
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba 'NUMERO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error32 se esperaba (
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error32 se esperaba un tipo de dato valido
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'TIPO DE DATO VALIDO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    public void COLUMNDEF (Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        DATATYPE(lexer);
-        Limpiar(lexer);
-        COLUMNDEF2(lexer);
-    }
-    
-    public void COLUMNDEF2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_COLLATE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                COLUMNDEF3(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            COLUMNDEF3(lexer);
-        }
-        
-    }
-    
-    public void COLUMNDEF3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_CONSTRAINT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                COLUMNDEF4(lexer);
-            }
-            
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            COLUMNDEF5(lexer);
-        }
-    }
-    
-    public void COLUMNDEF4(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_DEFAULT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SCALAREXP(lexer);
-            Limpiar(lexer);
-            COLUMNDEF5(lexer);
-        }
-        else
-        {
-            COLUMNDEF5(lexer);
-        }
-    }
-    
-    public void COLUMNDEF5(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTITY)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            COLUMNDEF6(lexer);
-        }
-        else
-        {
-            COLUMNDEF7(lexer);
-        }
-    }
-    
-    public void SEED(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_ENTERODECIMAL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_DOUBLENUM)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            //error32 se esperaba un numero
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'NUMERO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-        
-    }
-     
-    public void COLUMNDEF6(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPARENTESISIZQ)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SEED(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPCOMA)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                SEED(lexer);
-                Limpiar(lexer);
-                
-                if(token == token.T_OPPARENTESISDER)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    COLUMNDEF7(lexer);
-                }
-                else
-                {
-                    //error32 se esperaba ")"
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error32 se esperaba ,
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ',' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            COLUMNDEF7(lexer);
-        }
-    }
-    
-    public void COLUMNDEF7(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_NOT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            COLUMNDEF8(lexer);
-        }
-        else
-        {
-            COLUMNDEF9(lexer);
-        }
-    }
-    
-    public void COLUMNDEF8(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_FOR)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_REPLICATION)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                COLUMNDEF9(lexer);
-            }
-            else
-            {
-                //error32 se esperaba REPLICATION
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'REPLICATION' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_NULL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            COLUMNDEF10(lexer);
-        }
-        else
-        {
-            //error32 se esperaba NULL o FOR
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'NULL o FOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void COLUMNDEF9(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_NOT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_NULL)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                COLUMNDEF10(lexer);
-            }
-            else
-            {
-                //error32 se esperaba NULL
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'NULL' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_NULL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            COLUMNDEF10(lexer);
-        }
-        else
-        {
-            COLUMNDEF10(lexer);
-        }
-    }
-    
-    public void COLUMNDEF10(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_ROWGUIDCOL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            COLUMNDEF11(lexer);
-        }
-        else
-        {
-            COLUMNDEF11(lexer);
-        }
-    }
-    
-    public void COLUMNDEF11(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_CONSTRAINT || token == token.T_PRIMARY || token == token.T_UNIQUE || token == token.T_FOREIGN || token == token.T_REFERENCES || token == token.T_CHECK)
-        {
-            COLUMNCONSTRAINT(lexer);
-            Limpiar(lexer);
-            COLUMNDEF13(lexer);
-            Limpiar(lexer);
-            COLUMNDEF12(lexer);
-        }
-        else
-        {
-            COLUMNDEF12(lexer);
-        }
-    }
-    
-    public void COLUMNDEF12(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_INDEX)
-        {
-            COLUMNINDEX(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void COLUMNDEF13(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            COLUMNCONSTRAINT(lexer);
-            Limpiar(lexer);
-            COLUMNDEF13(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void COLUMNCONSTRAINT(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_CONSTRAINT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                COLUMNC2(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            COLUMNC2(lexer);
-        }
-    }
-    
-    public void COLUMNC2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_PRIMARY)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_KEY)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                COLUMNC3(lexer);
-            }
-            else
-            {
-                //error32 se esperaba KEY
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'KEY' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_UNIQUE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            COLUMNC3(lexer);
-        }
-        else if(token ==  token.T_FOREIGN)
-        {
-            
-            COLUMNC5(lexer);
-        }
-        else if(token == token.T_REFERENCES)
-        {
-            
-            COLUMNC5(lexer);
-        }
-        else if(token == token.T_CHECK)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            COLUMNC16(lexer);
-        }
-        else
-        {
-            //error32 se esperaba PRIMARY o FOREIGN
+//        }
+//        else
+//        {
+//            //error32 se esperaba INDEX
 //            if(token == null)
 //                {
 //                    
@@ -1498,1110 +316,357 @@ public class minisql extends javax.swing.JFrame {
 //                else
 //                {
 //                    //error23
-//                    ErroresSintac = ErroresSintac + "Se esperaba 'PRIMARY o FOREIGN' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'INDEX' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
 //                    Error(lexer);
 //                    INICIO(lexer);
 //                }
-            
-        }
-    }
-    
-    public void COLUMNC3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_CLUSTERED)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            COLUMNC4(lexer);
-        }
-        else if(token == token.T_NONCLUSTERED)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            COLUMNC4(lexer);
-        }
-        else
-        {
-            COLUMNC4(lexer);
-        }
-    }
-    
-    public void COLUMNC4(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_ON)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token ==  token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                COLUMNC20(lexer);
-                                  
-            }  
-            else if(token == token.T_PRIMARY || token == token.T_DEFAULT)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    public void COLUMNC20 (Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-       
-            if(token == token.T_OPPARENTESISIZQ)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                if(token == token.T_IDENTIFICADOR)
-                {
-                    TRUNCAR(lexer);
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    if(token == token.T_OPPARENTESISDER)
-                    {
-                        token = lexer.yylex();
-                        Contador(lexer);
-                        Limpiar(lexer);
-                    }
-                    else
-                    {
-                            //error32 se esperaba ")"
-                        if(token == null)
-                        {
-
-                        }
-                        else
-                        {                        
-                                //error23
-                                ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                                Error(lexer);
-                                INICIO(lexer);
-                        }
-                    }
-                }
-                else
-                {
-                        //error32 se esperaba ID
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {                        
-                            //error23
-                            ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                            Error(lexer);
-                            INICIO(lexer);
-                    }
-                    
-                }
-            }
-            else
-            {
-                //nada porque vacio
-            }
-        
-                    
-        
-    }
-    public void COLUMNC5(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_FOREIGN)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_KEY)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                COLUMNC6(lexer);
-            }
-            else
-            {
-                //error32 se esperaba KEY
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'KEY' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            COLUMNC6(lexer);
-        }
-    }
-    
-    public void COLUMNC6(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_REFERENCES)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                COLUMNC7(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error32 se esperaba REFEReNCEs
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'REFERENCES' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void COLUMNC7(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPUNTO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                COLUMNC8(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            COLUMNC8(lexer);
-        }
-    }
-    
-    public void COLUMNC8(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token ==token.T_OPPARENTESISIZQ)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                COLUMNC10(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPPARENTESISDER)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    COLUMNC9(lexer);
-                }
-                else
-                {
-                    //error32 se esperaba ")"
-                    if(token == null)
-                    {  
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            COLUMNC9(lexer);
-        }
-    }
-    
-    public void COLUMNC10(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                COLUMNC10(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void COLUMNC9(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_ON)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            COLUMNC11(lexer);
-        }
-        else
-        {
-            COLUMNC15(lexer);
-        }
-    }
-    
-    public void COLUMNC11(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_DELETE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            COLUMNC12(lexer);
-            Limpiar(lexer);
-            COLUMNC14(lexer);
-        }
-        else if(token == token.T_UPDATE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            COLUMNC12(lexer);
-            Limpiar(lexer);
-            COLUMNC15(lexer);
-        }
-        else
-        {
-            //error32 se esperaba DELETE o UPDATE
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'DELETE o UPDATE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void COLUMNC12(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_NO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_ACTION)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ACTION
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ACTION' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_CASCADE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_SET)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            COLUMNC13(lexer);
-        }
-        else
-        {
-            //error32 se esperaba NO, CASCADE o SET
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'NO, CASCADE o SET' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void COLUMNC13(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_NULL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_DEFAULT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            //error32 se esperaba NULL o DEFAULT
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'NULL o DEFAULT' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void COLUMNC14(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_ON)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_UPDATE)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                COLUMNC12(lexer);
-                Limpiar(lexer);
-                COLUMNC15(lexer);
-            }
-            else
-            {
-                //error32 se esperaba UPDATE
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'UPDATE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            COLUMNC15(lexer);
-        }
-        
-    }
-    
-    public void COLUMNC15(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_NOT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_FOR)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                if(token == token.T_REPLICATION)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                }
-                else
-                {
-                    //error32 se esperaba REPLICATION
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba 'REPLICATION' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error32 se esperaba FOR
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'FOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void COLUMNC16(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_CHECK)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            COLUMNC17(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISIZQ)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                E5(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPPARENTESISDER)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                }
-            }
-            else
-            {
-                //error32 se esperaba )
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error32 se esperaba CHECK
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'CHECK' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void COLUMNC17(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_NOT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_FOR)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                if(token == token.T_REPLICATION)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                }
-                else
-                {
-                    //error32 se esperaba REPLICATION
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba 'REPLICATION' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error32 se esperaba FOR
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'FOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //nada porque vacio
-        }
-                
-    }
-    public void SELECT(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_SELECT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SELECT2(lexer);
-        }
-        else
-        {
-            //error32 se esperaba SELECT
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'SELECT' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void SELECT2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        SELECT3(lexer);
-        Limpiar(lexer);
-        SELECT4(lexer);
-    }
-    
-    public void SELECT3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_ALL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_DISTINCT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void SELECT4(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_TOP)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SELECT5(lexer);
-        }
-        else
-        {
-            SELECT7(lexer);
-        }
-    }
-    
-    public void SELECT5(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPARENTESISIZQ)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SCALAREXP(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISDER)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                SELECT6(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ")"
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error32 se esperaba "("
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void SELECT6(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_PERCENT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SELECT7(lexer);
-        }
-        else
-        {
-            SELECT7(lexer);
-        }
-    }
-    
-    public void SELECT7(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        SELIST(lexer);
-        Limpiar(lexer);
-        SELECT8(lexer);
-    }
-    
-    public void SELECT8(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_INTO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SELECT9(lexer);
-        }
-        else
-        {
-            SELECT11(lexer);
-        }
-    }
-    
-    public void SELECT9(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            OBJECT(lexer);
-            Limpiar(lexer);
-            SELECT11(lexer);
-        }
-        else
-        {
-            //error32 se esperaba ID
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void SELECT11(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_FROM)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            TABLESOURCE(lexer);
-            Limpiar(lexer);
-            SELECT17(lexer);
-           
-        }
-        else
-        {
-            SELECT12(lexer);
-        }
-    }
-    
-    public void SELECT12(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_WHERE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SEARCHWMATCH(lexer);
-            Limpiar(lexer);
-            SELECT13(lexer);
-        }
-        else
-        {
-            SELECT13(lexer);
-        }
-    }
-    
-    public void SELECT13(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_GROUP)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_BY)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                GROUP_CL(lexer);
-                Limpiar(lexer);
-                SELECT14(lexer);
-            }
-            else
-            {
-                //error32 se esepraba BY
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'BY' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            SELECT14(lexer);
-        }
-    }
-    
-    public void SELECT14(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_HAVING)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SEARCHWMATCH(lexer);
-            Limpiar(lexer);
-            SELECT15(lexer);
-                    
-        }
-        else
-        {
-            SELECT15(lexer);
-        }
-    }
-    
-    public void SELECT15(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_ORDER)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_BY)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ORDER(lexer);
-                SELECT16(lexer);
-            }
-            else
-            {
-                //error32 se esperaba BY
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'BY' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-           SELECT16(lexer);
-        }
-    }
-    
-    public void SELECT16(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_GO)
-        {
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                INICIO(lexer);
-        }
-        else if(token == token.T_OPPUNTOCOMA)
-        {
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                INICIO(lexer);
-        }
-        else
-        {
-            //error32 se esperaba GO o ;
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'GO o ;' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    public void SELECT17(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            TABLESOURCE(lexer);
-            Limpiar(lexer);
-            SELECT17(lexer);
-        }
-        else
-        {
-            SELECT12(lexer);
-        }
-    }
-    
-    public void GROUP_CL(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        E5(lexer);
-        Limpiar(lexer);
-        GROUP_CL2(lexer);
+//        }
+//    }
+//    
+//    public void COLUMNI1(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_CLUSTERED)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_NONCLUSTERED)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void COLUMNI2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        COLUMNC4(lexer);
+//    }
+//    
+//    public void CCD(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token ==  token.T_AS)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            E5(lexer);
+////            if(token == token.T_IDENTIFICADOR)
+////            {
+////                token = lexer.yylex();
+////                Contador(lexer);
+////                Limpiar(lexer);
+////                COLUMNC2(lexer);
+////            }
+////            else
+////            {
+////                //error32 se esperaba ID
+////            }
+//        }
+//        else
+//        {
+//            //error32 se esperaba AS
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'AS' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void TABLECON (Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_CONSTRAINT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                TABLECON1(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            TABLECON1(lexer);
+//        }
+//    }
+//    
+//    public void TABLECON1(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_PRIMARY)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_KEY)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                TABLECON2(lexer);
+//                Limpiar(lexer);
+//                TABLECON3(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba KEY
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'KEY' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_UNIQUE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            TABLECON2(lexer);
+//            Limpiar(lexer);
+//            TABLECON3(lexer);
+//        }
+//        else if(token == token.T_FOREIGN)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_KEY)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPPARENTESISIZQ)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    if(token == token.T_IDENTIFICADOR)
+//                    {
+//                        TRUNCAR(lexer);
+//                        token = lexer.yylex();
+//                        Contador(lexer);
+//                        Limpiar(lexer);
+//                        TABLECON7(lexer);
+//                        Limpiar(lexer);
+//                        if(token == token.T_OPPARENTESISDER)
+//                        {
+//                            token = lexer.yylex();
+//                            Contador(lexer);
+//                            Limpiar(lexer);
+//                            COLUMNC6(lexer);
+//                        }
+//                        else
+//                        {
+//                            //error32 se esperaba )
+//                            if(token == null)
+//                            {
+//
+//                            }
+//                            else
+//                            {
+//                                //error23
+//                                ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                                Error(lexer);
+//                                INICIO(lexer);
+//                            }
+//                        }
+//                    }
+//                    else
+//                    {
+//                        //error32 se esperaba ID
+//                        if(token == null)
+//                        {
+//
+//                        }
+//                        else
+//                        {
+//                            //error23
+//                            ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                            Error(lexer);
+//                            INICIO(lexer);
+//                        }
+//                    }
+//                }
+//                else
+//                {
+//                    //error32 se esperaba (
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error32 se esperaba KEy
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'KEY' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_CHECK)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            COLUMNC16(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba PRIMARY UNIQUE FOREIGN CHECK
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'PRIMARY, UNIQUE, FOREIGN o CHECK' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void TABLECON2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_CLUSTERED)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_NONCLUSTERED)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void TABLECON3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPARENTESISIZQ)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            TABLECON8(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISDER)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                COLUMNC4(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba )
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error32 se esperaba (
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void TABLECON8(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
 //        if(token == token.T_IDENTIFICADOR)
 //        {
 //            TRUNCAR(lexer);
 //            token = lexer.yylex();
 //            Contador(lexer);
 //            Limpiar(lexer);
-//            GROUP_CL2(lexer);
+//            TABLECON4(lexer);
 //        }
 //        else
 //        {
@@ -2618,5236 +683,66 @@ public class minisql extends javax.swing.JFrame {
 //                    INICIO(lexer);
 //                }
 //        }
-    }
-    
-    public void GROUP_CL2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            GROUP_CL(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    public void ORDER(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        E5(lexer);
-        Limpiar(lexer);
-        ORDER1(lexer);
-    }
-    
-    public void ORDER1(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_COLLATE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ORDER2(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            ORDER2(lexer);
-        }
-    }
-    
-    public void ORDER2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_ASC)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            ORDER3(lexer);
-            
-        }
-        else if(token == token.T_DESC)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            ORDER3(lexer);
-        }
-        else
-        {
-            ORDER3(lexer);
-        }
-    }
-    
-    public void ORDER3(Lexer lexer) throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            ORDER(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    public void SELIST(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        SELIST1(lexer);
-        Limpiar(lexer);
-        SELIST7(lexer);
-        
-    }
-    
-    public void SELIST1(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPMULTI)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            
-        }
-        else if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SELIST2(lexer);
-        }
-        else
-        {
-            E5(lexer);
-            Limpiar(lexer);
-            SELIST5(lexer);
-        }
-    }
-           
-    public void SELIST2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPUNTO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SELIST3(lexer);
-        }
-        else if(token == token.T_IGUAL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SELIST6(lexer);
-        }
-        else if(token == token.T_AS)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void SELIST3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPMULTI)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            //error32 se esperaba ID o *
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID o *' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void SELIST5(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_AS)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-            
-    }
-    
-    public void SELIST6(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        E5(lexer);
-    }
-    
-    public void SELIST7(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SELIST(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    public void INSERT(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_INSERT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INSERT1(lexer);
-        }
-        else
-        {
-            //error32 se esperaba INSERT
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'INSERT' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-              
-    }
-    
-    public void INSERT1(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_TOP)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISIZQ)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                SCALAREXP(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPPARENTESISDER)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    INSERT2(lexer);
-                }
-                else
-                {
-                    //error32 se esperaba ")"
-                    if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-                }
-            }
-            else
-            {
-                //error32 se esperaba "("
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            INSERT3(lexer);
-        }
-    }
-    
-    public void INSERT2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_PERCENT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INSERT3(lexer);
-        }
-        else
-        {
-            INSERT3(lexer);
-        }
-    }
-    
-    public void INSERT3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_INTO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INSERT4(lexer);
-        }
-        else
-        {
-            INSERT4(lexer);
-        }
-    }
-    
-    public void INSERT4(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            OBJECT(lexer);
-            Limpiar(lexer);
-            INSERT5(lexer);
-        }
-        else if(token == token.T_OPENQUERY || token == token.T_OPENROWSET)
-        {
-            ROWSETF(lexer);
-            Limpiar(lexer);
-            INSERT5(lexer);
-        }
-        else if(token == token.T_ARROBA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                INSERT5(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error32 se esperaba ID o VARIABLE
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID o VARIABLE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-                
-             
-    }
-    
-    public void INSERT5(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPARENTESISIZQ)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                COLUMNLIST(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPPARENTESISDER)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    INSERT6(lexer);
-                }
-                else
-                {
-                     //error32 se esperaba ")"
-                    if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-                }
-            }
-            
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            INSERT6(lexer);
-        }
-    }
-    
-    public void COLUMNLIST(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                COLUMNLIST(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    public void INSERT6(Lexer lexer) throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OUTPUT)
-        {
-            OUTPUTCLAUSE(lexer);
-            Limpiar(lexer);
-            INSERT7(lexer);
-        }
-        else
-        {
-            INSERT7(lexer);
-        }
-    }
-    
-    public void INSERT7(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_VALUES)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISIZQ)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                INSERT8(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPPARENTESISDER)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    INSERT11(lexer);
-                    Limpiar(lexer);
-                    INSERT10(lexer);
-                }
-                else
-                {
-                    //error32 se esperaba ")"
-                    if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-                }
-            }
-            else
-            {
-                //error32 se esperaba "("
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_DEFAULT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_VALUES)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                INSERT10(lexer);
-            }
-            else
-            {
-                //error32 se esperaba VALEUS
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'VALUES' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error32 se esperaba VALUES o DEFAULT VALUES
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'VALUES o DEFAULT VALUES' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-        
-    }
-    
-    public void INSERT8(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_DEFAULT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer); 
-            INSERT9(lexer);
-        }
-        else if(token == token.T_NULL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INSERT9(lexer);
-        }
-        else
-        {
-            E5(lexer);
-            Limpiar(lexer);
-            INSERT9(lexer);
-        }
-
-    }
-    
-    public void INSERT9(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INSERT8(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-        
-    }
-    
-    public void INSERT11(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISIZQ)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                INSERT8(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPPARENTESISDER)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    INSERT11(lexer);
-                }
-                else
-                {
-                    //error32 se esperaba ")"
-                    if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ') Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-                }
-            }
-            else
-            {
-                //error32 se esperaba "("
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void INSERT10(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token ==token.T_OPPUNTOCOMA)
-        {
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                INICIO(lexer);
-        }
-        else if(token == token.T_GO)
-        {
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                INICIO(lexer);
-        }
-        else
-        {
-            //error32 se esperaba ; o GO
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '; o GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    public void UPDATE(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_UPDATE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            DEFOBJETO(lexer);
-            Limpiar(lexer);
-            if(token == token.T_SET)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                UPD2(lexer);
-            }
-            else
-            {
-                //error32 se esperaba SET
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'SET' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error32 se esperaba UPDATE
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'UPDATE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    
-    
-    public void DEFOBJETO(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_TOP)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISIZQ)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                SCALAREXP(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPPARENTESISDER)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    DEFOBJETO1(lexer);
-                }
-                else
-                {
-                    //error32 se esperaba ")"
-                    if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-                }
-            }
-            else
-            {
-                //error32 se esperaba "("
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-            
-        }
-        else
-        {
-            DEFOBJETO2(lexer);
-        }
-    }
-    
-    public void DEFOBJETO1(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_PERCENT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            DEFOBJETO2(lexer);
-        }
-        else
-        {
-            DEFOBJETO2(lexer);
-        }
-    }
-     
-    public void DEFOBJETO2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            
-            OBJECT(lexer);
-        }
-        else if(token == token.T_OPENQUERY || token == token.T_OPENROWSET)
-        {
-            ROWSETF(lexer);
-        }
-        else if(token == token.T_ARROBA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error32 se esperaba ID o variable
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID o VARIABLE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    public void UPD2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            UPD3(lexer);
-        }
-        else if(token == token.T_ARROBA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                 token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                UPD9(lexer);
-            }
-            else
-            {
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-                    
-           
-        }
-        else
-        {
-            //error32 se esperaba VARIABLE o ID
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'VARIABLE o ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void UPD3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IGUAL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            UPD4(lexer);
-        }
-        else if (token == token.T_OPPUNTO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            UPD5(lexer);
-        }
-        else
-        {
-            //error32 se esperaba IGUAL o "."
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'IGUAL o .' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void UPD4(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_DEFAULT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            UPD8(lexer);
-        }
-        else if(token == token.T_NULL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            UPD8(lexer);
-        }
-        else
-        {
-            E3(lexer);
-            Limpiar(lexer);
-            UPD8(lexer);
-        }
-    }
-    
-    public void UPD5(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            UPD6(lexer);
-        }
-        else if(token == token.T_WRITE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISIZQ)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                E3(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPCOMA)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    UPD7(lexer);
-                    Limpiar(lexer);
-                    if(token == token.T_OPCOMA)
-                    {
-                        token = lexer.yylex();
-                        Contador(lexer);
-                        Limpiar(lexer);
-                        UPD7(lexer);
-                        Limpiar(lexer);
-                        if(token == token.T_OPPARENTESISDER)
-                        {
-                            token = lexer.yylex();
-                            Contador(lexer);
-                            Limpiar(lexer);
-                            UPD8(lexer);
-                        }
-                        else
-                        {
-                            //error32 se esperaba ")" 
-                            if(token == null)
-                            {
-
-                            }
-                            else
-                            {
-                                //error23
-                                ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                                Error(lexer);
-                                INICIO(lexer);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        //error32 se esperaba ","
-                        if(token == null)
-                        {
-
-                        }
-                        else
-                        {
-                            //error23
-                            ErroresSintac = ErroresSintac + "Se esperaba ',' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                            Error(lexer);
-                            INICIO(lexer);
-                        }
-                    }
-                    
-                }
-                else
-                {
-                    //error32 se esperaba ","
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba ',' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error32 se esperaba "("
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error32 se esperaba ID o WRITE
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID o WRITE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void UPD7(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_ENTERODECIMAL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_NULL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_ARROBA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            
-        }
-    }
-    
-    public void UPD9(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IGUAL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            UPD10(lexer);
-        }
-        else
-        {
-            //erorr32 se esperaba "="
-        }
-    }
-    
-    public void UPD10 (Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        E3(lexer);
-        Limpiar(lexer);
-        UPD8(lexer);
-        
-    }
-    
-    public void UPD8(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            UPD2(lexer);
-        }
-        else
-        {
-            FINALQUERY(lexer);
-        }
-    }
-    
-    public void UPD6(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IGUAL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            E3(lexer);
-            Limpiar(lexer);
-            UPD8(lexer);
-        }
-        else if(token == token.T_OPPARENTESISIZQ)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            ARGUMENT(lexer);
-            Limpiar(lexer);
-            if(token== token.T_OPPARENTESISDER)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                UPD8(lexer);
-            }
-        }
-        else
-        {
-            //error32 se esperaba "=" o "("
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '= o (' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void ARGUMENT(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        E3(lexer);
-        Limpiar(lexer);
-        ARGUMENT2(lexer);
-    }
-    
-    public void ARGUMENT2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            ARGUMENT(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    public void CREATE (Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_CREATE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_TABLE)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                CREATET1(lexer);
-            }
-            else if(token == token.T_DATABASE)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                CREATED(lexer);
-                Limpiar(lexer);
-                CREATED4(lexer);
-                
-            }
-            else if(token == token.T_USER)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                CREATEU(lexer);
-                
-            }
-            else if(token == token.T_INDEX || token == token.T_UNIQUE || token == token.T_CLUSTERED || token == token.T_NONCLUSTERED)
-            {
-                
-                CREATEI(lexer);
-               
-            }
-            else if(token == token.T_VIEW)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ALTERW(lexer);
-                
-            }
-            else
-            {
-                //error32 se esperaba TABLE, DATABASE, USER, INDEX, VIEW
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'TABLE DATABASE USER INDEX VIEW' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error32 se esperaba CREATE
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'CREATE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void CREATED4(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPUNTOCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INICIO(lexer);
-        }
-        else if (token == token.T_GO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INICIO(lexer);
-        }
-        else
-        {
-            //error12 se eseperaba ; o GO
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '; o GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-        
-    }
-    public void CREATEI(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_UNIQUE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            CREATEI2(lexer);
-        }
-        else
-        {
-            CREATEI2(lexer);
-        }
-        
-    }
-    
-    public void CREATEI2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_CLUSTERED)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            CREATEI3(lexer);
-        }
-        else if(token == token.T_NONCLUSTERED)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            CREATEI3(lexer);
-        }
-        else
-        {
-            CREATEI3(lexer);
-        }
-    }
-    
-    public void CREATEI3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_INDEX)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                if(token == token.T_ON)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    OBJECT(lexer);
-                    Limpiar(lexer);
-                    if(token == token.T_OPPARENTESISIZQ)
-                    {
-                        token = lexer.yylex();
-                        Contador(lexer);
-                        Limpiar(lexer);
-                        if(token == token.T_IDENTIFICADOR)
-                        {
-                            TRUNCAR(lexer);
-                            token = lexer.yylex();
-                            Contador(lexer);
-                            Limpiar(lexer);
-                            CREATEI4(lexer);
-                            Limpiar(lexer);
-                            CREATEI5(lexer);
-                            Limpiar(lexer);
-                            if(token == token.T_OPPARENTESISDER)
-                            {
-                                token = lexer.yylex();
-                                Contador(lexer);
-                                Limpiar(lexer);
-                                CREATEI6(lexer);
-                                Limpiar(lexer);
-                                COLUMNC4(lexer);
-                                Limpiar(lexer);
-                                CREATEI7(lexer);
-                            }
-                            else
-                            {
-                                //error12 se esperaba )
-                                if(token == null)
-                                {
-
-                                }
-                                else
-                                {
-                                    //error23
-                                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                                    Error(lexer);
-                                    INICIO(lexer);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            //error12 se esperaba ID
-                            if(token == null)
-                            {
-
-                            }
-                            else
-                            {
-                                //error23
-                                ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                                Error(lexer);
-                                INICIO(lexer);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        //error12 se esperaba (
-                        if(token == null)
-                        {
-
-                        }
-                        else
-                        {
-                            //error23
-                            ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                            Error(lexer);
-                            INICIO(lexer);
-                        }
-                    }
-                }
-                else
-                {
-                    //error12 se esperaba ON
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba 'ON' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error12 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error12 se esperaba IDNEX
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'INDEX' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void CREATEI4(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_ASC)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_DESC)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void CREATEI5(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token== token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                CREATEI4(lexer);
-                Limpiar(lexer);
-                CREATEI5(lexer);
-                
-            }
-            else
-            {
-                //error12 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void CREATEI6(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_WHERE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SEARCHWMATCH(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void CREATEI7(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPUNTOCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INICIO(lexer);
-        }
-        else if(token == token.T_GO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INICIO(lexer);
-        }
-        else
-        {
-            //error12 se esperaba GO o ;
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'GO o ;' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    public void CREATED(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            CREATED2(lexer);
-        }
-        else
-        {
-            //error12 Se esperaba ID
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void CREATED2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_COLLATE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error12 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-                
-            }
-        }
-        else
-        {
-            CREATED3(lexer);
-        }
-    }
-    
-    public void CREATED3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPUNTOCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INICIO(lexer);
-        }
-        else if (token == token.T_GO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INICIO(lexer);
-        }
-        else
-        {
-            //error12 se eseperaba ; o GO
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '; o GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    public void CREATET1(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        OBJECT(lexer);
-        Limpiar(lexer);
-        if(token == token.T_OPPARENTESISIZQ)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            CREATET(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISDER)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                COLUMNC4(lexer);
-                Limpiar(lexer);
-                FINC(lexer);
-            }
-            else
-            {
-                //error32 se esepraba )
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error32 se esperaba (
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-        
-    }
-    
-    public void FINC(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPUNTOCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INICIO(lexer);
-        }
-        else if(token == token.T_GO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INICIO(lexer);
-        }
-        else
-        {
-            //error32 se esperaba ; o GO
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '; o GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    public void CREATET(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            CREATET5(lexer);
-        }
-        else if(token == token.T_INDEX)
-        {
-            TABIND(lexer);
-            Limpiar(lexer);
-            CREATE3(lexer);
-            Limpiar(lexer);
-            
-        }
-        else if(token == token.T_CONSTRAINT || token == token.T_PRIMARY || token == token.T_UNIQUE || token ==  token.T_FOREIGN || token == token.T_CHECK)
-        {
-            TABLECON(lexer);
-            Limpiar(lexer);
-            CREATE3(lexer);
-            Limpiar(lexer);
-            
-            
-        }
-        
-    }
-    public void CREATET5(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_AS)
-        {
-            CCD(lexer);
-            Limpiar(lexer);
-            CREATE3(lexer);
-            
-        }
-        else if(token == token.T_INT || token == token.T_INTEGER|| token == token.T_SMALLINT || token == token.T_DECIMAL ||token == token.T_VARCHAR || token == token.T_FLOAT || token == token.T_BIT || token ==token.T_DATE || token == token.T_CHAR || token== token.T_NCHAR)
-        {
-            COLUMNDEF(lexer);
-            Limpiar(lexer);
-            CREATE3(lexer);
-            
-        }
-        else
-        {
-            //error32 se esperaba TIPO o AS
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'TIPO o AS' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void CREATE3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            CREATE4(lexer);
-        }
-        else if(token == token.T_IDENTIFICADOR)
-        {
-            CREATE4(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void CREATE4(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            CREATET6(lexer);
-        }
-        else if(token == token.T_INDEX)
-        {
-            TABIND(lexer);
-            Limpiar(lexer);
-            CREATE3(lexer);
-           
-        }
-        else if(token == token.T_CONSTRAINT || token == token.T_PRIMARY || token == token.T_UNIQUE || token ==  token.T_FOREIGN || token == token.T_CHECK)
-        {
-            TABLECON(lexer);
-            Limpiar(lexer);
-            CREATE3(lexer);
-          
-            
-        }
-    }
-    
-    public void CREATET6(Lexer lexer)throws IOException
-    {
-         Limpiar(lexer);
-        if(token == token.T_AS)
-        {
-            CCD(lexer);
-            Limpiar(lexer);
-            CREATE3(lexer);
-            
-        }
-        else if(token == token.T_INT || token == token.T_INTEGER|| token == token.T_SMALLINT || token == token.T_DECIMAL ||token == token.T_VARCHAR || token == token.T_FLOAT || token == token.T_BIT || token ==token.T_DATE || token == token.T_CHAR || token== token.T_NCHAR)
-        {
-            COLUMNDEF(lexer);
-            Limpiar(lexer);
-            CREATE3(lexer);
-            
-        }
-        else
-        {
-            //error32 se esperaba TIPO o AS
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'TIPO o AS' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    public void CREATEU(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token== token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            CREATEU2(lexer);
-        }
-        else
-        {
-            //error32 se esperaba ID
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void CREATEU2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPUNTOCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INICIO(lexer);
-        }
-        else if(token == token.T_GO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INICIO(lexer);
-        }
-        else
-        {
-            //error32 se esperaba GO ;
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'GO o ;' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    public void ALTER(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_ALTER)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_TABLE)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ALTERT(lexer);
-            }
-            else if(token == token.T_DATABASE)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ALTERD(lexer);
-            }
-            else if(token == token.T_USER)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ALTERU(lexer);
-                Limpiar(lexer);
-//                CREATED4(lexer);
-            }
-            else if(token == token.T_INDEX)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ALTERI(lexer);
-                Limpiar(lexer);
-//                CREATED4(lexer);
-            }
-            else if(token == token.T_VIEW)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ALTERW (lexer);
-            }
-            else
-            {
-                //error32 se esperaba TABLE, DATABASE, USER, INDEX, VIEW
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'TABLE DATABASE USER INDEX VIEW' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error32 se esperaba ALTER
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ALTER' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void ALTERT(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        OBJECT(lexer);
-        Limpiar(lexer);
-        ALTER1(lexer);
-        Limpiar(lexer);
-        FINALTER(lexer);
-    }
-    
-    public void FINALTER(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_GO)
-        {
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                INICIO(lexer);
-        }
-        else if(token == token.T_OPPUNTOCOMA)
-        {
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                INICIO(lexer);
-        }
-        else
-        {
-            //error12 se esperaba ; o GO
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '; o GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void ALTER1(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_ALTER)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_COLUMN)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                if(token  == token.T_IDENTIFICADOR)
-                {
-                    TRUNCAR(lexer);
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    ALTERT1(lexer);
-                }
-                else
-                {
-                    //error12 se esperaba ID
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error12 se esperaba COLUMN
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'COLUMN' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_ADD)
-        {
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ALTERT8(lexer);
-        }
-        else if(token == token.T_DROP)
-        {
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ALTERT10(lexer);
-        }
-        else
-        {
-            //error12 se esperaba ALTER ADD o DROP
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ADD ALTER DROP' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    
-    public void ALTERT1(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ALTERT2(lexer);
-        }
-        else
-        {
-            ALTERT6(lexer);
-        }
-    }
-    
-    public void ALTERT2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPUNTO)
-        {
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ALTERT3(lexer);
-            }
-            else
-            {
-                //error12 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            ALTERT3(lexer);
-        }
-    }
-    
-    public void ALTERT3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPARENTESISIZQ)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_ENTERODECIMAL)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ENT(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPPARENTESISDER)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    ALTERT4(lexer);
-                }
-                else
-                {
-                    //error12 se esperaba )
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error12 se esperaba NUMERO
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'NUMERO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            ALTERT4(lexer);
-        }
-    }
-    public void ENT(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_ENTERODECIMAL)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error12 se esperaba Numero
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'NUMERO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void ALTERT4(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_COLLATE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ALTERT5(lexer);
-            }
-            else
-            {
-                //error12 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            ALTERT5(lexer);
-        }
-    }
-    
-    public void ALTERT5(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_NULL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_NOT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_NULL)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error12 se esperaba NULL
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'NULL' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void ALTERT6(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_ADD)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            ALTERT7(lexer);
-        }
-        else if(token == token.T_DROP)
-        {
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ALTERT7(lexer);
-        }
-        else
-        {
-            //error12 se esperaba ID DROP o ADD
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID ADD O DROP' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void ALTERT7(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_ROWGUIDCOL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_NOT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_FOR)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                if(token == token.T_REPLICATION)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                }
-                else
-                {
-                    //error12 se esperaba REPLICATION
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba 'REPLICATION' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error12 se esperaba FOR
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'FOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error12 se esperaba ROWGUIDCOL o NOT 
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ROWGUIDCOL O NOT' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void ALTERT8(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            ALTERT14(lexer);
-            
-        }
-        else
-        {
-            TABLECON(lexer);
-            ALTERT9(lexer);
-        }
-    }
-    
-    public void ALTERT14(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_AS)
-        {
-            CCD(lexer);
-            Limpiar(lexer);
-            ALTERT9(lexer);
-            
-        }
-        else
-        {
-            COLUMNDEF(lexer);
-            Limpiar(lexer);
-            ALTERT9(lexer);
-        }
-    }
-    
-    public void ALTERT9(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            ALTERT8(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void ALTERT10(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_COLUMN)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            ALTERT12(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ALTERT13(lexer);
-            }
-            else
-            {
-                //error12 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            ALTERT11(lexer);
-            Limpiar(lexer);
-            ALTERT12(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ALTERT13(lexer);
-            }
-            else
-            {
-                //error12 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-    }
-    
-    public void ALTERT11(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_CONSTRAINT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void ALTERT12 (Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IF)
-        {
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                if(token == token.T_EXISTS)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                }
-                else
-                {
-                    //error12 se esperaba EXISTS
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba 'EXISTS' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void ALTERT13(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            ALTERT10(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-                
-              
-                
-    }
-    public void ALTERW(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            ALTERW2(lexer);
-        }
-        else
-        {
-            //error32 se esperaba ID
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void ALTERW2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPUNTO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-           
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ALTERW3(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            ALTERW3(lexer);
-        }
-    }
-    
-    public void ALTERW3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPARENTESISIZQ)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ALTERW5(lexer);
-                if(token == token.T_OPPARENTESISDER)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    ALTERW4(lexer);
-                }
-                else
-                {
-                    //error32 se esperaba ")"
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            ALTERW4(lexer);
-        }
-                
-    }
-    
-    public void ALTERW4(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPUNTOCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INICIO(lexer);
-        }
-        else if(token == token.T_GO)
-        {
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                INICIO(lexer);
-        }
-        else
-        {
-            //error32 se esperaba ; o GO
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'GO o ;' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void ALTERW5(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ALTERW5(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //vacio
-        }
-    }
-    public void ALTERI(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_ON)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                OBJECT(lexer);
-                Limpiar(lexer);
-                ALTERI3(lexer);
-                        
-                        
-            }
-            else
-            {
-                //error32 se esperaba ON
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ON' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_ALL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_ON)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                OBJECT(lexer);
-                Limpiar(lexer);
-                ALTERI3(lexer);
-            }
-            else{
-                //error32 se esperaba ON
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ON' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error32 se esperaba ID o ALL
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID o ALL' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-        
-    }
-    
-    public void ALTERI3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPUNTOCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INICIO(lexer);
-        }
-        else if(token == token.T_GO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INICIO(lexer);
-        }
-        else
-        {
-            //error32 se esperaba GO o ;
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'GO o ;' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    public void ALTERU(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            ALTERU2(lexer);
-        }
-        else
-        {
-            //error32 se esperaba ID
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void ALTERU2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPUNTOCOMA)
-        {
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                INICIO(lexer);
-        }
-        else if(token == token.T_GO)
-        {
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                INICIO(lexer);
-        }
-        else
-        {
-            //error32 se esperaba ; o GO
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'GO o ;' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-
-        }
-    
-    public void ALTERD(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            ALTERD3(lexer);
-        }
-        else if(token == token.T_CURRENT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            ALTERD3(lexer);
-        }
-        else
-        {
-            //error32 se esperaba ID o CURRENT
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID o CURRENT' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void ALTERD3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_COLLATE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                ALTERD4(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error32 se esperaba collate
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'COLLATE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void ALTERD4(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPUNTOCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INICIO(lexer);
-        }
-        else if(token == token.T_GO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INICIO(lexer);
-        }
-        else
-        {
-            //error32 se esperaba ; o GO
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '; o GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    public void DELETE(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        switch(token)
-        {
-            case T_DELETE:
-                token = lexer.yylex();
-                Contador(lexer);
-                DEL2(lexer);
-                Limpiar(lexer);
-                break;
-            default:
-                //error23 se espera DELETE
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'DELETE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-                break;
-        }
-    }
-    
-    public void DEL2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        switch(token)
-        {
-            case T_TOP:
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                
-                switch(token)
-                {
-                    case T_OPPARENTESISIZQ:
-                        
-                        token = lexer.yylex();
-                        Contador(lexer);
-                        Limpiar(lexer);
-                        SCALAREXP(lexer);
-                        
-                        switch(token)
-                        {
-                            case T_OPPARENTESISDER:
-                                
-                                token = lexer.yylex();
-                                Contador(lexer);
-                                Limpiar(lexer);
-                                DEL3(lexer);
-                                break;
-                            default:
-                                //error23 se esperaba ")"
-                                if(token == null)
-                                {
-
-                                }
-                                else
-                                {
-                                    //error23
-                                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                                    Error(lexer);
-                                    INICIO(lexer);
-                                }
-                                break;
-                        }
-                        break;
-                    default:
-                        //error23 se espera "("
-                        if(token == null)
-                        {
-
-                        }
-                        else
-                        {
-                            
-                            ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                            Error(lexer);
-                            INICIO(lexer);
-                        }
-                        break;
-                }
-                
-                break;
-            default:
-                DEL4(lexer);
-                break;
-        }
-    }
-    
-    public void DEL3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_PERCENT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            DEL4(lexer);
-        }
-        else
-        {
-            DEL4(lexer);
-        }
-    }
-    
-    public void DEL4(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_FROM)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            DEL5(lexer);
-        }
-        else
-        {
-            DEL5(lexer);
-        }
-    }
-    
-    public void DEL5(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_ARROBA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                FINALQUERY(lexer);
-            }
-            else
-            {
-                //error23 se esperaba identificador
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR ' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_IDENTIFICADOR)
-        {
-            OBJECT(lexer);
-            Limpiar(lexer);
-            FINALQUERY(lexer);
-            
-            
-         
-        }
-        else if(token == token.T_OPENROWSET)
-        {
-            ROWSETF(lexer);
-            Limpiar(lexer);
-            FINALQUERY(lexer);
-          
-            
-        }
-        else if(token == token.T_OPENQUERY)
-        {
-            ROWSETF(lexer);
-            Limpiar(lexer);
-            FINALQUERY(lexer);
-            
-            
-        }
-        else
-        {
-            //error23 se espera variable o identificador 
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-                
-    }
-    
-    public void SCALAREXP(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        SCALAREXP3(lexer);
-        SCALAREXP2(lexer);
-    }
-    
-    public void SCALAREXP2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if (token == token.T_OPSUMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SCALAREXP3(lexer);
-            SCALAREXP2(lexer);
-        }
-        else if (token == token.T_OPRESTA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SCALAREXP3(lexer);
-            SCALAREXP2(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    public void SCALAREXP3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        SCALAREXP5(lexer);
-        SCALAREXP4(lexer);
-    }
-    
-    public void SCALAREXP4(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPMULTI)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SCALAREXP5(lexer);
-            SCALAREXP4(lexer);
-        }
-        else if(token == token.T_OPDIV)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SCALAREXP5(lexer);
-            SCALAREXP4(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void SCALAREXP5(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPARENTESISIZQ)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SCALAREXP(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISDER)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error23 se esperaba ")"
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_ENTERODECIMAL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_DOUBLENUM)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_ARROBA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token ==token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error23 se esperaba identificador
-            }
-        }
-        else
-        {
-            //error23 se esperaba "@" "(" entero o float
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '@' o '(' o ENTERO o FLOAT Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    public void DML1(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        DML2(lexer);
-        Limpiar(lexer);
-        DML3(lexer);
-        
-        
-    }
-    
-    public void DML2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            COLNAME(lexer);
-        }
-        else
-        {
-            SCALAREXP(lexer);
-        }
-    }
-    
-    public void DML3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_AS)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                DML4(lexer);
-            }
-            else
-            {
-                //error23 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID ' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            DML4(lexer);
-        }
-    }
-    
-    public void DML4(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            DML1(lexer);
-        }
-        else
-        {
-            //vacio
-        }
-    }
-    
-    public void COLNAME(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPUNTO)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                COLNAME1(lexer);
-            }
-            else
-            {
-                //error23 se esperaba "."
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '.' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //vacio
-        }
-    }
-    
-    public void COLNAME1(Lexer lexer)throws IOException
-    {
-        if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            Limpiar(lexer);
-            if(token == token.T_OPMULTI)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //errror23 se espera "*" o identificador
-            }
-        }
-    }
-    public void OUTPUTCLAUSE(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OUTPUT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);            
-            DML1(lexer);
-            Limpiar(lexer);
-            OUTCL1(lexer);
-        }
-        else
-        {
-            //error23 se esperaba OUTPUT
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'OUTPUT' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void OUTCL1(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_INTO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            OUTCL2(lexer);
-        }
-        else
-        {
-            // no hacer nada porque vacio
-        }
-    }
-        
-    public void OUTCL2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_ARROBA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                OUTCL3(lexer);
-            }
-            else
-            {
-                //error23 se espera ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            OUTCL3(lexer);
-        }
-        else
-        {
-            //error23 se espera variable o id
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'VARIABLE' O IDENTIFICADOR Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void OUTCL3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPARENTESISIZQ)
-        {
-            COLIST(lexer);
-        }
-        else
-        {
-            //vacio
-        }
-        
-    }
-    
-    public void COLIST(Lexer lexer) throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPARENTESISIZQ)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            COLIST1(lexer);
-        }
-        else
-        {
-            //vacio
-        }
-    }
-    
-    public void COLIST1(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            COLIST2(lexer);
-            
-        }
-        else
-        {
-            //error23 se esperaba ID
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void COLIST2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            COLIST1(lexer);
-        }
-        else if(token == token.T_OPPARENTESISDER)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            //error23 se esperaba ")"
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            
-        }
-    }
-    public void ROWSETF(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPENROWSET)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            OPROW2(lexer);
-        }
-        else if(token == token.T_OPENQUERY)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            OPQUER2(lexer);
-        }
-    }
-    
-    public void OPROW2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPARENTESISIZQ)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_STRINGA)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPCOMA)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    OPROW3(lexer);
-                }
-                else
-                {
-                    //error23 se esperaba ","
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba ',' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error23 se esperaba string
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'STRING' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error23 se espesraba "("
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void OPROW3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_STRINGA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            OPROW4(lexer);
-        }
-        else
-        {
-            //error23 se esperaba un string
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'STRING' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-        
-    }
-    
-    public void OPROW4(Lexer lexer) throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPUNTOCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_STRINGA)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPPUNTOCOMA)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    if(token == token.T_STRINGA)
-                    {
-                        token = lexer.yylex();
-                        Contador(lexer);
-                        Limpiar(lexer);
-                        OPROW5(lexer);
-                    }
-                    else
-                    {
-                        //error23 se esperaba STRINGA
-                        if(token == null)
-                        {
-
-                        }
-                        else
-                        {
-                            //error23
-                            ErroresSintac = ErroresSintac + "Se esperaba 'STRING' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                            Error(lexer);
-                            INICIO(lexer);
-                        }
-                    }
-                }
-                else
-                {
-                    //error23 se esperaba ";"
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba ';' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error23 se esperaba STRING
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'STRING' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-                
-        }
-        else
-        {
-            OPROW5(lexer);
-        }
-    }
-    
-    public void OPROW5(Lexer lexer) throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            OPROW6(lexer);
-        }
-        else
-        {
-            //error23 se esperaba ","
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ',' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void OPROW6(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_STRINGA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISDER)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error23 se esperaba ")"
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            OBJECT(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISDER)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error23 se esperaba ")"
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-    }
-    
-    public void OPQUER2 (Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPARENTESISIZQ)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPCOMA)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    if(token == token.T_STRINGA)
-                    {
-                        token = lexer.yylex();
-                        Contador(lexer);
-                        Limpiar(lexer);
-                        if(token == token.T_OPPARENTESISDER)
-                        {
-                            token = lexer.yylex();
-                            Contador(lexer);
-                            Limpiar(lexer);
-                        }
-                        else
-                        {
-                            //error23 se espera ")"
-                            if(token == null)
-                            {
-
-                            }
-                            else
-                            {
-                                //error23
-                                ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                                Error(lexer);
-                                INICIO(lexer);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        //error23 se espera "string"
-                        if(token == null)
-                        {
-
-                        }
-                        else
-                        {
-                            //error23
-                            ErroresSintac = ErroresSintac + "Se esperaba 'STRING' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                            Error(lexer);
-                            INICIO(lexer);
-                        }
-                    }
-                }
-                else
-                {
-                   //error23 se esperaba "," 
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba ',' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error23 se esperaba identificador
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error23 se esperaba "("
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    public void FINALQUERY(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OUTPUT)
-        {
-            OUTPUTCLAUSE(lexer);
-            Limpiar(lexer);
-            FQ2(lexer);
-        }
-        else
-        {
-            FQ2(lexer);
-        }
-    }
-    
-    public void FQ2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_FROM)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            TABLESOURCE(lexer);
-            FQ3(lexer);
-        }
-        else
-        {
-            FQ3(lexer);
-        }
-    }
-    
-    public void FQ3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_WHERE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SEARCHWMATCH(lexer);
-            Limpiar(lexer);
-            FQ4(lexer);
-        }
-        else
-        {
-            FQ4(lexer);
-        }
-    }
-    
-    public void TABLESOURCE(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            OBJECT(lexer);
-            Limpiar(lexer);
-            TB1(lexer);
-            Limpiar(lexer);
-            SAM_CL(lexer);
-            Limpiar(lexer);
-            TABLE2(lexer);
-        }
-        else if(token == token.T_OPENQUERY || token == token.T_OPENROWSET)
-        {
-            ROWSETF(lexer);
-            Limpiar(lexer);
-            TB1(lexer);
-            Limpiar(lexer);
-            TABLE2(lexer);
-        }
-        else if (token == token.T_ARROBA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                TB1(lexer);
-                Limpiar(lexer);
-                TABLE2(lexer);
-            }
-            else
-            {
-                //error32 se esperaba id
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_OPPARENTESISIZQ)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            TABLESOURCE(lexer);
-            Limpiar(lexer);
-            TABLE3(lexer);
-            Limpiar(lexer);
-            TABLE2(lexer);
-        }
-        else
-        {
-            //se esperaba ID o VARIABLE
-        }
-    }
-    
-    public void TABLE2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_INNER || token == token.T_LEFT || token == token.T_RIGHT || token == token.T_FULL || token == token.T_JOIN)
-        {
-            
-            JOINTYPE(lexer);
-            Limpiar(lexer);
-            TABLESOURCE(lexer);
-            Limpiar(lexer);
-            if(token == token.T_ON)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                SEARCHWMATCH(lexer);
-                Limpiar(lexer);
-                TABLE2(lexer);
-            }
-            else
-            {
-                //error32 se esperaba ON
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ON' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_CROSS)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_JOIN)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                TABLESOURCE(lexer);
-                Limpiar(lexer);
-                TABLE2(lexer);
-            }
-            else
-            {
-                //error32 se esperaba JOIN
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'JOIN' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-                
-            }
-            
-        }
-        else
-        {
-            //vacio
-        }
-    }
-    
-    public void TABLE3 (Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_INNER || token == token.T_LEFT || token == token.T_RIGHT || token == token.T_FULL || token == token.T_JOIN)
-        {
-            
-            JOINTYPE(lexer);
-            Limpiar(lexer);
-            TABLESOURCE(lexer);
-            Limpiar(lexer);
-            if(token == token.T_ON)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                SEARCHWMATCH(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPPARENTESISDER)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    TABLE2(lexer);
-                }
-                else
-                {
-                    //error32 se esperaba ")"
-                    if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-                }
-                
-            }
-            else if(token == token.T_CROSS)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                if(token == token.T_JOIN)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    TABLESOURCE(lexer);
-                    if(token == token.T_OPPARENTESISDER)
-                    {
-                        token = lexer.yylex();
-                        Contador(lexer);
-                        Limpiar(lexer);
-                        TABLE2(lexer);
-                    }
-                    else
-                    {
-                        //error32 se esperaba ")"
-                        if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-                    } 
-                }
-                else
-                {
-                    //error32 se esperaba JOIN
-                    if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'JOIN' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-
-                }
-
-            }
-            else
-            {
-                //error32 se esperaba ON
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ON' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-    }
-    public void JOIN_TB(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR || token == token.T_OPENQUERY || token == token.T_OPENROWSET || token == token.T_ARROBA)
-        {
-            TABLESOURCE(lexer);
-            Limpiar(lexer);
-            JOIN_TB2(lexer);
-        }
-        else if(token == token.T_OPPARENTESISIZQ)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            JOIN_TB(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISDER)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else{
-                //error32 se esperaba ")"
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error32 se esperaba identificador 
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-        
-    }
-    
-    public void JOINTYPE (Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        JOINTYPE1(lexer);
-        if(token == token.T_JOIN)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            //error32 se esperaba JOIN
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'JOIN' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void JOINTYPE1(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_INNER)
-        {
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-        }
-        else if(token == token.T_LEFT)
-        {
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                JOINTYPE3(lexer);
-        }
-        else if(token == token.T_RIGHT)
-        {
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                JOINTYPE3(lexer);
-        }
-        else if(token == token.T_FULL)
-        {
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                JOINTYPE3(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void JOINTYPE3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OUTER)
-        {
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    public void JOIN_TB2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_CROSS)
-        {
-            token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-        }
-        else
-        {
-            JOINTYPE(lexer);
-            Limpiar(lexer);
-            TABLESOURCE(lexer);
-            Limpiar(lexer);
-            if(token == token.T_ON)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                SEARCHWMATCH(lexer);
-                
-            }
-            else
-            {
-                //error32 se esperaba ON
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ON' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-    }
-    
-    public void JOIN_TYPE(Lexer lexer )throws IOException
-    {
-        
-    }
-    public void TB1(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_AS)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error32 se esperaba identificador
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if (token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void SAM_CL(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_TABLESAMPLE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISIZQ)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                SCALAREXP(lexer);
-                Limpiar(lexer);
-                SAM_CL3(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPPARENTESISDER)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                }
-                else
-                {
-                    //error32 se esperaba ")"
-                    if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-                }
-               
-            }
-            else
-            {
-                //error32 se esperaba "("
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void SAM_CL3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_PERCENT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_ROWS)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-//    public void SEARCHC(Lexer lexer)throws IOException
-//    {
-//        Limpiar(lexer);
-//        SEARCHWMATCH(lexer);
-//        Limpiar(lexer);
-//        SEARCHC2(lexer);
 //    }
-//    public void SEARCHC2(Lexer lexer)throws IOException
+//    
+//    public void TABLECON4(Lexer lexer)throws IOException
 //    {
 //        Limpiar(lexer);
-//        if(token == token.T_AND)
+//        if(token == token.T_ASC)
 //        {
 //            token = lexer.yylex();
 //            Contador(lexer);
 //            Limpiar(lexer);
-//            SEARCHC(lexer);
-//            //SEARCHC2(lexer); hacer pruebas
-//            
+//            TABLECON6(lexer);
+//        }
+//        else if(token == token.T_DESC)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            TABLECON6(lexer);
 //        }
 //        else
 //        {
-//            //no hace nada es vacio
+//            TABLECON6(lexer);
 //        }
 //    }
-    
-    public void SEARCHWMATCH(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_NOT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            PREDICADO(lexer);
-            Limpiar(lexer);
-            SCWM2(lexer);
-            Limpiar(lexer);
-            
-        }
-        else if (token == token.T_OPPARENTESISIZQ)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SEARCHWMATCH(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISDER)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                SCWM2(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error23 se esperaba ")"
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            PREDICADO(lexer);
-            Limpiar(lexer);
-            SCWM2(lexer);
-            Limpiar(lexer);
-        }
-        
-    }
-    
-    public void PREDICADO(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-//        if(token == token.T_STRINGA)
+//    
+//    public void TABLECON6(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
 //        {
 //            token = lexer.yylex();
 //            Contador(lexer);
 //            Limpiar(lexer);
-//            NOT1(lexer);
-//            if(token == token.T_LIKE)
+//            TABLECON8(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void TABLECON7(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
 //            {
+//                TRUNCAR(lexer);
 //                token = lexer.yylex();
 //                Contador(lexer);
 //                Limpiar(lexer);
-//                if(token == token.T_STRINGA)
-//                {
-//                    token = lexer.yylex();
-//                    Contador(lexer);
-//                    Limpiar(lexer);                    
-//                }
-//                else
-//                {
-//                    //error23 se esperaba string
-//                    if(token == null)
-//                    {
-//
-//                    }
-//                    else
-//                    {
-//                        //error23
-//                        ErroresSintac = ErroresSintac + "Se esperaba 'STRING' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-//                        Error(lexer);
-//                        INICIO(lexer);
-//                    }
-//                }
+//                TABLECON7(lexer);
 //            }
 //            else
 //            {
-//                //error23 se esperaba LIKE
+//                //error32 se esperaba ID
 //                if(token == null)
 //                {
 //                    
@@ -7855,261 +750,6224 @@ public class minisql extends javax.swing.JFrame {
 //                else
 //                {
 //                    //error23
-//                    ErroresSintac = ErroresSintac + "Se esperaba 'LIKE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
 //                    Error(lexer);
 //                    INICIO(lexer);
 //                }
 //            }
 //        }
-        if(token == token.T_CONTAINS)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISIZQ)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                FT1(lexer);
-                if(token == token.T_OPCOMA)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    CSC1(lexer);
-                    if(token == token.T_OPPARENTESISDER)
-                    {
-                        token = lexer.yylex();
-                        Contador(lexer);
-                        Limpiar(lexer);
-                    }
-                    else
-                    {
-                        //error23 se esperaba ")"
-                        if(token == null)
-                        {
-
-                        }
-                        else
-                        {
-                            //error23
-                            ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                            Error(lexer);
-                            INICIO(lexer);
-                        }
-                    }
-                }
-                else
-                {
-                    //error23 se esperaba ","
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba ',' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error23 se esperaba "("
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_FREETEXT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISIZQ)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                FT1(lexer);
-                if(token == token.T_OPCOMA)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                    if(token == token.T_STRINGA)
-                    {
-                        token = lexer.yylex();
-                        Contador(lexer);
-                        Limpiar(lexer);
-                        if(token == token.T_OPPARENTESISDER)
-                        {
-                            token = lexer.yylex();
-                            Contador(lexer);
-                            Limpiar(lexer);
-                        }
-                        else
-                        {
-                            //error23 se esperaba string
-                            if(token == null)
-                            {
-
-                            }
-                            else
-                            {
-                                //error23
-                                ErroresSintac = ErroresSintac + "Se esperaba 'STRING' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                                Error(lexer);
-                                INICIO(lexer);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        //error23 se esperaba string
-                        if(token == null)
-                        {
-
-                        }
-                        else
-                        {
-                            //error23
-                            ErroresSintac = ErroresSintac + "Se esperaba 'STRING' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                            Error(lexer);
-                            INICIO(lexer);
-                        }
-                    }
-                }
-                else
-                {
-                    //error23 se esperaba ","
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba ',' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                    }
-                }
-            else
-            {
-                //error23 se esperaba "("
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            E(lexer);
-            Limpiar(lexer);
-            PRED1(lexer);
-        }
-    }
-    
-    public void E(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        T(lexer);
-        Limpiar(lexer);
-        E2(lexer);
-    }
-    
-    public void E2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if (token == token.T_OPSUMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            T(lexer);
-            Limpiar(lexer);
-            E2(lexer);
-        }
-        else if (token == token.T_OPRESTA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            T(lexer);
-            Limpiar(lexer);
-            E2(lexer);
-        }
-        else
-        {
-            //vacio
-        }
-    }
-    
-    public void T(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        G(lexer);
-        Limpiar(lexer);
-        T2(lexer);
-    }
-    
-    public void T2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPMULTI)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            G(lexer);
-            Limpiar(lexer);
-            T2(lexer);
-        }
-        else if(token == token.T_OPDIV)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            G(lexer);
-            Limpiar(lexer);
-            T2(lexer);
-        }
-        else
-        {
-            //vacio
-        }
-    }
-    
-    public void G(Lexer lexer)throws IOException
-    {
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void TABIND(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_INDEX)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                TABLECON2(lexer);
+//                if(token == token.T_OPPARENTESISIZQ)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    TABLECON8(lexer);
+//                    Limpiar(lexer);
+//                    if(token == token.T_OPPARENTESISDER)
+//                    {
+//                        token = lexer.yylex();
+//                        Contador(lexer);
+//                        Limpiar(lexer);  
+//                        COLUMNC4(lexer);
+//                    }
+//                }
+//                else
+//                {
+//                    //error32 se esperaba (
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error32 se espseraba INDEX
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'INDEX' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void DATATYPE(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token ==  token.T_INT || token == token.T_INTEGER || token == token.T_SMALLINT || token == token.T_DECIMAL || token == token.T_FLOAT || token == token.T_BIT || token ==  token.T_DATE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_VARCHAR || token == token.T_CHAR)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISIZQ)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_ENTERODECIMAL)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    if(token == token.T_OPPARENTESISDER)
+//                    {
+//                        token = lexer.yylex();
+//                        Contador(lexer);
+//                        Limpiar(lexer);
+//                    }
+//                    else
+//                    {
+//                        //error32 se esperaba )
+//                        if(token == null)
+//                        {
+//
+//                        }
+//                        else
+//                        {
+//                            //error23
+//                            ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                            Error(lexer);
+//                            INICIO(lexer);
+//                        }
+//                    }
+//                }
+//                else
+//                {
+//                    //error32 se esperaba un numero
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba 'NUMERO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }   
+//                }
+//            }
+//            else
+//            {
+//                //error32 se esperaba (
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_NCHAR)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISIZQ)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_ENTERODECIMAL)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    if(token == token.T_OPPARENTESISDER)
+//                    {
+//                        token = lexer.yylex();
+//                        Contador(lexer);
+//                        Limpiar(lexer);
+//                    }
+//                    else
+//                    {
+//                        //error32 se esperaba )
+//                        if(token == null)
+//                        {
+//
+//                        }
+//                        else
+//                        {
+//                            //error23
+//                            ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                            Error(lexer);
+//                            INICIO(lexer);
+//                        }
+//                    }
+//                }
+//                else
+//                {
+//                    //error32 se esperaba un numero
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba 'NUMERO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error32 se esperaba (
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error32 se esperaba un tipo de dato valido
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'TIPO DE DATO VALIDO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    public void COLUMNDEF (Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        DATATYPE(lexer);
+//        Limpiar(lexer);
+//        COLUMNDEF2(lexer);
+//    }
+//    
+//    public void COLUMNDEF2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_COLLATE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                COLUMNDEF3(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            COLUMNDEF3(lexer);
+//        }
+//        
+//    }
+//    
+//    public void COLUMNDEF3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_CONSTRAINT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                COLUMNDEF4(lexer);
+//            }
+//            
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            COLUMNDEF5(lexer);
+//        }
+//    }
+//    
+//    public void COLUMNDEF4(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_DEFAULT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SCALAREXP(lexer);
+//            Limpiar(lexer);
+//            COLUMNDEF5(lexer);
+//        }
+//        else
+//        {
+//            COLUMNDEF5(lexer);
+//        }
+//    }
+//    
+//    public void COLUMNDEF5(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTITY)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            COLUMNDEF6(lexer);
+//        }
+//        else
+//        {
+//            COLUMNDEF7(lexer);
+//        }
+//    }
+//    
+//    public void SEED(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_ENTERODECIMAL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_DOUBLENUM)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba un numero
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'NUMERO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//        
+//    }
+//     
+//    public void COLUMNDEF6(Lexer lexer)throws IOException
+//    {
 //        Limpiar(lexer);
 //        if(token == token.T_OPPARENTESISIZQ)
 //        {
 //            token = lexer.yylex();
 //            Contador(lexer);
 //            Limpiar(lexer);
-//            E(lexer);
+//            SEED(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPCOMA)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                SEED(lexer);
+//                Limpiar(lexer);
+//                
+//                if(token == token.T_OPPARENTESISDER)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    COLUMNDEF7(lexer);
+//                }
+//                else
+//                {
+//                    //error32 se esperaba ")"
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error32 se esperaba ,
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ',' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            COLUMNDEF7(lexer);
+//        }
+//    }
+//    
+//    public void COLUMNDEF7(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_NOT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            COLUMNDEF8(lexer);
+//        }
+//        else
+//        {
+//            COLUMNDEF9(lexer);
+//        }
+//    }
+//    
+//    public void COLUMNDEF8(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_FOR)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_REPLICATION)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                COLUMNDEF9(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba REPLICATION
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'REPLICATION' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_NULL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            COLUMNDEF10(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba NULL o FOR
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'NULL o FOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void COLUMNDEF9(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_NOT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_NULL)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                COLUMNDEF10(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba NULL
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'NULL' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_NULL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            COLUMNDEF10(lexer);
+//        }
+//        else
+//        {
+//            COLUMNDEF10(lexer);
+//        }
+//    }
+//    
+//    public void COLUMNDEF10(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_ROWGUIDCOL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            COLUMNDEF11(lexer);
+//        }
+//        else
+//        {
+//            COLUMNDEF11(lexer);
+//        }
+//    }
+//    
+//    public void COLUMNDEF11(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_CONSTRAINT || token == token.T_PRIMARY || token == token.T_UNIQUE || token == token.T_FOREIGN || token == token.T_REFERENCES || token == token.T_CHECK)
+//        {
+//            COLUMNCONSTRAINT(lexer);
+//            Limpiar(lexer);
+//            COLUMNDEF13(lexer);
+//            Limpiar(lexer);
+//            COLUMNDEF12(lexer);
+//        }
+//        else
+//        {
+//            COLUMNDEF12(lexer);
+//        }
+//    }
+//    
+//    public void COLUMNDEF12(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_INDEX)
+//        {
+//            COLUMNINDEX(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void COLUMNDEF13(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            COLUMNCONSTRAINT(lexer);
+//            Limpiar(lexer);
+//            COLUMNDEF13(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void COLUMNCONSTRAINT(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_CONSTRAINT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                COLUMNC2(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            COLUMNC2(lexer);
+//        }
+//    }
+//    
+//    public void COLUMNC2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_PRIMARY)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_KEY)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                COLUMNC3(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba KEY
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'KEY' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_UNIQUE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            COLUMNC3(lexer);
+//        }
+//        else if(token ==  token.T_FOREIGN)
+//        {
+//            
+//            COLUMNC5(lexer);
+//        }
+//        else if(token == token.T_REFERENCES)
+//        {
+//            
+//            COLUMNC5(lexer);
+//        }
+//        else if(token == token.T_CHECK)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            COLUMNC16(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba PRIMARY o FOREIGN
+////            if(token == null)
+////                {
+////                    
+////                }
+////                else
+////                {
+////                    //error23
+////                    ErroresSintac = ErroresSintac + "Se esperaba 'PRIMARY o FOREIGN' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+////                    Error(lexer);
+////                    INICIO(lexer);
+////                }
+//            
+//        }
+//    }
+//    
+//    public void COLUMNC3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_CLUSTERED)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            COLUMNC4(lexer);
+//        }
+//        else if(token == token.T_NONCLUSTERED)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            COLUMNC4(lexer);
+//        }
+//        else
+//        {
+//            COLUMNC4(lexer);
+//        }
+//    }
+//    
+//    public void COLUMNC4(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_ON)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token ==  token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                COLUMNC20(lexer);
+//                                  
+//            }  
+//            else if(token == token.T_PRIMARY || token == token.T_DEFAULT)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    public void COLUMNC20 (Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//       
+//            if(token == token.T_OPPARENTESISIZQ)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_IDENTIFICADOR)
+//                {
+//                    TRUNCAR(lexer);
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    if(token == token.T_OPPARENTESISDER)
+//                    {
+//                        token = lexer.yylex();
+//                        Contador(lexer);
+//                        Limpiar(lexer);
+//                    }
+//                    else
+//                    {
+//                            //error32 se esperaba ")"
+//                        if(token == null)
+//                        {
+//
+//                        }
+//                        else
+//                        {                        
+//                                //error23
+//                                ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                                Error(lexer);
+//                                INICIO(lexer);
+//                        }
+//                    }
+//                }
+//                else
+//                {
+//                        //error32 se esperaba ID
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {                        
+//                            //error23
+//                            ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                            Error(lexer);
+//                            INICIO(lexer);
+//                    }
+//                    
+//                }
+//            }
+//            else
+//            {
+//                //nada porque vacio
+//            }
+//        
+//                    
+//        
+//    }
+//    public void COLUMNC5(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_FOREIGN)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_KEY)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                COLUMNC6(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba KEY
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'KEY' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            COLUMNC6(lexer);
+//        }
+//    }
+//    
+//    public void COLUMNC6(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_REFERENCES)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                COLUMNC7(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error32 se esperaba REFEReNCEs
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'REFERENCES' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void COLUMNC7(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPUNTO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                COLUMNC8(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            COLUMNC8(lexer);
+//        }
+//    }
+//    
+//    public void COLUMNC8(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token ==token.T_OPPARENTESISIZQ)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                COLUMNC10(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPPARENTESISDER)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    COLUMNC9(lexer);
+//                }
+//                else
+//                {
+//                    //error32 se esperaba ")"
+//                    if(token == null)
+//                    {  
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            COLUMNC9(lexer);
+//        }
+//    }
+//    
+//    public void COLUMNC10(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                COLUMNC10(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void COLUMNC9(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_ON)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            COLUMNC11(lexer);
+//        }
+//        else
+//        {
+//            COLUMNC15(lexer);
+//        }
+//    }
+//    
+//    public void COLUMNC11(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_DELETE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            COLUMNC12(lexer);
+//            Limpiar(lexer);
+//            COLUMNC14(lexer);
+//        }
+//        else if(token == token.T_UPDATE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            COLUMNC12(lexer);
+//            Limpiar(lexer);
+//            COLUMNC15(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba DELETE o UPDATE
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'DELETE o UPDATE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void COLUMNC12(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_NO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_ACTION)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba ACTION
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ACTION' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_CASCADE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_SET)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            COLUMNC13(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba NO, CASCADE o SET
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'NO, CASCADE o SET' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void COLUMNC13(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_NULL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_DEFAULT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba NULL o DEFAULT
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'NULL o DEFAULT' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void COLUMNC14(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_ON)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_UPDATE)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                COLUMNC12(lexer);
+//                Limpiar(lexer);
+//                COLUMNC15(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba UPDATE
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'UPDATE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            COLUMNC15(lexer);
+//        }
+//        
+//    }
+//    
+//    public void COLUMNC15(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_NOT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_FOR)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_REPLICATION)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                }
+//                else
+//                {
+//                    //error32 se esperaba REPLICATION
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba 'REPLICATION' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error32 se esperaba FOR
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'FOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void COLUMNC16(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_CHECK)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            COLUMNC17(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISIZQ)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                E5(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPPARENTESISDER)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                }
+//            }
+//            else
+//            {
+//                //error32 se esperaba )
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error32 se esperaba CHECK
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'CHECK' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void COLUMNC17(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_NOT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_FOR)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_REPLICATION)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                }
+//                else
+//                {
+//                    //error32 se esperaba REPLICATION
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba 'REPLICATION' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error32 se esperaba FOR
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'FOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//                
+//    }
+//    public void SELECT(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_SELECT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SELECT2(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba SELECT
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'SELECT' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void SELECT2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        SELECT3(lexer);
+//        Limpiar(lexer);
+//        SELECT4(lexer);
+//    }
+//    
+//    public void SELECT3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_ALL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_DISTINCT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void SELECT4(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_TOP)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SELECT5(lexer);
+//        }
+//        else
+//        {
+//            SELECT7(lexer);
+//        }
+//    }
+//    
+//    public void SELECT5(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPARENTESISIZQ)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SCALAREXP(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISDER)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                SELECT6(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba ")"
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error32 se esperaba "("
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void SELECT6(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_PERCENT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SELECT7(lexer);
+//        }
+//        else
+//        {
+//            SELECT7(lexer);
+//        }
+//    }
+//    
+//    public void SELECT7(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        SELIST(lexer);
+//        Limpiar(lexer);
+//        SELECT8(lexer);
+//    }
+//    
+//    public void SELECT8(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_INTO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SELECT9(lexer);
+//        }
+//        else
+//        {
+//            SELECT11(lexer);
+//        }
+//    }
+//    
+//    public void SELECT9(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            OBJECT(lexer);
+//            Limpiar(lexer);
+//            SELECT11(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba ID
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void SELECT11(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_FROM)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            TABLESOURCE(lexer);
+//            Limpiar(lexer);
+//            SELECT17(lexer);
+//           
+//        }
+//        else
+//        {
+//            SELECT12(lexer);
+//        }
+//    }
+//    
+//    public void SELECT12(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_WHERE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SEARCHWMATCH(lexer);
+//            Limpiar(lexer);
+//            SELECT13(lexer);
+//        }
+//        else
+//        {
+//            SELECT13(lexer);
+//        }
+//    }
+//    
+//    public void SELECT13(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_GROUP)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_BY)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                GROUP_CL(lexer);
+//                Limpiar(lexer);
+//                SELECT14(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esepraba BY
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'BY' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            SELECT14(lexer);
+//        }
+//    }
+//    
+//    public void SELECT14(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_HAVING)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SEARCHWMATCH(lexer);
+//            Limpiar(lexer);
+//            SELECT15(lexer);
+//                    
+//        }
+//        else
+//        {
+//            SELECT15(lexer);
+//        }
+//    }
+//    
+//    public void SELECT15(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_ORDER)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_BY)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ORDER(lexer);
+//                SELECT16(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba BY
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'BY' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//           SELECT16(lexer);
+//        }
+//    }
+//    
+//    public void SELECT16(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_GO)
+//        {
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                INICIO(lexer);
+//        }
+//        else if(token == token.T_OPPUNTOCOMA)
+//        {
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                INICIO(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba GO o ;
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'GO o ;' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    public void SELECT17(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            TABLESOURCE(lexer);
+//            Limpiar(lexer);
+//            SELECT17(lexer);
+//        }
+//        else
+//        {
+//            SELECT12(lexer);
+//        }
+//    }
+//    
+//    public void GROUP_CL(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        E5(lexer);
+//        Limpiar(lexer);
+//        GROUP_CL2(lexer);
+////        if(token == token.T_IDENTIFICADOR)
+////        {
+////            TRUNCAR(lexer);
+////            token = lexer.yylex();
+////            Contador(lexer);
+////            Limpiar(lexer);
+////            GROUP_CL2(lexer);
+////        }
+////        else
+////        {
+////            //error32 se esperaba ID
+////            if(token == null)
+////                {
+////                    
+////                }
+////                else
+////                {
+////                    //error23
+////                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+////                    Error(lexer);
+////                    INICIO(lexer);
+////                }
+////        }
+//    }
+//    
+//    public void GROUP_CL2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            GROUP_CL(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    public void ORDER(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        E5(lexer);
+//        Limpiar(lexer);
+//        ORDER1(lexer);
+//    }
+//    
+//    public void ORDER1(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_COLLATE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ORDER2(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            ORDER2(lexer);
+//        }
+//    }
+//    
+//    public void ORDER2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_ASC)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            ORDER3(lexer);
+//            
+//        }
+//        else if(token == token.T_DESC)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            ORDER3(lexer);
+//        }
+//        else
+//        {
+//            ORDER3(lexer);
+//        }
+//    }
+//    
+//    public void ORDER3(Lexer lexer) throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            ORDER(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    public void SELIST(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        SELIST1(lexer);
+//        Limpiar(lexer);
+//        SELIST7(lexer);
+//        
+//    }
+//    
+//    public void SELIST1(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPMULTI)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            
+//        }
+//        else if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SELIST2(lexer);
+//        }
+//        else
+//        {
+//            E5(lexer);
+//            Limpiar(lexer);
+//            SELIST5(lexer);
+//        }
+//    }
+//           
+//    public void SELIST2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPUNTO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SELIST3(lexer);
+//        }
+//        else if(token == token.T_IGUAL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SELIST6(lexer);
+//        }
+//        else if(token == token.T_AS)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void SELIST3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPMULTI)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba ID o *
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID o *' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void SELIST5(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_AS)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//            
+//    }
+//    
+//    public void SELIST6(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        E5(lexer);
+//    }
+//    
+//    public void SELIST7(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SELIST(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    public void INSERT(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_INSERT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INSERT1(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba INSERT
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'INSERT' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//              
+//    }
+//    
+//    public void INSERT1(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_TOP)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISIZQ)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                SCALAREXP(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPPARENTESISDER)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    INSERT2(lexer);
+//                }
+//                else
+//                {
+//                    //error32 se esperaba ")"
+//                    if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//                }
+//            }
+//            else
+//            {
+//                //error32 se esperaba "("
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            INSERT3(lexer);
+//        }
+//    }
+//    
+//    public void INSERT2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_PERCENT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INSERT3(lexer);
+//        }
+//        else
+//        {
+//            INSERT3(lexer);
+//        }
+//    }
+//    
+//    public void INSERT3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_INTO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INSERT4(lexer);
+//        }
+//        else
+//        {
+//            INSERT4(lexer);
+//        }
+//    }
+//    
+//    public void INSERT4(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            OBJECT(lexer);
+//            Limpiar(lexer);
+//            INSERT5(lexer);
+//        }
+//        else if(token == token.T_OPENQUERY || token == token.T_OPENROWSET)
+//        {
+//            ROWSETF(lexer);
+//            Limpiar(lexer);
+//            INSERT5(lexer);
+//        }
+//        else if(token == token.T_ARROBA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                INSERT5(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error32 se esperaba ID o VARIABLE
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID o VARIABLE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//                
+//             
+//    }
+//    
+//    public void INSERT5(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPARENTESISIZQ)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                COLUMNLIST(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPPARENTESISDER)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    INSERT6(lexer);
+//                }
+//                else
+//                {
+//                     //error32 se esperaba ")"
+//                    if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//                }
+//            }
+//            
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            INSERT6(lexer);
+//        }
+//    }
+//    
+//    public void COLUMNLIST(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                COLUMNLIST(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    public void INSERT6(Lexer lexer) throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OUTPUT)
+//        {
+//            OUTPUTCLAUSE(lexer);
+//            Limpiar(lexer);
+//            INSERT7(lexer);
+//        }
+//        else
+//        {
+//            INSERT7(lexer);
+//        }
+//    }
+//    
+//    public void INSERT7(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_VALUES)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISIZQ)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                INSERT8(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPPARENTESISDER)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    INSERT11(lexer);
+//                    Limpiar(lexer);
+//                    INSERT10(lexer);
+//                }
+//                else
+//                {
+//                    //error32 se esperaba ")"
+//                    if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//                }
+//            }
+//            else
+//            {
+//                //error32 se esperaba "("
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_DEFAULT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_VALUES)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                INSERT10(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba VALEUS
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'VALUES' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error32 se esperaba VALUES o DEFAULT VALUES
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'VALUES o DEFAULT VALUES' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//        
+//    }
+//    
+//    public void INSERT8(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_DEFAULT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer); 
+//            INSERT9(lexer);
+//        }
+//        else if(token == token.T_NULL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INSERT9(lexer);
+//        }
+//        else
+//        {
+//            E5(lexer);
+//            Limpiar(lexer);
+//            INSERT9(lexer);
+//        }
+//
+//    }
+//    
+//    public void INSERT9(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INSERT8(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//        
+//    }
+//    
+//    public void INSERT11(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISIZQ)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                INSERT8(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPPARENTESISDER)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    INSERT11(lexer);
+//                }
+//                else
+//                {
+//                    //error32 se esperaba ")"
+//                    if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ') Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//                }
+//            }
+//            else
+//            {
+//                //error32 se esperaba "("
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void INSERT10(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token ==token.T_OPPUNTOCOMA)
+//        {
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                INICIO(lexer);
+//        }
+//        else if(token == token.T_GO)
+//        {
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                INICIO(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba ; o GO
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '; o GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    public void UPDATE(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_UPDATE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            DEFOBJETO(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_SET)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                UPD2(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba SET
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'SET' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error32 se esperaba UPDATE
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'UPDATE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    
+//    
+//    public void DEFOBJETO(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_TOP)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISIZQ)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                SCALAREXP(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPPARENTESISDER)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    DEFOBJETO1(lexer);
+//                }
+//                else
+//                {
+//                    //error32 se esperaba ")"
+//                    if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//                }
+//            }
+//            else
+//            {
+//                //error32 se esperaba "("
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//            
+//        }
+//        else
+//        {
+//            DEFOBJETO2(lexer);
+//        }
+//    }
+//    
+//    public void DEFOBJETO1(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_PERCENT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            DEFOBJETO2(lexer);
+//        }
+//        else
+//        {
+//            DEFOBJETO2(lexer);
+//        }
+//    }
+//     
+//    public void DEFOBJETO2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            
+//            OBJECT(lexer);
+//        }
+//        else if(token == token.T_OPENQUERY || token == token.T_OPENROWSET)
+//        {
+//            ROWSETF(lexer);
+//        }
+//        else if(token == token.T_ARROBA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error32 se esperaba ID o variable
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID o VARIABLE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    public void UPD2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            UPD3(lexer);
+//        }
+//        else if(token == token.T_ARROBA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                 token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                UPD9(lexer);
+//            }
+//            else
+//            {
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//                    
+//           
+//        }
+//        else
+//        {
+//            //error32 se esperaba VARIABLE o ID
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'VARIABLE o ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void UPD3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IGUAL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            UPD4(lexer);
+//        }
+//        else if (token == token.T_OPPUNTO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            UPD5(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba IGUAL o "."
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'IGUAL o .' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void UPD4(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_DEFAULT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            UPD8(lexer);
+//        }
+//        else if(token == token.T_NULL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            UPD8(lexer);
+//        }
+//        else
+//        {
+//            E3(lexer);
+//            Limpiar(lexer);
+//            UPD8(lexer);
+//        }
+//    }
+//    
+//    public void UPD5(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            UPD6(lexer);
+//        }
+//        else if(token == token.T_WRITE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISIZQ)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                E3(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPCOMA)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    UPD7(lexer);
+//                    Limpiar(lexer);
+//                    if(token == token.T_OPCOMA)
+//                    {
+//                        token = lexer.yylex();
+//                        Contador(lexer);
+//                        Limpiar(lexer);
+//                        UPD7(lexer);
+//                        Limpiar(lexer);
+//                        if(token == token.T_OPPARENTESISDER)
+//                        {
+//                            token = lexer.yylex();
+//                            Contador(lexer);
+//                            Limpiar(lexer);
+//                            UPD8(lexer);
+//                        }
+//                        else
+//                        {
+//                            //error32 se esperaba ")" 
+//                            if(token == null)
+//                            {
+//
+//                            }
+//                            else
+//                            {
+//                                //error23
+//                                ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                                Error(lexer);
+//                                INICIO(lexer);
+//                            }
+//                        }
+//                    }
+//                    else
+//                    {
+//                        //error32 se esperaba ","
+//                        if(token == null)
+//                        {
+//
+//                        }
+//                        else
+//                        {
+//                            //error23
+//                            ErroresSintac = ErroresSintac + "Se esperaba ',' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                            Error(lexer);
+//                            INICIO(lexer);
+//                        }
+//                    }
+//                    
+//                }
+//                else
+//                {
+//                    //error32 se esperaba ","
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba ',' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error32 se esperaba "("
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error32 se esperaba ID o WRITE
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID o WRITE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void UPD7(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_ENTERODECIMAL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_NULL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_ARROBA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            
+//        }
+//    }
+//    
+//    public void UPD9(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IGUAL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            UPD10(lexer);
+//        }
+//        else
+//        {
+//            //erorr32 se esperaba "="
+//        }
+//    }
+//    
+//    public void UPD10 (Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        E3(lexer);
+//        Limpiar(lexer);
+//        UPD8(lexer);
+//        
+//    }
+//    
+//    public void UPD8(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            UPD2(lexer);
+//        }
+//        else
+//        {
+//            FINALQUERY(lexer);
+//        }
+//    }
+//    
+//    public void UPD6(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IGUAL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            E3(lexer);
+//            Limpiar(lexer);
+//            UPD8(lexer);
+//        }
+//        else if(token == token.T_OPPARENTESISIZQ)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            ARGUMENT(lexer);
+//            Limpiar(lexer);
+//            if(token== token.T_OPPARENTESISDER)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                UPD8(lexer);
+//            }
+//        }
+//        else
+//        {
+//            //error32 se esperaba "=" o "("
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '= o (' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void ARGUMENT(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        E3(lexer);
+//        Limpiar(lexer);
+//        ARGUMENT2(lexer);
+//    }
+//    
+//    public void ARGUMENT2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            ARGUMENT(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    public void CREATE (Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_CREATE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_TABLE)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                CREATET1(lexer);
+//            }
+//            else if(token == token.T_DATABASE)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                CREATED(lexer);
+//                Limpiar(lexer);
+//                CREATED4(lexer);
+//                
+//            }
+//            else if(token == token.T_USER)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                CREATEU(lexer);
+//                
+//            }
+//            else if(token == token.T_INDEX || token == token.T_UNIQUE || token == token.T_CLUSTERED || token == token.T_NONCLUSTERED)
+//            {
+//                
+//                CREATEI(lexer);
+//               
+//            }
+//            else if(token == token.T_VIEW)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ALTERW(lexer);
+//                
+//            }
+//            else
+//            {
+//                //error32 se esperaba TABLE, DATABASE, USER, INDEX, VIEW
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'TABLE DATABASE USER INDEX VIEW' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error32 se esperaba CREATE
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'CREATE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void CREATED4(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPUNTOCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INICIO(lexer);
+//        }
+//        else if (token == token.T_GO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INICIO(lexer);
+//        }
+//        else
+//        {
+//            //error12 se eseperaba ; o GO
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '; o GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//        
+//    }
+//    public void CREATEI(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_UNIQUE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            CREATEI2(lexer);
+//        }
+//        else
+//        {
+//            CREATEI2(lexer);
+//        }
+//        
+//    }
+//    
+//    public void CREATEI2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_CLUSTERED)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            CREATEI3(lexer);
+//        }
+//        else if(token == token.T_NONCLUSTERED)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            CREATEI3(lexer);
+//        }
+//        else
+//        {
+//            CREATEI3(lexer);
+//        }
+//    }
+//    
+//    public void CREATEI3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_INDEX)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_ON)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    OBJECT(lexer);
+//                    Limpiar(lexer);
+//                    if(token == token.T_OPPARENTESISIZQ)
+//                    {
+//                        token = lexer.yylex();
+//                        Contador(lexer);
+//                        Limpiar(lexer);
+//                        if(token == token.T_IDENTIFICADOR)
+//                        {
+//                            TRUNCAR(lexer);
+//                            token = lexer.yylex();
+//                            Contador(lexer);
+//                            Limpiar(lexer);
+//                            CREATEI4(lexer);
+//                            Limpiar(lexer);
+//                            CREATEI5(lexer);
+//                            Limpiar(lexer);
+//                            if(token == token.T_OPPARENTESISDER)
+//                            {
+//                                token = lexer.yylex();
+//                                Contador(lexer);
+//                                Limpiar(lexer);
+//                                CREATEI6(lexer);
+//                                Limpiar(lexer);
+//                                COLUMNC4(lexer);
+//                                Limpiar(lexer);
+//                                CREATEI7(lexer);
+//                            }
+//                            else
+//                            {
+//                                //error12 se esperaba )
+//                                if(token == null)
+//                                {
+//
+//                                }
+//                                else
+//                                {
+//                                    //error23
+//                                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                                    Error(lexer);
+//                                    INICIO(lexer);
+//                                }
+//                            }
+//                        }
+//                        else
+//                        {
+//                            //error12 se esperaba ID
+//                            if(token == null)
+//                            {
+//
+//                            }
+//                            else
+//                            {
+//                                //error23
+//                                ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                                Error(lexer);
+//                                INICIO(lexer);
+//                            }
+//                        }
+//                    }
+//                    else
+//                    {
+//                        //error12 se esperaba (
+//                        if(token == null)
+//                        {
+//
+//                        }
+//                        else
+//                        {
+//                            //error23
+//                            ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                            Error(lexer);
+//                            INICIO(lexer);
+//                        }
+//                    }
+//                }
+//                else
+//                {
+//                    //error12 se esperaba ON
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba 'ON' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error12 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error12 se esperaba IDNEX
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'INDEX' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void CREATEI4(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_ASC)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_DESC)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void CREATEI5(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token== token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                CREATEI4(lexer);
+//                Limpiar(lexer);
+//                CREATEI5(lexer);
+//                
+//            }
+//            else
+//            {
+//                //error12 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void CREATEI6(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_WHERE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SEARCHWMATCH(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void CREATEI7(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPUNTOCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INICIO(lexer);
+//        }
+//        else if(token == token.T_GO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INICIO(lexer);
+//        }
+//        else
+//        {
+//            //error12 se esperaba GO o ;
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'GO o ;' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    public void CREATED(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            CREATED2(lexer);
+//        }
+//        else
+//        {
+//            //error12 Se esperaba ID
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void CREATED2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_COLLATE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //error12 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//                
+//            }
+//        }
+//        else
+//        {
+//            CREATED3(lexer);
+//        }
+//    }
+//    
+//    public void CREATED3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPUNTOCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INICIO(lexer);
+//        }
+//        else if (token == token.T_GO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INICIO(lexer);
+//        }
+//        else
+//        {
+//            //error12 se eseperaba ; o GO
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '; o GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    public void CREATET1(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        OBJECT(lexer);
+//        Limpiar(lexer);
+//        if(token == token.T_OPPARENTESISIZQ)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            CREATET(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISDER)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                COLUMNC4(lexer);
+//                Limpiar(lexer);
+//                FINC(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esepraba )
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error32 se esperaba (
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//        
+//    }
+//    
+//    public void FINC(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPUNTOCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INICIO(lexer);
+//        }
+//        else if(token == token.T_GO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INICIO(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba ; o GO
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '; o GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    public void CREATET(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            CREATET5(lexer);
+//        }
+//        else if(token == token.T_INDEX)
+//        {
+//            TABIND(lexer);
+//            Limpiar(lexer);
+//            CREATE3(lexer);
+//            Limpiar(lexer);
+//            
+//        }
+//        else if(token == token.T_CONSTRAINT || token == token.T_PRIMARY || token == token.T_UNIQUE || token ==  token.T_FOREIGN || token == token.T_CHECK)
+//        {
+//            TABLECON(lexer);
+//            Limpiar(lexer);
+//            CREATE3(lexer);
+//            Limpiar(lexer);
+//            
+//            
+//        }
+//        
+//    }
+//    public void CREATET5(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_AS)
+//        {
+//            CCD(lexer);
+//            Limpiar(lexer);
+//            CREATE3(lexer);
+//            
+//        }
+//        else if(token == token.T_INT || token == token.T_INTEGER|| token == token.T_SMALLINT || token == token.T_DECIMAL ||token == token.T_VARCHAR || token == token.T_FLOAT || token == token.T_BIT || token ==token.T_DATE || token == token.T_CHAR || token== token.T_NCHAR)
+//        {
+//            COLUMNDEF(lexer);
+//            Limpiar(lexer);
+//            CREATE3(lexer);
+//            
+//        }
+//        else
+//        {
+//            //error32 se esperaba TIPO o AS
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'TIPO o AS' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void CREATE3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            CREATE4(lexer);
+//        }
+//        else if(token == token.T_IDENTIFICADOR)
+//        {
+//            CREATE4(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void CREATE4(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            CREATET6(lexer);
+//        }
+//        else if(token == token.T_INDEX)
+//        {
+//            TABIND(lexer);
+//            Limpiar(lexer);
+//            CREATE3(lexer);
+//           
+//        }
+//        else if(token == token.T_CONSTRAINT || token == token.T_PRIMARY || token == token.T_UNIQUE || token ==  token.T_FOREIGN || token == token.T_CHECK)
+//        {
+//            TABLECON(lexer);
+//            Limpiar(lexer);
+//            CREATE3(lexer);
+//          
+//            
+//        }
+//    }
+//    
+//    public void CREATET6(Lexer lexer)throws IOException
+//    {
+//         Limpiar(lexer);
+//        if(token == token.T_AS)
+//        {
+//            CCD(lexer);
+//            Limpiar(lexer);
+//            CREATE3(lexer);
+//            
+//        }
+//        else if(token == token.T_INT || token == token.T_INTEGER|| token == token.T_SMALLINT || token == token.T_DECIMAL ||token == token.T_VARCHAR || token == token.T_FLOAT || token == token.T_BIT || token ==token.T_DATE || token == token.T_CHAR || token== token.T_NCHAR)
+//        {
+//            COLUMNDEF(lexer);
+//            Limpiar(lexer);
+//            CREATE3(lexer);
+//            
+//        }
+//        else
+//        {
+//            //error32 se esperaba TIPO o AS
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'TIPO o AS' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    public void CREATEU(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token== token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            CREATEU2(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba ID
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void CREATEU2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPUNTOCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INICIO(lexer);
+//        }
+//        else if(token == token.T_GO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INICIO(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba GO ;
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'GO o ;' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    public void ALTER(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_ALTER)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_TABLE)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ALTERT(lexer);
+//            }
+//            else if(token == token.T_DATABASE)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ALTERD(lexer);
+//            }
+//            else if(token == token.T_USER)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ALTERU(lexer);
+//                Limpiar(lexer);
+////                CREATED4(lexer);
+//            }
+//            else if(token == token.T_INDEX)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ALTERI(lexer);
+//                Limpiar(lexer);
+////                CREATED4(lexer);
+//            }
+//            else if(token == token.T_VIEW)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ALTERW (lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba TABLE, DATABASE, USER, INDEX, VIEW
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'TABLE DATABASE USER INDEX VIEW' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error32 se esperaba ALTER
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ALTER' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void ALTERT(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        OBJECT(lexer);
+//        Limpiar(lexer);
+//        ALTER1(lexer);
+//        Limpiar(lexer);
+//        FINALTER(lexer);
+//    }
+//    
+//    public void FINALTER(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_GO)
+//        {
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                INICIO(lexer);
+//        }
+//        else if(token == token.T_OPPUNTOCOMA)
+//        {
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                INICIO(lexer);
+//        }
+//        else
+//        {
+//            //error12 se esperaba ; o GO
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '; o GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void ALTER1(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_ALTER)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_COLUMN)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                if(token  == token.T_IDENTIFICADOR)
+//                {
+//                    TRUNCAR(lexer);
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    ALTERT1(lexer);
+//                }
+//                else
+//                {
+//                    //error12 se esperaba ID
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error12 se esperaba COLUMN
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'COLUMN' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_ADD)
+//        {
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ALTERT8(lexer);
+//        }
+//        else if(token == token.T_DROP)
+//        {
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ALTERT10(lexer);
+//        }
+//        else
+//        {
+//            //error12 se esperaba ALTER ADD o DROP
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ADD ALTER DROP' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    
+//    public void ALTERT1(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ALTERT2(lexer);
+//        }
+//        else
+//        {
+//            ALTERT6(lexer);
+//        }
+//    }
+//    
+//    public void ALTERT2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPUNTO)
+//        {
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ALTERT3(lexer);
+//            }
+//            else
+//            {
+//                //error12 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            ALTERT3(lexer);
+//        }
+//    }
+//    
+//    public void ALTERT3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPARENTESISIZQ)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_ENTERODECIMAL)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ENT(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPPARENTESISDER)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    ALTERT4(lexer);
+//                }
+//                else
+//                {
+//                    //error12 se esperaba )
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error12 se esperaba NUMERO
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'NUMERO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            ALTERT4(lexer);
+//        }
+//    }
+//    public void ENT(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_ENTERODECIMAL)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //error12 se esperaba Numero
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'NUMERO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void ALTERT4(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_COLLATE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ALTERT5(lexer);
+//            }
+//            else
+//            {
+//                //error12 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            ALTERT5(lexer);
+//        }
+//    }
+//    
+//    public void ALTERT5(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_NULL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_NOT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_NULL)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //error12 se esperaba NULL
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'NULL' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void ALTERT6(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_ADD)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            ALTERT7(lexer);
+//        }
+//        else if(token == token.T_DROP)
+//        {
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ALTERT7(lexer);
+//        }
+//        else
+//        {
+//            //error12 se esperaba ID DROP o ADD
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID ADD O DROP' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void ALTERT7(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_ROWGUIDCOL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_NOT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_FOR)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_REPLICATION)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                }
+//                else
+//                {
+//                    //error12 se esperaba REPLICATION
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba 'REPLICATION' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error12 se esperaba FOR
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'FOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error12 se esperaba ROWGUIDCOL o NOT 
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ROWGUIDCOL O NOT' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void ALTERT8(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            ALTERT14(lexer);
+//            
+//        }
+//        else
+//        {
+//            TABLECON(lexer);
+//            ALTERT9(lexer);
+//        }
+//    }
+//    
+//    public void ALTERT14(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_AS)
+//        {
+//            CCD(lexer);
+//            Limpiar(lexer);
+//            ALTERT9(lexer);
+//            
+//        }
+//        else
+//        {
+//            COLUMNDEF(lexer);
+//            Limpiar(lexer);
+//            ALTERT9(lexer);
+//        }
+//    }
+//    
+//    public void ALTERT9(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            ALTERT8(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void ALTERT10(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_COLUMN)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            ALTERT12(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ALTERT13(lexer);
+//            }
+//            else
+//            {
+//                //error12 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            ALTERT11(lexer);
+//            Limpiar(lexer);
+//            ALTERT12(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ALTERT13(lexer);
+//            }
+//            else
+//            {
+//                //error12 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//    }
+//    
+//    public void ALTERT11(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_CONSTRAINT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void ALTERT12 (Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IF)
+//        {
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_EXISTS)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                }
+//                else
+//                {
+//                    //error12 se esperaba EXISTS
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba 'EXISTS' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void ALTERT13(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            ALTERT10(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//                
+//              
+//                
+//    }
+//    public void ALTERW(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            ALTERW2(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba ID
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void ALTERW2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPUNTO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//           
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ALTERW3(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            ALTERW3(lexer);
+//        }
+//    }
+//    
+//    public void ALTERW3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPARENTESISIZQ)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ALTERW5(lexer);
+//                if(token == token.T_OPPARENTESISDER)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    ALTERW4(lexer);
+//                }
+//                else
+//                {
+//                    //error32 se esperaba ")"
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            ALTERW4(lexer);
+//        }
+//                
+//    }
+//    
+//    public void ALTERW4(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPUNTOCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INICIO(lexer);
+//        }
+//        else if(token == token.T_GO)
+//        {
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                INICIO(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba ; o GO
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'GO o ;' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void ALTERW5(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ALTERW5(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //vacio
+//        }
+//    }
+//    public void ALTERI(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_ON)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                OBJECT(lexer);
+//                Limpiar(lexer);
+//                ALTERI3(lexer);
+//                        
+//                        
+//            }
+//            else
+//            {
+//                //error32 se esperaba ON
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ON' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_ALL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_ON)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                OBJECT(lexer);
+//                Limpiar(lexer);
+//                ALTERI3(lexer);
+//            }
+//            else{
+//                //error32 se esperaba ON
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ON' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error32 se esperaba ID o ALL
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID o ALL' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//        
+//    }
+//    
+//    public void ALTERI3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPUNTOCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INICIO(lexer);
+//        }
+//        else if(token == token.T_GO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INICIO(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba GO o ;
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'GO o ;' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    public void ALTERU(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            ALTERU2(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba ID
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void ALTERU2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPUNTOCOMA)
+//        {
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                INICIO(lexer);
+//        }
+//        else if(token == token.T_GO)
+//        {
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                INICIO(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba ; o GO
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'GO o ;' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//
+//        }
+//    
+//    public void ALTERD(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            ALTERD3(lexer);
+//        }
+//        else if(token == token.T_CURRENT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            ALTERD3(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba ID o CURRENT
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID o CURRENT' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void ALTERD3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_COLLATE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                ALTERD4(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error32 se esperaba collate
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'COLLATE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void ALTERD4(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPUNTOCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INICIO(lexer);
+//        }
+//        else if(token == token.T_GO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INICIO(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba ; o GO
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '; o GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    public void DELETE(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        switch(token)
+//        {
+//            case T_DELETE:
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                DEL2(lexer);
+//                Limpiar(lexer);
+//                break;
+//            default:
+//                //error23 se espera DELETE
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'DELETE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//                break;
+//        }
+//    }
+//    
+//    public void DEL2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        switch(token)
+//        {
+//            case T_TOP:
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                
+//                switch(token)
+//                {
+//                    case T_OPPARENTESISIZQ:
+//                        
+//                        token = lexer.yylex();
+//                        Contador(lexer);
+//                        Limpiar(lexer);
+//                        SCALAREXP(lexer);
+//                        
+//                        switch(token)
+//                        {
+//                            case T_OPPARENTESISDER:
+//                                
+//                                token = lexer.yylex();
+//                                Contador(lexer);
+//                                Limpiar(lexer);
+//                                DEL3(lexer);
+//                                break;
+//                            default:
+//                                //error23 se esperaba ")"
+//                                if(token == null)
+//                                {
+//
+//                                }
+//                                else
+//                                {
+//                                    //error23
+//                                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                                    Error(lexer);
+//                                    INICIO(lexer);
+//                                }
+//                                break;
+//                        }
+//                        break;
+//                    default:
+//                        //error23 se espera "("
+//                        if(token == null)
+//                        {
+//
+//                        }
+//                        else
+//                        {
+//                            
+//                            ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                            Error(lexer);
+//                            INICIO(lexer);
+//                        }
+//                        break;
+//                }
+//                
+//                break;
+//            default:
+//                DEL4(lexer);
+//                break;
+//        }
+//    }
+//    
+//    public void DEL3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_PERCENT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            DEL4(lexer);
+//        }
+//        else
+//        {
+//            DEL4(lexer);
+//        }
+//    }
+//    
+//    public void DEL4(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_FROM)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            DEL5(lexer);
+//        }
+//        else
+//        {
+//            DEL5(lexer);
+//        }
+//    }
+//    
+//    public void DEL5(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_ARROBA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                FINALQUERY(lexer);
+//            }
+//            else
+//            {
+//                //error23 se esperaba identificador
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR ' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_IDENTIFICADOR)
+//        {
+//            OBJECT(lexer);
+//            Limpiar(lexer);
+//            FINALQUERY(lexer);
+//            
+//            
+//         
+//        }
+//        else if(token == token.T_OPENROWSET)
+//        {
+//            ROWSETF(lexer);
+//            Limpiar(lexer);
+//            FINALQUERY(lexer);
+//          
+//            
+//        }
+//        else if(token == token.T_OPENQUERY)
+//        {
+//            ROWSETF(lexer);
+//            Limpiar(lexer);
+//            FINALQUERY(lexer);
+//            
+//            
+//        }
+//        else
+//        {
+//            //error23 se espera variable o identificador 
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//                
+//    }
+//    
+//    public void SCALAREXP(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        SCALAREXP3(lexer);
+//        SCALAREXP2(lexer);
+//    }
+//    
+//    public void SCALAREXP2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if (token == token.T_OPSUMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SCALAREXP3(lexer);
+//            SCALAREXP2(lexer);
+//        }
+//        else if (token == token.T_OPRESTA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SCALAREXP3(lexer);
+//            SCALAREXP2(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    public void SCALAREXP3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        SCALAREXP5(lexer);
+//        SCALAREXP4(lexer);
+//    }
+//    
+//    public void SCALAREXP4(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPMULTI)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SCALAREXP5(lexer);
+//            SCALAREXP4(lexer);
+//        }
+//        else if(token == token.T_OPDIV)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SCALAREXP5(lexer);
+//            SCALAREXP4(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void SCALAREXP5(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPARENTESISIZQ)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SCALAREXP(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISDER)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //error23 se esperaba ")"
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_ENTERODECIMAL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_DOUBLENUM)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_ARROBA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token ==token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //error23 se esperaba identificador
+//            }
+//        }
+//        else
+//        {
+//            //error23 se esperaba "@" "(" entero o float
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '@' o '(' o ENTERO o FLOAT Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    public void DML1(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        DML2(lexer);
+//        Limpiar(lexer);
+//        DML3(lexer);
+//        
+//        
+//    }
+//    
+//    public void DML2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            COLNAME(lexer);
+//        }
+//        else
+//        {
+//            SCALAREXP(lexer);
+//        }
+//    }
+//    
+//    public void DML3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_AS)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                DML4(lexer);
+//            }
+//            else
+//            {
+//                //error23 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID ' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            DML4(lexer);
+//        }
+//    }
+//    
+//    public void DML4(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            DML1(lexer);
+//        }
+//        else
+//        {
+//            //vacio
+//        }
+//    }
+//    
+//    public void COLNAME(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPUNTO)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                COLNAME1(lexer);
+//            }
+//            else
+//            {
+//                //error23 se esperaba "."
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '.' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //vacio
+//        }
+//    }
+//    
+//    public void COLNAME1(Lexer lexer)throws IOException
+//    {
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            Limpiar(lexer);
+//            if(token == token.T_OPMULTI)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //errror23 se espera "*" o identificador
+//            }
+//        }
+//    }
+//    public void OUTPUTCLAUSE(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OUTPUT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);            
+//            DML1(lexer);
+//            Limpiar(lexer);
+//            OUTCL1(lexer);
+//        }
+//        else
+//        {
+//            //error23 se esperaba OUTPUT
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'OUTPUT' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void OUTCL1(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_INTO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            OUTCL2(lexer);
+//        }
+//        else
+//        {
+//            // no hacer nada porque vacio
+//        }
+//    }
+//        
+//    public void OUTCL2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_ARROBA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                OUTCL3(lexer);
+//            }
+//            else
+//            {
+//                //error23 se espera ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            OUTCL3(lexer);
+//        }
+//        else
+//        {
+//            //error23 se espera variable o id
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'VARIABLE' O IDENTIFICADOR Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void OUTCL3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPARENTESISIZQ)
+//        {
+//            COLIST(lexer);
+//        }
+//        else
+//        {
+//            //vacio
+//        }
+//        
+//    }
+//    
+//    public void COLIST(Lexer lexer) throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPARENTESISIZQ)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            COLIST1(lexer);
+//        }
+//        else
+//        {
+//            //vacio
+//        }
+//    }
+//    
+//    public void COLIST1(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            COLIST2(lexer);
+//            
+//        }
+//        else
+//        {
+//            //error23 se esperaba ID
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void COLIST2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            COLIST1(lexer);
+//        }
+//        else if(token == token.T_OPPARENTESISDER)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //error23 se esperaba ")"
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            
+//        }
+//    }
+//    public void ROWSETF(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPENROWSET)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            OPROW2(lexer);
+//        }
+//        else if(token == token.T_OPENQUERY)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            OPQUER2(lexer);
+//        }
+//    }
+//    
+//    public void OPROW2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPARENTESISIZQ)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_STRINGA)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPCOMA)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    OPROW3(lexer);
+//                }
+//                else
+//                {
+//                    //error23 se esperaba ","
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba ',' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error23 se esperaba string
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'STRING' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error23 se espesraba "("
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void OPROW3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_STRINGA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            OPROW4(lexer);
+//        }
+//        else
+//        {
+//            //error23 se esperaba un string
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'STRING' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//        
+//    }
+//    
+//    public void OPROW4(Lexer lexer) throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPUNTOCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_STRINGA)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPPUNTOCOMA)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    if(token == token.T_STRINGA)
+//                    {
+//                        token = lexer.yylex();
+//                        Contador(lexer);
+//                        Limpiar(lexer);
+//                        OPROW5(lexer);
+//                    }
+//                    else
+//                    {
+//                        //error23 se esperaba STRINGA
+//                        if(token == null)
+//                        {
+//
+//                        }
+//                        else
+//                        {
+//                            //error23
+//                            ErroresSintac = ErroresSintac + "Se esperaba 'STRING' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                            Error(lexer);
+//                            INICIO(lexer);
+//                        }
+//                    }
+//                }
+//                else
+//                {
+//                    //error23 se esperaba ";"
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba ';' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error23 se esperaba STRING
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'STRING' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//                
+//        }
+//        else
+//        {
+//            OPROW5(lexer);
+//        }
+//    }
+//    
+//    public void OPROW5(Lexer lexer) throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            OPROW6(lexer);
+//        }
+//        else
+//        {
+//            //error23 se esperaba ","
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ',' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void OPROW6(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_STRINGA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
 //            Limpiar(lexer);
 //            if(token == token.T_OPPARENTESISDER)
 //            {
@@ -8135,895 +6993,129 @@ public class minisql extends javax.swing.JFrame {
 //        }
 //        else
 //        {
-            EXPPIZADA(lexer);
+//            OBJECT(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISDER)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //error23 se esperaba ")"
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
 //        }
-    }
-    
-    public void EXPPIZADA(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
+//    }
+//    
+//    public void OPQUER2 (Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPARENTESISIZQ)
+//        {
 //            token = lexer.yylex();
 //            Contador(lexer);
 //            Limpiar(lexer);
-              OBJECT(lexer);
-        }
-        else if(token == token.T_ARROBA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error23 se esperaba ID
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_NULL || token == token.T_ENTERODECIMAL || token == token.T_FLOAT || token == token.T_STRINGA ||token == token.T_DOUBLENUM)
-        {
-            CONST(lexer);
-        }
-        else if(token == token.T_AVG || token == token.T_COUNT || token == token.T_MAX || token == token.T_MIN || token == token.T_SUM)
-        {
-            FUNC(lexer);
-        }
-        else
-        {
-            //error23 se esperaba ID, variable, funcion, constante 
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba IDENTIFICADOR, VARIABLE, FUNCION O CONSTANTE Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void CONST(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_NULL || token == token.T_ENTERODECIMAL || token == token.T_FLOAT || token == token.T_STRINGA || token == token.T_DOUBLENUM)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            //error23 se esperaba una COnstante
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'CONSTANTE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void FUNC(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_AVG)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISIZQ)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                FUNC2(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPPARENTESISDER)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                }
-                else
-                {
-                    //error23 se esperaba ")"
-                    if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-                }
-            }
-            else
-            {
-                //error23 se esperaba "("
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_COUNT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-             if(token == token.T_OPPARENTESISIZQ)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                FUNC3(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPPARENTESISDER)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                }
-                else
-                {
-                    //error23 se esperaba ")"
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error23 se esperaba "("
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-            
-        }
-        else if(token == token.T_MAX)
-        {
-            
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISIZQ)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                FUNC2(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPPARENTESISDER)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                }
-                else
-                {
-                    //error23 se esperaba ")"
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error23 se esperaba "("
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_MIN)
-        {
-          
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISIZQ)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                FUNC2(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPPARENTESISDER)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                }
-                else
-                {
-                    //error23 se esperaba ")"
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error23 se esperaba "("
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else  if(token ==token.T_SUM)
-        {
-            
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISIZQ)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                FUNC2(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPPARENTESISDER)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                }
-                else
-                {
-                    //error23 se esperaba ")"
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error23 se esperaba "("
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error23 se esperaba FUNCION  
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'FUNCTION' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void FUNC2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_ALL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            E3(lexer);
-        }
-        else if(token == token.T_DISTINCT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            E3(lexer);
-        }
-        else
-        {
-            E3(lexer);
-        }
-    }
-    
-    public void FUNC3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPMULTI)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            E3(lexer);
-        }
-    }
-    public void E3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        T3(lexer);
-        Limpiar(lexer);
-        E4(lexer);
-    }
-    
-    public void E4(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPSUMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            T3(lexer);
-            Limpiar(lexer);
-            E4(lexer);
-        }
-        else if (token == token.T_OPRESTA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            T3(lexer);
-            Limpiar(lexer);
-            E4(lexer);
-        }
-        else
-        {
-            //vacio
-        }
-    }
-    
-    public void T3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        F2(lexer);
-        Limpiar(lexer);
-        T4(lexer);
-        
-    }
-    
-    public void T4(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPMULTI)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            F2(lexer);
-            Limpiar(lexer);
-            T4(lexer);
-        }
-        else if(token == token.T_OPDIV)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            F2(lexer);
-            Limpiar(lexer);
-            T4(lexer);
-        }
-        else
-        {
-            //vacio
-        }
-    }
-    
-    public void F2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        G2(lexer);
-        Limpiar(lexer);
-        F3(lexer);
-    }
-    
-    public void F3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPMENORQUE || token == token.T_OPMAYORQUE || token == token.T_OPMENORIGUAL || token == token.T_OPMAYORIGUAL || token == token.T_IGUAL || token == token.T_OPDIFERENTE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            G2(lexer);
-            Limpiar(lexer);
-            F3(lexer);
-        }
-        else
-        {
-            //vacio
-        }
-    }
-    
-    public void G2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPARENTESISIZQ)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            E3(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISDER)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error23 se espera ")"
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if (token == token.T_IDENTIFICADOR)
-        {
-            OBJECT(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_ARROBA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token ==token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else{
-                //error23 se esperaba identificador
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_DOUBLENUM)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_ENTERODECIMAL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_STRINGA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_NULL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            //error32 se esperaba ENTERO, FLOAT, "(",ID o STRING
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ENTERO FLOAT ( ID o STRING' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    
-    public void E5(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        T5(lexer);
-        Limpiar(lexer);
-        E6(lexer);
-    }
-    
-    public void E6(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPSUMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            T5(lexer);
-            Limpiar(lexer);
-            E6(lexer);
-        }
-        else if (token == token.T_OPRESTA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            T5(lexer);
-            Limpiar(lexer);
-            E6(lexer);
-        }
-        else
-        {
-            //vacio
-        }
-    }
-    
-    public void T5(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        F4(lexer);
-        Limpiar(lexer);
-        T6(lexer);
-        
-    }
-    
-    public void T6(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPMULTI)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            F4(lexer);
-            Limpiar(lexer);
-            T6(lexer);
-        }
-        else if(token == token.T_OPDIV)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            F4(lexer);
-            Limpiar(lexer);
-            T6(lexer);
-        }
-        else
-        {
-            //vacio
-        }
-    }
-    
-    public void F4(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        G3(lexer);
-        Limpiar(lexer);
-        F5(lexer);
-    }
-    
-    public void F5(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPMENORQUE || token == token.T_OPMAYORQUE || token == token.T_OPMENORIGUAL || token == token.T_OPMAYORIGUAL || token == token.T_IGUAL || token == token.T_OPDIFERENTE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            G3(lexer);
-            Limpiar(lexer);
-            F5(lexer);
-        }
-        else
-        {
-            //vacio
-        }
-    }
-    
-    public void G3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPARENTESISIZQ)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            E5(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISDER)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error23 se espera ")"
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if (token == token.T_IDENTIFICADOR)
-        {
-            OBJECT(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_ARROBA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token ==token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else{
-                //error23 se esperaba identificador
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_DOUBLENUM)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_ENTERODECIMAL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_STRINGA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_NULL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if(token == token.T_AVG || token == token.T_COUNT || token == token.T_MAX || token == token.T_MIN || token == token.T_SUM)
-        {
-            FUNC(lexer);
-        }
-        else if(token == token.T_OPRESTA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_ENTERODECIMAL)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else if(token == token.T_DOUBLENUM)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                
-            }
-        }
-        else
-        {
-            //error32 se esperaba ENTERO, FLOAT, "(",ID o STRING
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ENTERO FLOAT ( ID o STRING' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    public void COMPARADORES(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IGUAL || token == token.T_OPDIFERENTE || token == token.T_OPMENORQUE || token == token.T_OPMENORIGUAL || token == token.T_OPMAYORQUE || token == token.T_OPMAYORIGUAL)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        
-        
-    }
-    
-    public void CSC1(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_STRINGA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if (token == token.T_OPPARENTESISIZQ)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            CSC1(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISDER)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                CSC2(lexer);
-            }
-            else
-            {
-                //error23 se eseperaba ")"
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error23 se esperaba string o "(" REVISAR
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPCOMA)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    if(token == token.T_STRINGA)
+//                    {
+//                        token = lexer.yylex();
+//                        Contador(lexer);
+//                        Limpiar(lexer);
+//                        if(token == token.T_OPPARENTESISDER)
+//                        {
+//                            token = lexer.yylex();
+//                            Contador(lexer);
+//                            Limpiar(lexer);
+//                        }
+//                        else
+//                        {
+//                            //error23 se espera ")"
+//                            if(token == null)
+//                            {
+//
+//                            }
+//                            else
+//                            {
+//                                //error23
+//                                ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                                Error(lexer);
+//                                INICIO(lexer);
+//                            }
+//                        }
+//                    }
+//                    else
+//                    {
+//                        //error23 se espera "string"
+//                        if(token == null)
+//                        {
+//
+//                        }
+//                        else
+//                        {
+//                            //error23
+//                            ErroresSintac = ErroresSintac + "Se esperaba 'STRING' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                            Error(lexer);
+//                            INICIO(lexer);
+//                        }
+//                    }
+//                }
+//                else
+//                {
+//                   //error23 se esperaba "," 
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba ',' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error23 se esperaba identificador
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error23 se esperaba "("
 //            if(token == null)
 //                {
 //                    
@@ -9035,1353 +7127,3265 @@ public class minisql extends javax.swing.JFrame {
 //                    Error(lexer);
 //                    INICIO(lexer);
 //                }
-        }
-    }
-    
-    public void CSC2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_AND)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            CSC3(lexer);
-        }
-        else if(token == token.T_OR)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            CSC1(lexer);
-        }
-        else if(token == token.T_OPOR)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            CSC1(lexer);
-        }
-        else if(token == token.T_OPAND)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            CSC1(lexer);
-        }
-        else
-        {
-            CSC1(lexer);
-        }
-    }
-    
-    public void CSC3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_NOT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            CSC1(lexer);
-        }
-        else
-        {
-            CSC1(lexer);
-        }
-    }
-    public void PRED1(Lexer lexer) throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IS)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            NOT1(lexer);
-            if(token==token.T_NULL)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error23 se esperaba NULL
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'NULL' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_IGUAL || token == token.T_OPDIFERENTE || token == token.T_OPMENORQUE || token == token.T_OPMENORIGUAL || token == token.T_OPMAYORQUE || token == token.T_OPMAYORIGUAL)
-        {
-            COMPARADORES(lexer);
-            Limpiar(lexer);
-            E(lexer);
-        }
-        else
-        {
-            NOT1(lexer);
-            Limpiar(lexer);
-            PRED3(lexer);
-        }
-        
-    }
-    
-    public void PRED2(Lexer lexer) throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            E(lexer);
-            Limpiar(lexer);
-            PRED2(lexer);
-        }
-        else
-        {
-            //no hacer nada porque vacio
-        }
-    }
-    public void PRED3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_BETWEEN)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            E(lexer);
-            Limpiar(lexer);
-            if(token == token.T_AND)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                E(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error32 se espera AND
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'AND' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_IN)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISIZQ)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                E(lexer);
-                Limpiar(lexer);
-                PRED2(lexer);
-                if(token == token.T_OPPARENTESISDER)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    Limpiar(lexer);
-                }
-                else
-                {
-                    //error23 se esperaba ")"
-                    if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-            }
-            else
-            {
-                //error23 se esperaba "("
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else if(token == token.T_LIKE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            E(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            //error23 se esperaba IN o BETWEEN
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'IN' O BETWEEN Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    public void NOT1(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_NOT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void FT1(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else if (token == token.T_OPMULTI)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-        }
-        else
-        {
-            //error23 se esperaba id o "*"
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR' O '*' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    public void SCWM2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_AND)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SCWM3(lexer);
-        }
-        else if (token == token.T_OR)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SCWM3(lexer);
-        }
-        else
-        {
-            //vacio
-        }
-    }
-    
-    public void SCWM3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_NOT)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SCWM4(lexer);
-        }
-        else
-        {
-            SCWM4(lexer);
-        }
-    }
-    
-    public void SCWM4(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPPARENTESISIZQ)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            SEARCHWMATCH(lexer);
-            Limpiar(lexer);
-            if(token == token.T_OPPARENTESISDER)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                SCWM5(lexer);
-            }
-            else
-            {
-                //error23 se esperaba ")"
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            PREDICADO(lexer);
-            Limpiar(lexer);
-            SCWM5(lexer);
-        }
-        
-    }
-    
-    public void SCWM5(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        SCWM2(lexer);
-    }
-    
-    public void FQ4(Lexer lexer)throws IOException
-    {
-        if(token == token.T_OPPUNTOCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INICIO(lexer);
-        }
-        else if(token == token.T_GO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            INICIO(lexer);
-        }
-        else
-        {
-            //error23 se esperaba ";" o GO
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ';' o 'GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    public void DROP(Lexer lexer) throws IOException
-    {
-        Limpiar(lexer);
-        if (token == token.T_DROP)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            DROP2(lexer);
-        }
-        else
-        {
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    
-                    ErroresSintac = ErroresSintac + "Se esperaba 'DROP' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-         
-    }
-    
-    public void DROP2(Lexer lexer) throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_TABLE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            DROPT2 (lexer);
-        }
-        else if (token == token.T_DATABASE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            DROPD2(lexer);
-            
-        }
-        else if (token == token.T_USER)
-        {
-            
-          
-            DROPL2 (lexer);
-        }
-        else if (token == token.T_INDEX)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            DROPI2(lexer);
-        }
-        else if (token == token.T_VIEW)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            DROPW2(lexer);
-        }
-        else
-        {
-            //error23 se espera table, database, login, index, view
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'TABLE', 'DATABASE', 'LOGIN', 'INDEX' O 'VIEW' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            
-        }
-    }
-    
-    public void DROPW2(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        switch(token)
-        {
-            case T_IF:
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                
-                switch(token)
-                {
-                    case T_EXISTS:
-                        token = lexer.yylex();
-                        Contador(lexer);
-                        Limpiar(lexer);
-                        DROPW3(lexer);
-                        break;
-                    default:
-                        //error23 se espera EXISTS
-                          if(token == null)
-                            {
-
-                            }
-                            else
-                            {
-                                //error23
-                                ErroresSintac = ErroresSintac + "Se esperaba 'EXISTS'Linea: " +ContadorLineas + " Columna " + ContadorCaracteres +"\n";
-                                Error(lexer);
-                                INICIO(lexer);
-                            }
-                        break;
-                }
-                break;
-            default:
-                DROPW3(lexer);
-                break;
-        }
-    }
-    
-    public void DROPW3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        switch(token)
-        {
-            case T_IDENTIFICADOR:
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                if(token == token.T_OPPUNTO)
-                {
-                     token = lexer.yylex();
-                    Contador(lexer);
-                    
-                    
-                    if(token == token.T_IDENTIFICADOR)
-                    {
-                        TRUNCAR(lexer);
-                         token = lexer.yylex();
-                        Contador(lexer);
-                        Limpiar(lexer);
-                        DROPW4(lexer);
-                    }
-                    else
-                    {
-                        //error23 se esperaba identificador
-                          if(token == null)
-                            {
-
-                            }
-                            else
-                            {
-                                //error23
-                                ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres +"\n";
-                                Error(lexer);
-                                INICIO(lexer);
-                            }
-                    }
-                }
-                else
-                {
-                    DROPW4(lexer);
-                }
-                
-                break;
-            default:
-                //error23 se espera identificador
-                  if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres +"\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-              
-                    
-        }
-    }
-    
-    public void DROPW4(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        switch(token)
-        {
-            case T_OPCOMA:
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                DROPW3(lexer);
-                break;
-            case T_OPPUNTOCOMA:
-                token = lexer.yylex();
-                Contador(lexer);
-                INICIO(lexer);
-                break;
-            case T_GO:
-                token = lexer.yylex();
-                Contador(lexer);
-                INICIO(lexer);
-                break;
-            default:
-                //error23 se espera ";" o GO
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ';' o 'GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-                break;
-          
-        }
-    }
-    public void DROPI2(Lexer lexer) throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IF)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_EXISTS)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                DROPI3(lexer);
-            }
-            else
-            {
-                //erroe23 se espera exists
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'EXISTS' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            DROPI3(lexer);
-        }
-        
-    }
-        
-     public void DROPI3(Lexer lexer) throws IOException
-     {
-        Limpiar(lexer);
-        if(token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            DROPI4(lexer);
-        }
-        else
-        {
-            //error23 debe venir identificador
-              if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-     }
-     
-    public void DROPI4(Lexer lexer) throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_ON)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            OBJECT(lexer);
-            DROPI6(lexer);
-            
-        }
-        else if (token == token.T_OPPUNTO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                DROPI5(lexer);
-            }
-            else
-            {
-                //error23 se espera identificador
-                  if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres +"\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //error23 se espera ON o "."
-              if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ON' o '.' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres +"\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-        
-    } 
-    
-    public void DROPI5(Lexer lexer) throws IOException
-    {
-        switch(token)
-        {
-            case T_OPPUNTO:
-                token = lexer.yylex();
-                Contador(lexer);
-                
-                switch (token)
-                {
-                    case T_IDENTIFICADOR:
-                        TRUNCAR(lexer);
-                        token = lexer.yylex();
-                        Contador(lexer);
-                        DROPI6(lexer);
-                        break;
-                    default:
-                        //error23 se esperaba identificador
-                          if(token == null)
-                        {
-
-                        }
-                        else
-                        {
-                            //error23
-                            ErroresSintac = ErroresSintac + "Se esperaba 'ID Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                            Error(lexer);
-                            INICIO(lexer);
-                        }
-                }
-                
-                break;
-            default:
-                DROPI6(lexer);
-                break;
-        }
-    }
-    public void DROPI6(Lexer lexer) throws IOException
-    {
-        Limpiar(lexer);
-         switch(token)
-        {
-            case T_OPCOMA:
-                token = lexer.yylex();
-                Contador(lexer);
-                DROPI3(lexer);
-                break;
-            case T_OPPUNTOCOMA:
-                token = lexer.yylex();
-                Contador(lexer);
-                INICIO(lexer);
-            case T_GO:
-                token = lexer.yylex();
-                Contador(lexer);
-                INICIO(lexer);
-            default:
-                //error23 se esperaba ";"
-                  if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ';' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres +"\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-                break;
-        }
-    }
-    
-    public void DROPL2 (Lexer lexer) throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_USER)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            DROPL3(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-                
-                if(token == token.T_OPPUNTOCOMA)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    INICIO(lexer);
-                }
-                else if(token == token.T_GO)
-                {
-                    token = lexer.yylex();
-                    Contador(lexer);
-                    INICIO(lexer);
-                }
-                else
-                {
-                    //error23 se espera punto y coma
-                      if(token == null)
-                    {
-
-                    }
-                    else
-                    {
-                        //error23
-                        ErroresSintac = ErroresSintac + "Se esperaba '; o GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres +"\n";
-                        Error(lexer);
-                        INICIO(lexer);
-                    }
-                }
-                
-            }
-            else
-            {
-                //error23 se espera identificador
-                  if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //eror23 se espera login
-              if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'LOGIN' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void DROPL3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IF)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_EXISTS)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
-            }
-            else
-            {
-                //error se esperaba EXISTS
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'EXISTS' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-            
-        }
-        else
-        {
-            //nada porque vacio
-        }
-    }
-    
-    public void DROPD2(Lexer lexer) throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IF)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_EXISTS)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                DROPD3(lexer);
-            }
-            else
-            {
-                //erroe23 se espera exists
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'EXISTS' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            DROPD3(lexer);
-        }
-    }
-    
-    public void DROPD3(Lexer lexer) throws IOException
-    {
-         Limpiar(lexer);
-         if(token == token.T_IDENTIFICADOR)
-         {
-             TRUNCAR(lexer);
-             token = lexer.yylex();
-             Contador(lexer);
-             DROPD4(lexer);
-         }
-         else
-         {
-             //error23 debe venir identificador
-               if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-         }
-    }
-    
-    public void DROPD4(Lexer lexer) throws IOException
-    {
-         Limpiar(lexer);
-         if(token == token.T_OPCOMA)
-         {
-             token = lexer.yylex();
-             Contador(lexer);
-             DROPD3(lexer);
-         }
-         else if(token == token.T_OPPUNTOCOMA)
-         {
-           token = lexer.yylex();
-           Contador(lexer);
-           INICIO(lexer);
-         }
-           else if(token == token.T_GO)
-         {
-           token = lexer.yylex();
-           Contador(lexer);
-           INICIO(lexer);
-         }
-         else
-         {
-             //error23 se espera ";"
-               if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ';' o 'GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-         }
-    }
-    
-    public void DROPT2(Lexer lexer) throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_IF)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            Limpiar(lexer);
-            if(token == token.T_EXISTS)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                DROPT3(lexer);
-            }
-            else
-            {
-                //erroe23 se espera exists
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'EXISTS' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres +"\n";
-                  Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            DROPT3(lexer);
-        }
-    }
-    
-    public void DROPT3(Lexer lexer)throws IOException
-    {
-        Limpiar(lexer);
-        OBJECT(lexer);
-        DROPT6(lexer);
-    }
-    
-    public void DROPT6(Lexer lexer) throws IOException
-    {
-        Limpiar(lexer);
-        if(token == token.T_OPCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            DROPT3(lexer);
-        }
-        else if (token == token.T_OPPUNTOCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            INICIO(lexer);
-        }
-        else if (token == token.T_GO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            INICIO(lexer);
-        }
-        else
-        {
-            //error23 se espera ";"
-              if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ';' o 'GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-      public void TRUNCATE (Lexer lexer) throws IOException
-    {
-        Limpiar(lexer);
-        if (token == token.T_TRUNCATE)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            
-            Limpiar(lexer);
-            
-            if (token == token.T_TABLE)
-            {
-                token = lexer.yylex();
-                Contador(lexer);
-                OBJECT(lexer);
-                
-                //preguntar si agregar partitions o se queda asi de simple
-                TRUNC8(lexer);
-            }
-            else
-            {
-              //aqui seria error23
-                if(token == null)
-                {
-                    ContadorLineas = 0;
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'TABLE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres +"\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-            //aqui seria error23
-            
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'TRUNCATE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-        
-    }
-      
-    public void OBJECT(Lexer lexer) throws IOException
-    {
-        Limpiar(lexer);
-        if (token == token.T_IDENTIFICADOR)
-        {
-            TRUNCAR(lexer);
-            token = lexer.yylex();
-            Contador(lexer);
-            OBJECT2(lexer);
-        }
-        else
-        {
-            //error23
-            if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n"; 
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void OBJECT2(Lexer lexer)throws IOException
-    {
-        if(token == token.T_OPPUNTO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {   
-                TRUNCAR(lexer);
-                token = lexer.yylex();
-                Contador(lexer);
-                OBJECT3(lexer);
-            }
-            else
-            {
-                //error23
-                if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-            }
-        }
-        else
-        {
-          
-           OBJECT3(lexer); 
-        }
-    }
-    
-    public void OBJECT3(Lexer lexer) throws IOException
-    {
-        if(token == token.T_OPPUNTO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            if(token == token.T_IDENTIFICADOR)
-            {
-                TRUNCAR(lexer);
-               token = lexer.yylex();
-               Contador(lexer);
-            }
-        }
-        else
-        {
-            //no hace nada porque puede ser vacio
-        }
-    }
-    
-    public void TRUNC8 (Lexer lexer) throws IOException
-    {
-       Limpiar(lexer);
-        if(token == token.T_OPPUNTOCOMA)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            INICIO(lexer);
-        }
-        else if (token == token.T_GO)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            INICIO(lexer);
-        }
-        else
-        {
-            //error23 se esperaba ";"
-              if(token == null)
-                {
-                    
-                }
-                else
-                {
-                    //error23
-                    ErroresSintac = ErroresSintac + "Se esperaba ';' o 'GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
-                    Error(lexer);
-                    INICIO(lexer);
-                }
-        }
-    }
-    
-    public void Limpiar(Lexer lexer) throws IOException
-    {
-        while(token == token.T_WHITE || token == token.T_COMENTARIOS || token == token.T_COMENTARIOS2 || token == token.T_ENTER || token == token.T_ERRORCOMENTARIOS ||token == token.ERROR)
-        {
-            token = lexer.yylex();
-            Contador(lexer);
-            
-            if(token == token.T_ENTER)
-            {
-                ContadorLineas++;
-                  ContadorCaracteres = 1;
-                    ContadorCaracterInicio = 0;
-
-            }
-            else if(token == token.T_WHITE)
-            {
-                 
-            }
-            else if(token == token.T_COMENTARIOS2)
-            {
-                int ContEnt = 0;
-                    //resultado = resultado + lexer.lexeme + "        Linea: " + ContadorLineas + " Columna: " +  ContadorCaracterInicio + "-" + ContadorCaracteres +  " T_COMENTARIOS\r\n";
-                    int car = lexer.lexeme.length();
-                    for (int i = 0; i < car; i++) 
-                    {
-                        if(lexer.lexeme.charAt(i) == '\n')
-                        {
-                            ContEnt++;
-                        }
-                        
-                    }
-                    ContadorLineas = ContadorLineas + ContEnt;
-            }
-            else if(token == token.T_COMENTARIOS)
-            {
-                ContadorLineas++;
-            }
-            else if(token == token.ERROR)
-            {
-                ErroresSintac = ErroresSintac + " este simbolo no es valido: " + lexer.lexeme + "Linea: "+ ContadorLineas + " Columna: " + ContadorCaracteres +"\n";
-            }
-        }
-    }
-    public void TRUNCAR(Lexer lexer)throws IOException
-    {
-        String cadenaF = lexer.lexeme;
-        int truncar2 = lexer.lexeme.length();
-        if(truncar2 > 31)
-        {
-            cadenaF = lexer.lexeme.substring(0,31);
-            ErroresSintac = ErroresSintac + "el ID ha sido truncado: " + cadenaF + " Linea: " + ContadorLineas + " Columna: " + ContadorCaracteres + "\n";
-        }
-        else
-        {
-            
-        }
-    }
-    public void Error(Lexer lexer) throws IOException
-    {
-        while (token != token.T_OPPUNTOCOMA && token  != null && token != token.T_GO)
-        {
-//            if(token == null)
+//        }
+//    }
+//    public void FINALQUERY(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OUTPUT)
+//        {
+//            OUTPUTCLAUSE(lexer);
+//            Limpiar(lexer);
+//            FQ2(lexer);
+//        }
+//        else
+//        {
+//            FQ2(lexer);
+//        }
+//    }
+//    
+//    public void FQ2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_FROM)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            TABLESOURCE(lexer);
+//            FQ3(lexer);
+//        }
+//        else
+//        {
+//            FQ3(lexer);
+//        }
+//    }
+//    
+//    public void FQ3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_WHERE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SEARCHWMATCH(lexer);
+//            Limpiar(lexer);
+//            FQ4(lexer);
+//        }
+//        else
+//        {
+//            FQ4(lexer);
+//        }
+//    }
+//    
+//    public void TABLESOURCE(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            OBJECT(lexer);
+//            Limpiar(lexer);
+//            TB1(lexer);
+//            Limpiar(lexer);
+//            SAM_CL(lexer);
+//            Limpiar(lexer);
+//            TABLE2(lexer);
+//        }
+//        else if(token == token.T_OPENQUERY || token == token.T_OPENROWSET)
+//        {
+//            ROWSETF(lexer);
+//            Limpiar(lexer);
+//            TB1(lexer);
+//            Limpiar(lexer);
+//            TABLE2(lexer);
+//        }
+//        else if (token == token.T_ARROBA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            if(token == token.T_IDENTIFICADOR)
 //            {
-//               System.exit(0);
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                TB1(lexer);
+//                Limpiar(lexer);
+//                TABLE2(lexer);
 //            }
 //            else
 //            {
-                token = lexer.yylex();
-                Contador(lexer);
-                Limpiar(lexer);
+//                //error32 se esperaba id
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
 //            }
-           
-        }
-        token = lexer.yylex();
-        Contador(lexer);
-    }
+//        }
+//        else if(token == token.T_OPPARENTESISIZQ)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            TABLESOURCE(lexer);
+//            Limpiar(lexer);
+//            TABLE3(lexer);
+//            Limpiar(lexer);
+//            TABLE2(lexer);
+//        }
+//        else
+//        {
+//            //se esperaba ID o VARIABLE
+//        }
+//    }
+//    
+//    public void TABLE2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_INNER || token == token.T_LEFT || token == token.T_RIGHT || token == token.T_FULL || token == token.T_JOIN)
+//        {
+//            
+//            JOINTYPE(lexer);
+//            Limpiar(lexer);
+//            TABLESOURCE(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_ON)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                SEARCHWMATCH(lexer);
+//                Limpiar(lexer);
+//                TABLE2(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba ON
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ON' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_CROSS)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_JOIN)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                TABLESOURCE(lexer);
+//                Limpiar(lexer);
+//                TABLE2(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba JOIN
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'JOIN' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//                
+//            }
+//            
+//        }
+//        else
+//        {
+//            //vacio
+//        }
+//    }
+//    
+//    public void TABLE3 (Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_INNER || token == token.T_LEFT || token == token.T_RIGHT || token == token.T_FULL || token == token.T_JOIN)
+//        {
+//            
+//            JOINTYPE(lexer);
+//            Limpiar(lexer);
+//            TABLESOURCE(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_ON)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                SEARCHWMATCH(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPPARENTESISDER)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    TABLE2(lexer);
+//                }
+//                else
+//                {
+//                    //error32 se esperaba ")"
+//                    if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//                }
+//                
+//            }
+//            else if(token == token.T_CROSS)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_JOIN)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    TABLESOURCE(lexer);
+//                    if(token == token.T_OPPARENTESISDER)
+//                    {
+//                        token = lexer.yylex();
+//                        Contador(lexer);
+//                        Limpiar(lexer);
+//                        TABLE2(lexer);
+//                    }
+//                    else
+//                    {
+//                        //error32 se esperaba ")"
+//                        if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//                    } 
+//                }
+//                else
+//                {
+//                    //error32 se esperaba JOIN
+//                    if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'JOIN' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//
+//                }
+//
+//            }
+//            else
+//            {
+//                //error32 se esperaba ON
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ON' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//    }
+//    public void JOIN_TB(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR || token == token.T_OPENQUERY || token == token.T_OPENROWSET || token == token.T_ARROBA)
+//        {
+//            TABLESOURCE(lexer);
+//            Limpiar(lexer);
+//            JOIN_TB2(lexer);
+//        }
+//        else if(token == token.T_OPPARENTESISIZQ)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            JOIN_TB(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISDER)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else{
+//                //error32 se esperaba ")"
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error32 se esperaba identificador 
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//        
+//    }
+//    
+//    public void JOINTYPE (Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        JOINTYPE1(lexer);
+//        if(token == token.T_JOIN)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba JOIN
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'JOIN' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void JOINTYPE1(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_INNER)
+//        {
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//        }
+//        else if(token == token.T_LEFT)
+//        {
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                JOINTYPE3(lexer);
+//        }
+//        else if(token == token.T_RIGHT)
+//        {
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                JOINTYPE3(lexer);
+//        }
+//        else if(token == token.T_FULL)
+//        {
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                JOINTYPE3(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void JOINTYPE3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OUTER)
+//        {
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    public void JOIN_TB2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_CROSS)
+//        {
+//            token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//        }
+//        else
+//        {
+//            JOINTYPE(lexer);
+//            Limpiar(lexer);
+//            TABLESOURCE(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_ON)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                SEARCHWMATCH(lexer);
+//                
+//            }
+//            else
+//            {
+//                //error32 se esperaba ON
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ON' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//    }
+//    
+//    public void JOIN_TYPE(Lexer lexer )throws IOException
+//    {
+//        
+//    }
+//    public void TB1(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_AS)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //error32 se esperaba identificador
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if (token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void SAM_CL(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_TABLESAMPLE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISIZQ)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                SCALAREXP(lexer);
+//                Limpiar(lexer);
+//                SAM_CL3(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPPARENTESISDER)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                }
+//                else
+//                {
+//                    //error32 se esperaba ")"
+//                    if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//                }
+//               
+//            }
+//            else
+//            {
+//                //error32 se esperaba "("
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void SAM_CL3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_PERCENT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_ROWS)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+////    public void SEARCHC(Lexer lexer)throws IOException
+////    {
+////        Limpiar(lexer);
+////        SEARCHWMATCH(lexer);
+////        Limpiar(lexer);
+////        SEARCHC2(lexer);
+////    }
+////    public void SEARCHC2(Lexer lexer)throws IOException
+////    {
+////        Limpiar(lexer);
+////        if(token == token.T_AND)
+////        {
+////            token = lexer.yylex();
+////            Contador(lexer);
+////            Limpiar(lexer);
+////            SEARCHC(lexer);
+////            //SEARCHC2(lexer); hacer pruebas
+////            
+////        }
+////        else
+////        {
+////            //no hace nada es vacio
+////        }
+////    }
+//    
+//    public void SEARCHWMATCH(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_NOT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            PREDICADO(lexer);
+//            Limpiar(lexer);
+//            SCWM2(lexer);
+//            Limpiar(lexer);
+//            
+//        }
+//        else if (token == token.T_OPPARENTESISIZQ)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SEARCHWMATCH(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISDER)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                SCWM2(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //error23 se esperaba ")"
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            PREDICADO(lexer);
+//            Limpiar(lexer);
+//            SCWM2(lexer);
+//            Limpiar(lexer);
+//        }
+//        
+//    }
+//    
+//    public void PREDICADO(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+////        if(token == token.T_STRINGA)
+////        {
+////            token = lexer.yylex();
+////            Contador(lexer);
+////            Limpiar(lexer);
+////            NOT1(lexer);
+////            if(token == token.T_LIKE)
+////            {
+////                token = lexer.yylex();
+////                Contador(lexer);
+////                Limpiar(lexer);
+////                if(token == token.T_STRINGA)
+////                {
+////                    token = lexer.yylex();
+////                    Contador(lexer);
+////                    Limpiar(lexer);                    
+////                }
+////                else
+////                {
+////                    //error23 se esperaba string
+////                    if(token == null)
+////                    {
+////
+////                    }
+////                    else
+////                    {
+////                        //error23
+////                        ErroresSintac = ErroresSintac + "Se esperaba 'STRING' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+////                        Error(lexer);
+////                        INICIO(lexer);
+////                    }
+////                }
+////            }
+////            else
+////            {
+////                //error23 se esperaba LIKE
+////                if(token == null)
+////                {
+////                    
+////                }
+////                else
+////                {
+////                    //error23
+////                    ErroresSintac = ErroresSintac + "Se esperaba 'LIKE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+////                    Error(lexer);
+////                    INICIO(lexer);
+////                }
+////            }
+////        }
+//        if(token == token.T_CONTAINS)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISIZQ)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                FT1(lexer);
+//                if(token == token.T_OPCOMA)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    CSC1(lexer);
+//                    if(token == token.T_OPPARENTESISDER)
+//                    {
+//                        token = lexer.yylex();
+//                        Contador(lexer);
+//                        Limpiar(lexer);
+//                    }
+//                    else
+//                    {
+//                        //error23 se esperaba ")"
+//                        if(token == null)
+//                        {
+//
+//                        }
+//                        else
+//                        {
+//                            //error23
+//                            ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                            Error(lexer);
+//                            INICIO(lexer);
+//                        }
+//                    }
+//                }
+//                else
+//                {
+//                    //error23 se esperaba ","
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba ',' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error23 se esperaba "("
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_FREETEXT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISIZQ)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                FT1(lexer);
+//                if(token == token.T_OPCOMA)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                    if(token == token.T_STRINGA)
+//                    {
+//                        token = lexer.yylex();
+//                        Contador(lexer);
+//                        Limpiar(lexer);
+//                        if(token == token.T_OPPARENTESISDER)
+//                        {
+//                            token = lexer.yylex();
+//                            Contador(lexer);
+//                            Limpiar(lexer);
+//                        }
+//                        else
+//                        {
+//                            //error23 se esperaba string
+//                            if(token == null)
+//                            {
+//
+//                            }
+//                            else
+//                            {
+//                                //error23
+//                                ErroresSintac = ErroresSintac + "Se esperaba 'STRING' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                                Error(lexer);
+//                                INICIO(lexer);
+//                            }
+//                        }
+//                    }
+//                    else
+//                    {
+//                        //error23 se esperaba string
+//                        if(token == null)
+//                        {
+//
+//                        }
+//                        else
+//                        {
+//                            //error23
+//                            ErroresSintac = ErroresSintac + "Se esperaba 'STRING' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                            Error(lexer);
+//                            INICIO(lexer);
+//                        }
+//                    }
+//                }
+//                else
+//                {
+//                    //error23 se esperaba ","
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba ',' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                    }
+//                }
+//            else
+//            {
+//                //error23 se esperaba "("
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            E(lexer);
+//            Limpiar(lexer);
+//            PRED1(lexer);
+//        }
+//    }
+//    
+//    public void E(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        T(lexer);
+//        Limpiar(lexer);
+//        E2(lexer);
+//    }
+//    
+//    public void E2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if (token == token.T_OPSUMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            T(lexer);
+//            Limpiar(lexer);
+//            E2(lexer);
+//        }
+//        else if (token == token.T_OPRESTA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            T(lexer);
+//            Limpiar(lexer);
+//            E2(lexer);
+//        }
+//        else
+//        {
+//            //vacio
+//        }
+//    }
+//    
+//    public void T(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        G(lexer);
+//        Limpiar(lexer);
+//        T2(lexer);
+//    }
+//    
+//    public void T2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPMULTI)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            G(lexer);
+//            Limpiar(lexer);
+//            T2(lexer);
+//        }
+//        else if(token == token.T_OPDIV)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            G(lexer);
+//            Limpiar(lexer);
+//            T2(lexer);
+//        }
+//        else
+//        {
+//            //vacio
+//        }
+//    }
+//    
+//    public void G(Lexer lexer)throws IOException
+//    {
+////        Limpiar(lexer);
+////        if(token == token.T_OPPARENTESISIZQ)
+////        {
+////            token = lexer.yylex();
+////            Contador(lexer);
+////            Limpiar(lexer);
+////            E(lexer);
+////            Limpiar(lexer);
+////            if(token == token.T_OPPARENTESISDER)
+////            {
+////                token = lexer.yylex();
+////                Contador(lexer);
+////                Limpiar(lexer);
+////            }
+////            else
+////            {
+////                //error23 se esperaba ")"
+////                if(token == null)
+////                {
+////                    
+////                }
+////                else
+////                {
+////                    //error23
+////                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+////                    Error(lexer);
+////                    INICIO(lexer);
+////                }
+////            }
+////        }
+////        else
+////        {
+//            EXPPIZADA(lexer);
+////        }
+//    }
+//    
+//    public void EXPPIZADA(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+////            token = lexer.yylex();
+////            Contador(lexer);
+////            Limpiar(lexer);
+//              OBJECT(lexer);
+//        }
+//        else if(token == token.T_ARROBA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //error23 se esperaba ID
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_NULL || token == token.T_ENTERODECIMAL || token == token.T_FLOAT || token == token.T_STRINGA ||token == token.T_DOUBLENUM)
+//        {
+//            CONST(lexer);
+//        }
+//        else if(token == token.T_AVG || token == token.T_COUNT || token == token.T_MAX || token == token.T_MIN || token == token.T_SUM)
+//        {
+//            FUNC(lexer);
+//        }
+//        else
+//        {
+//            //error23 se esperaba ID, variable, funcion, constante 
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba IDENTIFICADOR, VARIABLE, FUNCION O CONSTANTE Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void CONST(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_NULL || token == token.T_ENTERODECIMAL || token == token.T_FLOAT || token == token.T_STRINGA || token == token.T_DOUBLENUM)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //error23 se esperaba una COnstante
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'CONSTANTE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void FUNC(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_AVG)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISIZQ)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                FUNC2(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPPARENTESISDER)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                }
+//                else
+//                {
+//                    //error23 se esperaba ")"
+//                    if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//                }
+//            }
+//            else
+//            {
+//                //error23 se esperaba "("
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_COUNT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//             if(token == token.T_OPPARENTESISIZQ)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                FUNC3(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPPARENTESISDER)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                }
+//                else
+//                {
+//                    //error23 se esperaba ")"
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error23 se esperaba "("
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//            
+//        }
+//        else if(token == token.T_MAX)
+//        {
+//            
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISIZQ)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                FUNC2(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPPARENTESISDER)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                }
+//                else
+//                {
+//                    //error23 se esperaba ")"
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error23 se esperaba "("
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_MIN)
+//        {
+//          
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISIZQ)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                FUNC2(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPPARENTESISDER)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                }
+//                else
+//                {
+//                    //error23 se esperaba ")"
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error23 se esperaba "("
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else  if(token ==token.T_SUM)
+//        {
+//            
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISIZQ)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                FUNC2(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPPARENTESISDER)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                }
+//                else
+//                {
+//                    //error23 se esperaba ")"
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error23 se esperaba "("
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error23 se esperaba FUNCION  
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'FUNCTION' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void FUNC2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_ALL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            E3(lexer);
+//        }
+//        else if(token == token.T_DISTINCT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            E3(lexer);
+//        }
+//        else
+//        {
+//            E3(lexer);
+//        }
+//    }
+//    
+//    public void FUNC3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPMULTI)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            E3(lexer);
+//        }
+//    }
+//    public void E3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        T3(lexer);
+//        Limpiar(lexer);
+//        E4(lexer);
+//    }
+//    
+//    public void E4(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPSUMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            T3(lexer);
+//            Limpiar(lexer);
+//            E4(lexer);
+//        }
+//        else if (token == token.T_OPRESTA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            T3(lexer);
+//            Limpiar(lexer);
+//            E4(lexer);
+//        }
+//        else
+//        {
+//            //vacio
+//        }
+//    }
+//    
+//    public void T3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        F2(lexer);
+//        Limpiar(lexer);
+//        T4(lexer);
+//        
+//    }
+//    
+//    public void T4(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPMULTI)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            F2(lexer);
+//            Limpiar(lexer);
+//            T4(lexer);
+//        }
+//        else if(token == token.T_OPDIV)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            F2(lexer);
+//            Limpiar(lexer);
+//            T4(lexer);
+//        }
+//        else
+//        {
+//            //vacio
+//        }
+//    }
+//    
+//    public void F2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        G2(lexer);
+//        Limpiar(lexer);
+//        F3(lexer);
+//    }
+//    
+//    public void F3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPMENORQUE || token == token.T_OPMAYORQUE || token == token.T_OPMENORIGUAL || token == token.T_OPMAYORIGUAL || token == token.T_IGUAL || token == token.T_OPDIFERENTE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            G2(lexer);
+//            Limpiar(lexer);
+//            F3(lexer);
+//        }
+//        else
+//        {
+//            //vacio
+//        }
+//    }
+//    
+//    public void G2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPARENTESISIZQ)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            E3(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISDER)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //error23 se espera ")"
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if (token == token.T_IDENTIFICADOR)
+//        {
+//            OBJECT(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_ARROBA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token ==token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else{
+//                //error23 se esperaba identificador
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_DOUBLENUM)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_ENTERODECIMAL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_STRINGA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_NULL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //error32 se esperaba ENTERO, FLOAT, "(",ID o STRING
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ENTERO FLOAT ( ID o STRING' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    
+//    public void E5(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        T5(lexer);
+//        Limpiar(lexer);
+//        E6(lexer);
+//    }
+//    
+//    public void E6(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPSUMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            T5(lexer);
+//            Limpiar(lexer);
+//            E6(lexer);
+//        }
+//        else if (token == token.T_OPRESTA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            T5(lexer);
+//            Limpiar(lexer);
+//            E6(lexer);
+//        }
+//        else
+//        {
+//            //vacio
+//        }
+//    }
+//    
+//    public void T5(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        F4(lexer);
+//        Limpiar(lexer);
+//        T6(lexer);
+//        
+//    }
+//    
+//    public void T6(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPMULTI)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            F4(lexer);
+//            Limpiar(lexer);
+//            T6(lexer);
+//        }
+//        else if(token == token.T_OPDIV)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            F4(lexer);
+//            Limpiar(lexer);
+//            T6(lexer);
+//        }
+//        else
+//        {
+//            //vacio
+//        }
+//    }
+//    
+//    public void F4(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        G3(lexer);
+//        Limpiar(lexer);
+//        F5(lexer);
+//    }
+//    
+//    public void F5(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPMENORQUE || token == token.T_OPMAYORQUE || token == token.T_OPMENORIGUAL || token == token.T_OPMAYORIGUAL || token == token.T_IGUAL || token == token.T_OPDIFERENTE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            G3(lexer);
+//            Limpiar(lexer);
+//            F5(lexer);
+//        }
+//        else
+//        {
+//            //vacio
+//        }
+//    }
+//    
+//    public void G3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPARENTESISIZQ)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            E5(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISDER)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //error23 se espera ")"
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if (token == token.T_IDENTIFICADOR)
+//        {
+//            OBJECT(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_ARROBA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token ==token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else{
+//                //error23 se esperaba identificador
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_DOUBLENUM)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_ENTERODECIMAL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_STRINGA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_NULL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if(token == token.T_AVG || token == token.T_COUNT || token == token.T_MAX || token == token.T_MIN || token == token.T_SUM)
+//        {
+//            FUNC(lexer);
+//        }
+//        else if(token == token.T_OPRESTA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_ENTERODECIMAL)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else if(token == token.T_DOUBLENUM)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                
+//            }
+//        }
+//        else
+//        {
+//            //error32 se esperaba ENTERO, FLOAT, "(",ID o STRING
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ENTERO FLOAT ( ID o STRING' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    public void COMPARADORES(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IGUAL || token == token.T_OPDIFERENTE || token == token.T_OPMENORQUE || token == token.T_OPMENORIGUAL || token == token.T_OPMAYORQUE || token == token.T_OPMAYORIGUAL)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        
+//        
+//    }
+//    
+//    public void CSC1(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_STRINGA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if (token == token.T_OPPARENTESISIZQ)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            CSC1(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISDER)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                CSC2(lexer);
+//            }
+//            else
+//            {
+//                //error23 se eseperaba ")"
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error23 se esperaba string o "(" REVISAR
+////            if(token == null)
+////                {
+////                    
+////                }
+////                else
+////                {
+////                    //error23
+////                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+////                    Error(lexer);
+////                    INICIO(lexer);
+////                }
+//        }
+//    }
+//    
+//    public void CSC2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_AND)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            CSC3(lexer);
+//        }
+//        else if(token == token.T_OR)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            CSC1(lexer);
+//        }
+//        else if(token == token.T_OPOR)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            CSC1(lexer);
+//        }
+//        else if(token == token.T_OPAND)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            CSC1(lexer);
+//        }
+//        else
+//        {
+//            CSC1(lexer);
+//        }
+//    }
+//    
+//    public void CSC3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_NOT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            CSC1(lexer);
+//        }
+//        else
+//        {
+//            CSC1(lexer);
+//        }
+//    }
+//    public void PRED1(Lexer lexer) throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IS)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            NOT1(lexer);
+//            if(token==token.T_NULL)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //error23 se esperaba NULL
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'NULL' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_IGUAL || token == token.T_OPDIFERENTE || token == token.T_OPMENORQUE || token == token.T_OPMENORIGUAL || token == token.T_OPMAYORQUE || token == token.T_OPMAYORIGUAL)
+//        {
+//            COMPARADORES(lexer);
+//            Limpiar(lexer);
+//            E(lexer);
+//        }
+//        else
+//        {
+//            NOT1(lexer);
+//            Limpiar(lexer);
+//            PRED3(lexer);
+//        }
+//        
+//    }
+//    
+//    public void PRED2(Lexer lexer) throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            E(lexer);
+//            Limpiar(lexer);
+//            PRED2(lexer);
+//        }
+//        else
+//        {
+//            //no hacer nada porque vacio
+//        }
+//    }
+//    public void PRED3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_BETWEEN)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            E(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_AND)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                E(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //error32 se espera AND
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'AND' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_IN)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISIZQ)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                E(lexer);
+//                Limpiar(lexer);
+//                PRED2(lexer);
+//                if(token == token.T_OPPARENTESISDER)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    Limpiar(lexer);
+//                }
+//                else
+//                {
+//                    //error23 se esperaba ")"
+//                    if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                //error23 se esperaba "("
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba '(' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else if(token == token.T_LIKE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            E(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //error23 se esperaba IN o BETWEEN
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'IN' O BETWEEN Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    public void NOT1(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_NOT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void FT1(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else if (token == token.T_OPMULTI)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//        }
+//        else
+//        {
+//            //error23 se esperaba id o "*"
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR' O '*' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    public void SCWM2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_AND)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SCWM3(lexer);
+//        }
+//        else if (token == token.T_OR)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SCWM3(lexer);
+//        }
+//        else
+//        {
+//            //vacio
+//        }
+//    }
+//    
+//    public void SCWM3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_NOT)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SCWM4(lexer);
+//        }
+//        else
+//        {
+//            SCWM4(lexer);
+//        }
+//    }
+//    
+//    public void SCWM4(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPPARENTESISIZQ)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            SEARCHWMATCH(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_OPPARENTESISDER)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                SCWM5(lexer);
+//            }
+//            else
+//            {
+//                //error23 se esperaba ")"
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ')' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            PREDICADO(lexer);
+//            Limpiar(lexer);
+//            SCWM5(lexer);
+//        }
+//        
+//    }
+//    
+//    public void SCWM5(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        SCWM2(lexer);
+//    }
+//    
+//    public void FQ4(Lexer lexer)throws IOException
+//    {
+//        if(token == token.T_OPPUNTOCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INICIO(lexer);
+//        }
+//        else if(token == token.T_GO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            INICIO(lexer);
+//        }
+//        else
+//        {
+//            //error23 se esperaba ";" o GO
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ';' o 'GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    public void DROP(Lexer lexer) throws IOException
+//    {
+//        Limpiar(lexer);
+//        if (token == token.T_DROP)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            DROP2(lexer);
+//        }
+//        else
+//        {
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'DROP' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//         
+//    }
+//    
+//    public void DROP2(Lexer lexer) throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_TABLE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            DROPT2 (lexer);
+//        }
+//        else if (token == token.T_DATABASE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            DROPD2(lexer);
+//            
+//        }
+//        else if (token == token.T_USER)
+//        {
+//            
+//          
+//            DROPL2 (lexer);
+//        }
+//        else if (token == token.T_INDEX)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            DROPI2(lexer);
+//        }
+//        else if (token == token.T_VIEW)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            DROPW2(lexer);
+//        }
+//        else
+//        {
+//            //error23 se espera table, database, login, index, view
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'TABLE', 'DATABASE', 'LOGIN', 'INDEX' O 'VIEW' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            
+//        }
+//    }
+//    
+//    public void DROPW2(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        switch(token)
+//        {
+//            case T_IF:
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                
+//                switch(token)
+//                {
+//                    case T_EXISTS:
+//                        token = lexer.yylex();
+//                        Contador(lexer);
+//                        Limpiar(lexer);
+//                        DROPW3(lexer);
+//                        break;
+//                    default:
+//                        //error23 se espera EXISTS
+//                          if(token == null)
+//                            {
+//
+//                            }
+//                            else
+//                            {
+//                                //error23
+//                                ErroresSintac = ErroresSintac + "Se esperaba 'EXISTS'Linea: " +ContadorLineas + " Columna " + ContadorCaracteres +"\n";
+//                                Error(lexer);
+//                                INICIO(lexer);
+//                            }
+//                        break;
+//                }
+//                break;
+//            default:
+//                DROPW3(lexer);
+//                break;
+//        }
+//    }
+//    
+//    public void DROPW3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        switch(token)
+//        {
+//            case T_IDENTIFICADOR:
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                if(token == token.T_OPPUNTO)
+//                {
+//                     token = lexer.yylex();
+//                    Contador(lexer);
+//                    
+//                    
+//                    if(token == token.T_IDENTIFICADOR)
+//                    {
+//                        TRUNCAR(lexer);
+//                         token = lexer.yylex();
+//                        Contador(lexer);
+//                        Limpiar(lexer);
+//                        DROPW4(lexer);
+//                    }
+//                    else
+//                    {
+//                        //error23 se esperaba identificador
+//                          if(token == null)
+//                            {
+//
+//                            }
+//                            else
+//                            {
+//                                //error23
+//                                ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres +"\n";
+//                                Error(lexer);
+//                                INICIO(lexer);
+//                            }
+//                    }
+//                }
+//                else
+//                {
+//                    DROPW4(lexer);
+//                }
+//                
+//                break;
+//            default:
+//                //error23 se espera identificador
+//                  if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres +"\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//              
+//                    
+//        }
+//    }
+//    
+//    public void DROPW4(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        switch(token)
+//        {
+//            case T_OPCOMA:
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                DROPW3(lexer);
+//                break;
+//            case T_OPPUNTOCOMA:
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                INICIO(lexer);
+//                break;
+//            case T_GO:
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                INICIO(lexer);
+//                break;
+//            default:
+//                //error23 se espera ";" o GO
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ';' o 'GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//                break;
+//          
+//        }
+//    }
+//    public void DROPI2(Lexer lexer) throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IF)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_EXISTS)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                DROPI3(lexer);
+//            }
+//            else
+//            {
+//                //erroe23 se espera exists
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'EXISTS' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            DROPI3(lexer);
+//        }
+//        
+//    }
+//        
+//     public void DROPI3(Lexer lexer) throws IOException
+//     {
+//        Limpiar(lexer);
+//        if(token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            DROPI4(lexer);
+//        }
+//        else
+//        {
+//            //error23 debe venir identificador
+//              if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//     }
+//     
+//    public void DROPI4(Lexer lexer) throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_ON)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            OBJECT(lexer);
+//            DROPI6(lexer);
+//            
+//        }
+//        else if (token == token.T_OPPUNTO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                DROPI5(lexer);
+//            }
+//            else
+//            {
+//                //error23 se espera identificador
+//                  if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres +"\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //error23 se espera ON o "."
+//              if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ON' o '.' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres +"\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//        
+//    } 
+//    
+//    public void DROPI5(Lexer lexer) throws IOException
+//    {
+//        switch(token)
+//        {
+//            case T_OPPUNTO:
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                
+//                switch (token)
+//                {
+//                    case T_IDENTIFICADOR:
+//                        TRUNCAR(lexer);
+//                        token = lexer.yylex();
+//                        Contador(lexer);
+//                        DROPI6(lexer);
+//                        break;
+//                    default:
+//                        //error23 se esperaba identificador
+//                          if(token == null)
+//                        {
+//
+//                        }
+//                        else
+//                        {
+//                            //error23
+//                            ErroresSintac = ErroresSintac + "Se esperaba 'ID Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                            Error(lexer);
+//                            INICIO(lexer);
+//                        }
+//                }
+//                
+//                break;
+//            default:
+//                DROPI6(lexer);
+//                break;
+//        }
+//    }
+//    public void DROPI6(Lexer lexer) throws IOException
+//    {
+//        Limpiar(lexer);
+//         switch(token)
+//        {
+//            case T_OPCOMA:
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                DROPI3(lexer);
+//                break;
+//            case T_OPPUNTOCOMA:
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                INICIO(lexer);
+//            case T_GO:
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                INICIO(lexer);
+//            default:
+//                //error23 se esperaba ";"
+//                  if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ';' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres +"\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//                break;
+//        }
+//    }
+//    
+//    public void DROPL2 (Lexer lexer) throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_USER)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            DROPL3(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//                
+//                if(token == token.T_OPPUNTOCOMA)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    INICIO(lexer);
+//                }
+//                else if(token == token.T_GO)
+//                {
+//                    token = lexer.yylex();
+//                    Contador(lexer);
+//                    INICIO(lexer);
+//                }
+//                else
+//                {
+//                    //error23 se espera punto y coma
+//                      if(token == null)
+//                    {
+//
+//                    }
+//                    else
+//                    {
+//                        //error23
+//                        ErroresSintac = ErroresSintac + "Se esperaba '; o GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres +"\n";
+//                        Error(lexer);
+//                        INICIO(lexer);
+//                    }
+//                }
+//                
+//            }
+//            else
+//            {
+//                //error23 se espera identificador
+//                  if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //eror23 se espera login
+//              if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'LOGIN' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void DROPL3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IF)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_EXISTS)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+//            }
+//            else
+//            {
+//                //error se esperaba EXISTS
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'EXISTS' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//            
+//        }
+//        else
+//        {
+//            //nada porque vacio
+//        }
+//    }
+//    
+//    public void DROPD2(Lexer lexer) throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IF)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_EXISTS)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                DROPD3(lexer);
+//            }
+//            else
+//            {
+//                //erroe23 se espera exists
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'EXISTS' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            DROPD3(lexer);
+//        }
+//    }
+//    
+//    public void DROPD3(Lexer lexer) throws IOException
+//    {
+//         Limpiar(lexer);
+//         if(token == token.T_IDENTIFICADOR)
+//         {
+//             TRUNCAR(lexer);
+//             token = lexer.yylex();
+//             Contador(lexer);
+//             DROPD4(lexer);
+//         }
+//         else
+//         {
+//             //error23 debe venir identificador
+//               if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'ID' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//         }
+//    }
+//    
+//    public void DROPD4(Lexer lexer) throws IOException
+//    {
+//         Limpiar(lexer);
+//         if(token == token.T_OPCOMA)
+//         {
+//             token = lexer.yylex();
+//             Contador(lexer);
+//             DROPD3(lexer);
+//         }
+//         else if(token == token.T_OPPUNTOCOMA)
+//         {
+//           token = lexer.yylex();
+//           Contador(lexer);
+//           INICIO(lexer);
+//         }
+//           else if(token == token.T_GO)
+//         {
+//           token = lexer.yylex();
+//           Contador(lexer);
+//           INICIO(lexer);
+//         }
+//         else
+//         {
+//             //error23 se espera ";"
+//               if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ';' o 'GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//         }
+//    }
+//    
+//    public void DROPT2(Lexer lexer) throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_IF)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            Limpiar(lexer);
+//            if(token == token.T_EXISTS)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                DROPT3(lexer);
+//            }
+//            else
+//            {
+//                //erroe23 se espera exists
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'EXISTS' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres +"\n";
+//                  Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            DROPT3(lexer);
+//        }
+//    }
+//    
+//    public void DROPT3(Lexer lexer)throws IOException
+//    {
+//        Limpiar(lexer);
+//        OBJECT(lexer);
+//        DROPT6(lexer);
+//    }
+//    
+//    public void DROPT6(Lexer lexer) throws IOException
+//    {
+//        Limpiar(lexer);
+//        if(token == token.T_OPCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            DROPT3(lexer);
+//        }
+//        else if (token == token.T_OPPUNTOCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            INICIO(lexer);
+//        }
+//        else if (token == token.T_GO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            INICIO(lexer);
+//        }
+//        else
+//        {
+//            //error23 se espera ";"
+//              if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ';' o 'GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//      public void TRUNCATE (Lexer lexer) throws IOException
+//    {
+//        Limpiar(lexer);
+//        if (token == token.T_TRUNCATE)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            
+//            Limpiar(lexer);
+//            
+//            if (token == token.T_TABLE)
+//            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                OBJECT(lexer);
+//                
+//                //preguntar si agregar partitions o se queda asi de simple
+//                TRUNC8(lexer);
+//            }
+//            else
+//            {
+//              //aqui seria error23
+//                if(token == null)
+//                {
+//                    ContadorLineas = 0;
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'TABLE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres +"\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//            //aqui seria error23
+//            
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'TRUNCATE' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//        
+//    }
+//      
+//    public void OBJECT(Lexer lexer) throws IOException
+//    {
+//        Limpiar(lexer);
+//        if (token == token.T_IDENTIFICADOR)
+//        {
+//            TRUNCAR(lexer);
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            OBJECT2(lexer);
+//        }
+//        else
+//        {
+//            //error23
+//            if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n"; 
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void OBJECT2(Lexer lexer)throws IOException
+//    {
+//        if(token == token.T_OPPUNTO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {   
+//                TRUNCAR(lexer);
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                OBJECT3(lexer);
+//            }
+//            else
+//            {
+//                //error23
+//                if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba 'IDENTIFICADOR' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//            }
+//        }
+//        else
+//        {
+//          
+//           OBJECT3(lexer); 
+//        }
+//    }
+//    
+//    public void OBJECT3(Lexer lexer) throws IOException
+//    {
+//        if(token == token.T_OPPUNTO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            if(token == token.T_IDENTIFICADOR)
+//            {
+//                TRUNCAR(lexer);
+//               token = lexer.yylex();
+//               Contador(lexer);
+//            }
+//        }
+//        else
+//        {
+//            //no hace nada porque puede ser vacio
+//        }
+//    }
+//    
+//    public void TRUNC8 (Lexer lexer) throws IOException
+//    {
+//       Limpiar(lexer);
+//        if(token == token.T_OPPUNTOCOMA)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            INICIO(lexer);
+//        }
+//        else if (token == token.T_GO)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            INICIO(lexer);
+//        }
+//        else
+//        {
+//            //error23 se esperaba ";"
+//              if(token == null)
+//                {
+//                    
+//                }
+//                else
+//                {
+//                    //error23
+//                    ErroresSintac = ErroresSintac + "Se esperaba ';' o 'GO' Linea: " +ContadorLineas + " Columna " + ContadorCaracteres + "\n";
+//                    Error(lexer);
+//                    INICIO(lexer);
+//                }
+//        }
+//    }
+//    
+//    public void Limpiar(Lexer lexer) throws IOException
+//    {
+//        while(token == token.T_WHITE || token == token.T_COMENTARIOS || token == token.T_COMENTARIOS2 || token == token.T_ENTER || token == token.T_ERRORCOMENTARIOS ||token == token.ERROR)
+//        {
+//            token = lexer.yylex();
+//            Contador(lexer);
+//            
+//            if(token == token.T_ENTER)
+//            {
+//                ContadorLineas++;
+//                  ContadorCaracteres = 1;
+//                    ContadorCaracterInicio = 0;
+//
+//            }
+//            else if(token == token.T_WHITE)
+//            {
+//                 
+//            }
+//            else if(token == token.T_COMENTARIOS2)
+//            {
+//                int ContEnt = 0;
+//                    //resultado = resultado + lexer.lexeme + "        Linea: " + ContadorLineas + " Columna: " +  ContadorCaracterInicio + "-" + ContadorCaracteres +  " T_COMENTARIOS\r\n";
+//                    int car = lexer.lexeme.length();
+//                    for (int i = 0; i < car; i++) 
+//                    {
+//                        if(lexer.lexeme.charAt(i) == '\n')
+//                        {
+//                            ContEnt++;
+//                        }
+//                        
+//                    }
+//                    ContadorLineas = ContadorLineas + ContEnt;
+//            }
+//            else if(token == token.T_COMENTARIOS)
+//            {
+//                ContadorLineas++;
+//            }
+//            else if(token == token.ERROR)
+//            {
+//                ErroresSintac = ErroresSintac + " este simbolo no es valido: " + lexer.lexeme + "Linea: "+ ContadorLineas + " Columna: " + ContadorCaracteres +"\n";
+//            }
+//        }
+//    }
+//    public void TRUNCAR(Lexer lexer)throws IOException
+//    {
+//        String cadenaF = lexer.lexeme;
+//        int truncar2 = lexer.lexeme.length();
+//        if(truncar2 > 31)
+//        {
+//            cadenaF = lexer.lexeme.substring(0,31);
+//            ErroresSintac = ErroresSintac + "el ID ha sido truncado: " + cadenaF + " Linea: " + ContadorLineas + " Columna: " + ContadorCaracteres + "\n";
+//        }
+//        else
+//        {
+//            
+//        }
+//    }
+//    public void Error(Lexer lexer) throws IOException
+//    {
+//        while (token != token.T_OPPUNTOCOMA && token  != null && token != token.T_GO)
+//        {
+////            if(token == null)
+////            {
+////               System.exit(0);
+////            }
+////            else
+////            {
+//                token = lexer.yylex();
+//                Contador(lexer);
+//                Limpiar(lexer);
+////            }
+//           
+//        }
+//        token = lexer.yylex();
+//        Contador(lexer);
+//    }
  
     public void Imprimir (String resultado)
     {
@@ -10419,16 +10423,16 @@ public class minisql extends javax.swing.JFrame {
             }
     }
     
-    public void Contador(Lexer lexer)throws IOException
-    {
-        if(token != null)
-        {
-            ContadorCaracteres = lexer.lexeme.length() + ContadorCaracteres;
-            //ContadorCaracterInicio = ContadorCaracterInicio + 1;
-            //ContadorCaracterInicio = ContadorCaracteres ;
-        }
-      
-    }
+//    public void Contador(Lexer lexer)throws IOException
+//    {
+//        if(token != null)
+//        {
+//            ContadorCaracteres = lexer.lexeme.length() + ContadorCaracteres;
+//            //ContadorCaracterInicio = ContadorCaracterInicio + 1;
+//            //ContadorCaracterInicio = ContadorCaracteres ;
+//        }
+//      
+//    }
     
 
     public void tablaResultado(){
